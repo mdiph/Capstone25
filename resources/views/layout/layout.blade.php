@@ -191,8 +191,8 @@
                             <div class="collapse" id="custompages">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="../login.html">
-                                            <span class="sub-item">Login & Register 1</span>
+                                        <a href="/User">
+                                            <span class="sub-item">User Control</span>
                                         </a>
                                     </li>
                                     <li>

@@ -1,9 +1,11 @@
 <?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\SalesmanController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KategoriController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalesmanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 
 Route::get('/salesman', [SalesmanController::class, 'index']);
@@ -38,9 +43,11 @@ Route::post('/produk/store', [ProdukController::class, 'store']);
 Route::post('/produk/update/{id}', [ProdukController::class, 'update']);
 Route::post('/produk/delete/{id}', [ProdukController::class, 'destroy']);
 
-Route::get('login', function () {
-    return view('login');
-});
+Route::get('/User', [UserController::class, 'index']);
+Route::post('/User/store', [UserController::class, 'store']);
+Route::post('/User/update/{id}', [UserController::class, 'update']);
+Route::post('/User/delete/{id}', [UserController::class, 'destroy']);
+
 Route::get('/', function () {
     return view('welcome');
 });
