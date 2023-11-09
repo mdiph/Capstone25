@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
@@ -23,7 +24,7 @@ class LoginController extends Controller
         ]);
 
 
-        
+
 
 
         if (Auth::attempt($credentials)) {
@@ -33,5 +34,35 @@ class LoginController extends Controller
         }
 
         return back()->with('LoginFailed', 'Password atau email salah');
+    }
+
+
+    public function logout(Request $request){
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+
+    }
+
+
+    public function register(Request $request){
+        $validateData = $request->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required|email:dns|unique:users',
+            'password' => 'required|min:5|max:30'
+          ]);
+
+          //enkripsi password di my sql
+          $validateData['password'] = bcrypt($validateData['password']);
+
+
+          //$request->session()->flash('success', 'Registrasi selesai, silahkan login');
+
+          User::create($validateData);
     }
 }

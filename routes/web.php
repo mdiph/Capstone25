@@ -18,8 +18,10 @@ use App\Http\Controllers\SalesmanController;
 |
 */
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/register', [LoginController::class, 'register']);
 
 
 Route::get('/salesman', [SalesmanController::class, 'index']);
@@ -43,11 +45,17 @@ Route::post('/produk/store', [ProdukController::class, 'store']);
 Route::post('/produk/update/{id}', [ProdukController::class, 'update']);
 Route::post('/produk/delete/{id}', [ProdukController::class, 'destroy']);
 
+Route::middleware(['auth'])->group(function () {
 Route::get('/User', [UserController::class, 'index']);
 Route::post('/User/store', [UserController::class, 'store']);
 Route::post('/User/update/{id}', [UserController::class, 'update']);
 Route::post('/User/delete/{id}', [UserController::class, 'destroy']);
-
 Route::get('/', function () {
     return view('welcome');
 });
+});
+
+
+
+
+

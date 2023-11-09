@@ -77,8 +77,8 @@
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
+                                    {{ auth()->user()->nama }}
+                                    <span class="user-level">{{ auth()->user()->role }}</span>
                                     <span class="caret"></span>
                                 </span>
                             </a>
@@ -215,11 +215,17 @@
                         </li>
 
                         <li class="nav-item">
-                            <a data-toggle="collapse" href="#">
+
+
+                            <a data-toggle="collapse" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <p>Logout</p>
 
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                                {{ csrf_field() }}
+                            </form>
 
                         </li>
 
