@@ -12,6 +12,9 @@ class UserController extends Controller
 
     public function index(){
 
+        if(auth()->user()->role !== 'Admin'){
+            abort(403);
+        }
         $user = User::all();
         return view('Admin.list')->with('user', $user);
     }
@@ -41,15 +44,16 @@ class UserController extends Controller
 
         $user  =  User::find($id);
 
-        $validateData = $request->validate([
-            'nama' => 'required|max:255',
-            'email' => 'required|email:dns|unique:users',
-            'role' => 'required',
+        // $validateData = $request->validate([
+        //     'nama' => 'required|max:255',
+        //     'email' => 'required|email:dns|unique:users',
 
-          ]);
+        //     'role' => 'required',
+        //   ]);
 
+        $validateData = $request->all();
           //enkripsi password di my sql
-          
+
         $user->update($validateData);
 
         return redirect('/User')->with('success', 'Ubah data berhasil');

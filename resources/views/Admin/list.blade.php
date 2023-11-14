@@ -73,7 +73,7 @@
                                                     <div class="form-group">
                                                         <label>email</label>
                                                         <input type="email" class="form-control" name="email"
-                                                            placeholder="deksripsi..." required>
+                                                            placeholder="email. . ." required>
 
                                                     </div>
 
@@ -149,7 +149,7 @@
 
 
 
-                                         
+
 
 
 
@@ -167,7 +167,7 @@
                                                     <div class="modal-footer ">
                                                         <button type="submit" id="addRowButton"
                                                             class="btn btn-primary"><i class="fa fa-save"></i>
-                                                            Tambah</button>
+                                                            Ubah</button>
                                                         <button type="button" class="btn btn-danger"
                                                             data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
                                                     </div>

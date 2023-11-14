@@ -40,7 +40,7 @@ Route::post('/kategori/store', [KategoriController::class, 'store']);
 Route::post('/kategori/update/{id}', [KategoriController::class, 'update']);
 Route::post('/kategori/delete/{id}', [KategoriController::class, 'destroy']);
 
-Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);
 Route::post('/produk/update/{id}', [ProdukController::class, 'update']);
 Route::post('/produk/delete/{id}', [ProdukController::class, 'destroy']);
