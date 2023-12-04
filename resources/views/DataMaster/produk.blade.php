@@ -247,7 +247,7 @@
                                 @endforeach
 
                                 <div class="table-responsive">
-                                    <table id="produk" class="display table table-striped table-hover">
+                                    <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No </th>
@@ -255,8 +255,10 @@
                                                 <th>Deskripsi</th>
                                                 <th>Harga</th>
                                                 <th>Satuan</th>
+                                                <th>Stok</th>
                                                 <th>Unit</th>
                                                 <th>Kategori</th>
+                                                <td>Action</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -268,6 +270,7 @@
                                                     <td>{{ $row->deskripsi}}</td>
                                                     <td>{{ $row->harga }}</td>
                                                     <td>{{ $row->satuan}}</td>
+                                                    <td>{{ $row->stok }}</td>
                                                     <td>{{ $row->unit }}</td>
                                                     <td>{{ $row->kategori->nama_kategori }}</td>
                                                     <td>

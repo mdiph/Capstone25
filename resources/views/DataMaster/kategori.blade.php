@@ -70,7 +70,7 @@
                                                             placeholder="Nama kategori..." required>
 
                                                     </div>
-                                                    
+
 
 
                                                 </div>
@@ -177,11 +177,12 @@
                                 @endforeach
 
                                 <div class="table-responsive">
-                                    <table id="kategori" class="display table table-striped table-hover">
+                                    <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No </th>
                                                 <th>Nama Kategori</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -190,7 +191,6 @@
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->nama_kategori }}</td>
-
                                                     <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>

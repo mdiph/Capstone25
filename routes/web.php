@@ -51,9 +51,12 @@ Route::post('/User/store', [UserController::class, 'store']);
 Route::post('/User/update/{id}', [UserController::class, 'update']);
 Route::post('/User/delete/{id}', [UserController::class, 'destroy']);
 Route::get('/', function () {
-    return view('welcome');
+    return view('tes');
 });
+
+
 });
+
 
 
 

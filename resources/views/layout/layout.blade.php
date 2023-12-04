@@ -120,7 +120,7 @@
                             </span>
 
                         </li>
-                        <li class="nav-item" >
+                        <li class="nav-item">
                             <a data-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Data Master</p>
@@ -217,13 +217,15 @@
                         <li class="nav-item">
 
 
-                            <a data-toggle="collapse" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a data-toggle="collapse" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <p>Logout</p>
 
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: one;">
                                 {{ csrf_field() }}
                             </form>
 
@@ -253,61 +255,34 @@
     <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Azzara JS -->
     <script src="/assets/js/ready.min.js"></script>
+    <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
     <!-- Azzara DEMO methods, don't include it in your project! -->
     <!-- Sweet Alert -->
     <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-    <script src="/assets/js/setting-demo.js"></script>
+    <script src="/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+    
     <script>
         $(document).ready(function() {
-            $('#basic-datatables').DataTable({});
+            $('#add-row').DataTable({});
 
-            $('#multi-filter-select').DataTable({
-                "pageLength": 5,
-                initComplete: function() {
-                    this.api().columns().every(function() {
-                        var column = this;
-                        var select = $(
-                                '<select class="form-control"><option value=""></option></select>'
-                            )
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
-
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append('<option value="' + d + '">' + d +
-                                '</option>')
-                        });
-                    });
-                }
+            $('#datepicker').datetimepicker({
+                format: 'MM/DD/YYYY',
             });
 
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
 
-            var action =
-                '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                ]);
-                $('#addRowModal').modal('hide');
-
-            });
         });
     </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(function () {
+            $('#datepicker').datetimepicker({
+                format: 'MM/DD/YYYY',
+            });
+        });
+    });
+</script>
 
     <script>
         //== Class definition

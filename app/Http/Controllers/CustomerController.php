@@ -15,7 +15,7 @@ class CustomerController extends Controller
         //
         $data = customer::all();
 
-        return view ('DataMaster.customer')->with('data', $data);
+        return view ('tes')->with('data', $data);
     }
 
     /**
