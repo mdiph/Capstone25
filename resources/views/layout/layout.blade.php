@@ -24,6 +24,10 @@
         });
     </script>
 
+<script src="/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/azzara.min.css">
@@ -181,6 +185,28 @@
                             </div>
                         </li>
 
+                        <li class="nav-item">
+                            <a data-toggle="collapse" href="#transaksi">
+                                <i class="far fa-chart-bar"></i>
+                                <p>Transaksi</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="transaksi">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="/barangmasuk">
+                                            <span class="sub-item">Barang Masuk</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../charts/sparkline.html">
+                                            <span class="sub-item">Barang Keluar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
 
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#custompages">
@@ -241,48 +267,98 @@
 
     </div>
     <!--   Core JS Files   -->
-    <script src="/assets/js/core/jquery.3.2.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <!-- Bootstrap Toggle -->
-    <script src="/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-    <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
-    <!-- Azzara JS -->
-    <script src="/assets/js/ready.min.js"></script>
-    <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
-    <!-- Azzara DEMO methods, don't include it in your project! -->
-    <!-- Sweet Alert -->
-    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-    <script src="/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
-    
+
+<!-- jQuery UI -->
+<script src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+<!-- Moment JS -->
+<script src="/assets/js/plugin/moment/moment.min.js"></script>
+
+<!-- Chart JS -->
+<script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+
+<!-- jQuery Sparkline -->
+<script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Chart Circle -->
+<script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+<!-- Datatables -->
+<script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+<!-- Bootstrap Notify -->
+<script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+<!-- Bootstrap Toggle -->
+<script src="/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+<!-- jQuery Vector Maps -->
+<script src="/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+<script src="/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+<!-- Google Maps Plugin -->
+<script src="/assets/js/plugin/gmaps/gmaps.js"></script>
+
+<!-- Dropzone -->
+<script src="/assets/js/plugin/dropzone/dropzone.min.js"></script>
+
+<!-- Fullcalendar -->
+<script src="/assets/js/plugin/fullcalendar/fullcalendar.min.js"></script>
+
+<!-- DateTimePicker -->
+<script src="/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Bootstrap Tagsinput -->
+<script src="/assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+
+<!-- Bootstrap Wizard -->
+<script src="/assets/js/plugin/bootstrap-wizard/bootstrapwizard.js"></script>
+
+<!-- jQuery Validation -->
+<script src="/assets/js/plugin/jquery.validate/jquery.validate.min.js"></script>
+
+<!-- Summernote -->
+<script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
+
+<!-- Select2 -->
+<script src="/assets/js/plugin/select2/select2.full.min.js"></script>
+
+<!-- Sweet Alert -->
+<script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+<!-- Azzara JS -->
+<script src="/assets/js/ready.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#add-row').DataTable({});
 
-            $('#datepicker').datetimepicker({
-                format: 'MM/DD/YYYY',
-            });
+
 
 
         });
     </script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(function () {
-            $('#datepicker').datetimepicker({
-                format: 'MM/DD/YYYY',
+    <script type="text/javascript">
+    $('#datepicker').datetimepicker({
+	format: 'MM/DD/YYYY'
+});
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                $('#datepicker').datetimepicker({
+                    format: 'MM/DD/YYYY',
+                });
             });
         });
-    });
-</script>
+    </script>
 
     <script>
         //== Class definition

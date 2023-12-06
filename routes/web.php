@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\BarangMasukController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -6,6 +8,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SalesmanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +43,11 @@ Route::post('/kategori/store', [KategoriController::class, 'store']);
 Route::post('/kategori/update/{id}', [KategoriController::class, 'update']);
 Route::post('/kategori/delete/{id}', [KategoriController::class, 'destroy']);
 
+Route::get('/barangmasuk', [BarangMasukController::class, 'index']);
+Route::get('/barangmasuk/add', [BarangMasukController::class, 'create']);
+Route::post('/barangmasuk/store', [BarangMasukController::class, 'store']);
+
+
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);
 Route::post('/produk/update/{id}', [ProdukController::class, 'update']);
@@ -51,7 +59,7 @@ Route::post('/User/store', [UserController::class, 'store']);
 Route::post('/User/update/{id}', [UserController::class, 'update']);
 Route::post('/User/delete/{id}', [UserController::class, 'destroy']);
 Route::get('/', function () {
-    return view('tes');
+    return view('welcome');
 });
 
 
