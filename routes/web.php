@@ -8,7 +8,10 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SalesmanController;
-
+use App\Http\Controllers\BarangkeluarController;
+use App\Http\Controllers\TransaksiController;
+use App\Models\Barangkeluar;
+use App\Models\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +50,13 @@ Route::get('/barangmasuk', [BarangMasukController::class, 'index']);
 Route::get('/barangmasuk/add', [BarangMasukController::class, 'create']);
 Route::post('/barangmasuk/store', [BarangMasukController::class, 'store']);
 
+Route::get('/barangkeluar', [BarangkeluarController::class, 'index']);
+Route::get('/barangkeluar/add', [BarangkeluarController::class, 'create']);
+Route::post('/barangkeluar/store', [BarangkeluarController::class, 'store']);
+
+
+Route::get('/transaksi', [TransaksiController::class, 'index']);
+Route::post('/addcart/{id}', [TransaksiController::class, 'addCart']);
 
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);

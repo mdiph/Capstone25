@@ -27,4 +27,14 @@ class produk extends Model
 
         return $this->hasMany(BarangMasuk::class);
     }
+
+    public function barangKeluar() {
+
+        return $this->hasMany(Barangkeluar::class);
+    }
+
+    public function cart() {
+
+        return $this->hasMany(cart::class);
+    }
 }

@@ -199,7 +199,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../charts/sparkline.html">
+                                        <a href="/transaksi">
+                                            <span class="sub-item">Transaksi</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/barangkeluar">
                                             <span class="sub-item">Barang Keluar</span>
                                         </a>
                                     </li>

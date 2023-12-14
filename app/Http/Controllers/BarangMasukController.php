@@ -33,7 +33,7 @@ class BarangMasukController extends Controller
 
         //    produk::where('id', 1)->increment('stok', $qty);
         $data = produk::with('kategori')->get();
-        return view('tes')->with('data', $data);
+        return view('transaction.addstockin')->with('data', $data);
     }
 
     public function store(Request $request)
@@ -54,6 +54,6 @@ class BarangMasukController extends Controller
         }
 
 
-        return redirect('/barangmasuk')->with('message', $queryStatus);;
+        return redirect('/barangmasuk')->with('message', $queryStatus);
     }
 }
