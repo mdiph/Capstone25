@@ -27,7 +27,7 @@
                 </div>
                 <div class="column">
                     <div class="">
-                        <form method="POST" action="/barangmasuk/store">
+                        <form method="POST" action="/transaksi/add">
 
                             @csrf
 
@@ -48,14 +48,18 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="inputPassword4">Tanggal transaksi</label>
-                                            <input type="date" class="form-control" id="inputPassword4"
+                                            <input type="date" class="form-control" id="inputPassword4" name="tanggal_transaksi"
                                                 placeholder="Pilih tanggal">
                                         </div>
 
                                         <div class="form-group col-md-4">
                                             <label for="inputEmail4">Salesman</label>
-                                            <input type="text" class="form-control" id="inputEmail4"
-                                                placeholder="Pilih Salesman">
+                                            <select class="form-control select2" name="salesman_id" required>
+                                                <option value = "">Pilih Salesman</option>
+                                                @foreach ($salesman as $s)
+                                                    <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -63,18 +67,22 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="inputPassword4">Customer</label>
-                                            <input type="text" class="form-control" id="inputPassword4"
-                                                placeholder="Pilih Customer">
+                                            <select class="form-control select2" name="customer_id" required>
+                                                <option value = "">Pilih Customer</option>
+                                                @foreach ($customer as $c)
+                                                    <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputPassword4">Bayar</label>
-                                            <input type="text" class="form-control" id="inputPassword4"
+                                            <input type="text" class="form-control" id="inputPassword4" name="bayar"
                                                 placeholder="Nilai Bayar">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputPassword4">Total</label>
-                                            <input type="text" class="form-control" id="inputPassword4" disabled
-                                                placeholder="Total bayar">
+                                            <input type="text" class="form-control" id="total_price" disabled
+                                                placeholder="Total bayar" value="{{ $total }}">
                                         </div>
 
                                     </div>
@@ -93,23 +101,23 @@
 
                                             @php $no = 1 @endphp
                                             @foreach ($tes as $row)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $row->produk->nama_produk }}
-                                                <td>{{ $row->qty }}</td>
-                                                <td>{{ $row->qty * $row->harga }}</td>
-                                                <td>
-                                                    <button class="btn btn-xs btn-danger" type="submit">
-                                                        <i class="fa fa-trash"> Hapus </i>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $row->produk->nama_produk }}
+                                                    <td>{{ $row->qty }}</td>
+                                                    <td ><input type="hidden" name="total" value="{{ $row->qty * $row->produk->harga }}">{{ $row->qty * $row->produk->harga }}</td>
+                                                    <td>
+                                                        <a href="/deletecart/{{ $row->id }}" method="POST"
+                                                            class="btn btn-xs btn-danger"><i
+                                                                class="fa fa-trash"></i>Delete</a>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
 
                                     <div class="card-action">
-                                        <button class="btn btn-success">Submit</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
 
@@ -128,8 +136,8 @@
 
     {{-- @foreach ($data as $d) --}}
     <!-- Modal edit -->
-    <div class="modal fade" id="modalload" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg" id="modalload" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header ">
                     <h5 class="modal-title">
@@ -150,8 +158,8 @@
                                 <th>No </th>
                                 <th>Nama </th>
                                 <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Qty</th>
+                                <th>Stok tersisa</th>
+                                {{-- <th class="w-10">Qty</th> --}}
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -160,24 +168,22 @@
                             @php $no = 1 @endphp
                             @foreach ($data as $row)
                                 <tr>
-                                    <form action="/addcart/{{ $row->id }}" method="POST">
+                                    <form action="/addcart/" method="POST">
                                         @csrf
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $row->nama_produk }}</td>
-                                        <input type="hidden" id="id" name="produk_id" value="{{ $row->id }}">
+                                        <input type="hidden" id="id" name="produk_id"
+                                            value="{{ $row->id }}">
 
                                         <td>{{ $row->harga }}</td>
-                                        <input type="hidden" id="harga" name="harga" value="{{ $row->harga }}">
+                                        <input type="hidden" id="harga" name="harga"
+                                            value="{{ $row->harga }}">
                                         <td>{{ $row->stok }}</td>
 
-                                        <td><input type="number" id="qty" name="qty" class="w-100"></td>
+                                        {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
                                         <td>
-                                            {{-- <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
-                                            class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                            Edit</a>
-                                        <a href="#DeleteRowModal{{ $row->id }}" data-toggle="modal"
-                                            class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
-                                            Delete</a> --}}
+
+
 
                                             <button class="btn btn-xs btn-info" type="submit">
                                                 <i class="fa fa-check"> Pilih </i>
@@ -210,6 +216,17 @@
 
                 $('#modalload').modal('hide');
             });
+        });
+
+
+
+        $('#quantity').keyup(function() {
+            var quantity = $("#quantity").val();
+            // var iPrice = $("#item_price").val();
+
+            var total = quantity ;
+
+            $("#total_price").val(total); // sets the total price input to the quantity * price
         });
     </script>
 

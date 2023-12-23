@@ -12,7 +12,7 @@ class cart extends Model
     protected $table = 'cart';
 
     protected $fillable = [
-        "qty", "harga", "produk_id"
+        "qty", "produk_id",
     ];
 
     public function produk(){

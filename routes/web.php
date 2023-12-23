@@ -56,7 +56,9 @@ Route::post('/barangkeluar/store', [BarangkeluarController::class, 'store']);
 
 
 Route::get('/transaksi', [TransaksiController::class, 'index']);
-Route::post('/addcart/{id}', [TransaksiController::class, 'addCart']);
+Route::post('/transaksi/add', [TransaksiController::class, 'store']);
+Route::post('/addcart', [TransaksiController::class, 'addCart']);
+Route::get('/deletecart/{id}', [TransaksiController::class, 'DeleteCart']);
 
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);

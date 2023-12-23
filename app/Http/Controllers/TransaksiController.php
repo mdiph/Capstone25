@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\cart;
+use App\Models\customer;
+use App\Models\detailtran;
+use App\Models\produk;
+use App\Models\salesman;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use App\Models\produk;
-use App\Models\cart;
 use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
@@ -16,28 +19,50 @@ class TransaksiController extends Controller
     public function index()
     {
         //
+        $salesman = salesman::all();
+        $customer = customer::all();
         $tes = cart::with('produk')->get();
+        // $total = $tes->sum('harga');
+
+        $total = DB::table('cart')
+            ->join('produk', 'cart.produk_id', '=', 'produk.id')
+            ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
+            ->get()
+            ->first()->total_harga;
         $data = DB::select('SELECT * FROM produk WHERE id NOT IN (SELECT produk_id FROM cart);');
-        return view('transaction.transaksi')->with('data', $data)->with('tes', $tes);
+        return view('transaction.transaksi')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
     }
 
 
-    public function addCart(Request $request,  $id){
+
+    public function addCart(Request $request)
+    {
 
 
         $validate = $request->all();
-        $select = $validate['produk_id'];
-        $qty =  $validate['qty'];
+        // $select = $validate['produk_id'];
+        // $qty =  $validate['qty'];
+
 
 
         cart::create($validate);
 
-        DB::transaction(function () use($qty, $select) {
-            produk::where('id', $select)->decrement('stok', $qty);
+        // DB::transaction(function () use ($qty, $select) {
+        // });
+
+        return redirect('/transaksi');
+    }
+
+    public function DeleteCart(Request $request,  $id)
+    {
+
+        $id = cart::findOrFail($id);
+
+        $id->delete();
 
 
 
-        });
+
 
         return redirect('/transaksi');
     }
@@ -47,6 +72,7 @@ class TransaksiController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -55,6 +81,34 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->all();
+
+        $transaksi = Transaksi::create($validate);
+
+        $cart = cart::with('produk')->get();
+
+        foreach($cart as $key => $value){
+            $product = array(
+                'transaksi_id' =>$transaksi->id,
+                'qty' => $value->qty,
+                'total' => $value->qty * $value->produk->harga,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            );
+
+            $orderproduct = detailtran::insert($product);
+
+            $deletecart = cart::where('id', $value->id)->delete();
+
+
+        }
+
+        return redirect('/transaksi');
+
+
+
+
+
     }
 
     /**
