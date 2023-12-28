@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('logout', [\App\Http\Controllers\API\UserController::class, 'logout']);
+    Route::get('barangmasuk', [\App\Http\Controllers\API\BarangMasukController::class, 'index']);
 
 });
 

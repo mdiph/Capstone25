@@ -29,8 +29,8 @@ class TransaksiController extends Controller
             ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
             ->get()
             ->first()->total_harga;
-        $data = DB::select('SELECT * FROM produk WHERE id NOT IN (SELECT produk_id FROM cart);');
-        return view('transaction.transaksi')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
+        $data = produk::with('kategori')->get();
+        return view('transaction.addtransaksi')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
     }
 
 
@@ -85,23 +85,23 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::create($validate);
 
-        $cart = cart::with('produk')->get();
+        // $cart = cart::with('produk')->get();
 
-        foreach($cart as $key => $value){
-            $product = array(
-                'transaksi_id' =>$transaksi->id,
-                'qty' => $value->qty,
-                'total' => $value->qty * $value->produk->harga,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now()
-            );
+        // foreach($cart as $key => $value){
+        //     $product = array(
+        //         'transaksi_id' =>$transaksi->id,
+        //         'qty' => $value->qty,
+        //         'total' => $value->qty * $value->produk->harga,
+        //         'created_at' => \Carbon\Carbon::now(),
+        //         'updated_at' => \Carbon\Carbon::now()
+        //     );
 
-            $orderproduct = detailtran::insert($product);
+        //     $orderproduct = detailtran::insert($product);
 
-            $deletecart = cart::where('id', $value->id)->delete();
+        //     $deletecart = cart::where('id', $value->id)->delete();
 
 
-        }
+        // }
 
         return redirect('/transaksi');
 

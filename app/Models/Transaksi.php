@@ -10,5 +10,5 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $table = 'transaksi';
-    protected $fillable = ["kode_transaksi", "tanggal_transaksi", "total", "bayar", "salesman_id", "customer_id"];
+    protected $fillable = ["kode_transaksi", "tanggal_transaksi", "harga_jual", "stok_keluar", "produk_id","salesman_id", "customer_id"];
 }

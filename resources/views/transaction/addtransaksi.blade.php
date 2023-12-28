@@ -27,7 +27,7 @@
                 </div>
                 <div class="column">
                     <div class="">
-                        <form method="POST" action="/barangmasuk/store">
+                        <form method="POST" action="/transaksi/add">
 
                             @csrf
 
@@ -40,7 +40,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="email2">Kode Barang</label>
+                                                    <label for="email2">Nama Barang</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control"
                                                             id="nama" placeholder="Cari barang. . ." aria-label=""
@@ -58,34 +58,45 @@
 
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="email2">No transaksi</label>
-                                    <input type="text" class="form-control" id="" name="id_masuk"
-                                        placeholder="No transaksi. . ." disabled>
+                                    <label>Tanggal Transaksi</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="datepicker" name="tanggal_transaksi"
+                                            name="datepicker" placeholder="tanggal masuk. . .">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="email2">Harga</label>
+                                <label for="email2">Harga Jual</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">RP</span>
                                     </div>
-                                    <input type="text" class="form-control" name="harga" id="harga"
-                                        aria-label="Amount (to the nearest dollar)" readonly>
+                                    <input type="text" class="form-control" name="harga_jual" id="harga"
+                                        aria-label="Amount (to the nearest dollar)" >
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>Tanggal Masuk</label>
+                                <label>Saelsman</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" id="datepicker" name="tanggal_masuk"
-                                        name="datepicker" placeholder="tanggal masuk. . .">
+                                    <select class="form-control select2" name="salesman_id" required>
+                                        <option value = "">Pilih Salesman</option>
+                                        @foreach ($salesman as $s)
+                                            <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
+                                            <i class="fa fa-user"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -95,11 +106,11 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="email2">Stok Barang</label>
+                                <label for="email2">Stok Keluar</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Stok Masuk" name="stok"
+                                    <input type="number" class="form-control" placeholder="Stok Masuk" name="stok_keluar"
                                         id="stok" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        disabled>
+                                        >
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">Pcs</span>
                                     </div>
@@ -108,13 +119,17 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>Tanggal Expired</label>
+                                <label>Customer</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" id="datepicker" name="tanggal_expired"
-                                        name="datepicker" placeholder="tanggal expired. . .">
+                                    <select class="form-control select2" name="customer_id" required>
+                                        <option value = "">Pilih Customer</option>
+                                        @foreach ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
+                                            <i class="fa fa-truck"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -126,33 +141,8 @@
                     <div class="form-group">
 
                     </div>
-                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">With textarea</span>
-                                            </div>
-                                            <textarea class="form-control" aria-label="With textarea"></textarea>
-                                        </div>
-                                    </div> --}}
-                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-default btn-border" type="button">Button</button>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="" aria-label=""
-                                                aria-describedby="basic-addon1">
-                                        </div>
-                                    </div> --}}
-                    <div class="form-group w-50">
-                        <label for="email2">Stok Masuk</label>
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Stok Masuk" name="jumlah_masuk"
-                                aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon2">Pcs</span>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </div>
                 <div class="card-action">
                     <button class="btn btn-success">Submit</button>
@@ -241,11 +231,9 @@
             $(document).on('click', '#select', function() {
                 var id = $(this).data('id');
                 var nama = $(this).data('nama');
-                var harga = $(this).data('harga');
-                var stok = $(this).data('stok');
+
                 $('#id').val(id);
-                $('#harga').val(harga)
-                $('#stok').val(stok)
+
                 $('#nama').val(nama)
 
 

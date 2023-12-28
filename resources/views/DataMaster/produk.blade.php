@@ -91,11 +91,7 @@
 
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label>Unit</label>
-                                                        <input type="text" class="form-control" name="unit"
-                                                            placeholder="unit..." required>
-                                                    </div>
+                                                    
 
                                                     <div class="form-group">
                                                         <label>Kategori</label>
@@ -171,11 +167,7 @@
 
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label>Unit</label>
-                                                            <input type="text" class="form-control" name="unit" value="{{ $d->unit}}"
-                                                                placeholder="unit..." required>
-                                                        </div>
+
 
                                                         <div class="form-group">
                                                             <label>Kategori</label>
@@ -256,7 +248,7 @@
                                                 <th>Harga</th>
                                                 <th>Satuan</th>
                                                 <th>Stok</th>
-                                                <th>Unit</th>
+
                                                 <th>Kategori</th>
                                                 <td>Action</td>
                                             </tr>
@@ -271,7 +263,7 @@
                                                     <td>{{ $row->harga }}</td>
                                                     <td>{{ $row->satuan}}</td>
                                                     <td>{{ $row->stok }}</td>
-                                                    <td>{{ $row->unit }}</td>
+
                                                     <td>{{ $row->kategori->nama_kategori }}</td>
                                                     <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"

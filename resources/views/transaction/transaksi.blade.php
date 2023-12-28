@@ -1,10 +1,11 @@
 @extends('layout.layout')
+
 @section('content')
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">Forms</h4>
+                    <h4 class="page-title">DataTables.Net</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
                             <a href="#">
@@ -15,223 +16,212 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Forms</a>
+                            <a href="#">Tables</a>
                         </li>
                         <li class="separator">
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Basic Form</a>
+                            <a href="#">Datatables</a>
                         </li>
                     </ul>
                 </div>
-                <div class="column">
-                    <div class="">
-                        <form method="POST" action="/transaksi/add">
-
-                            @csrf
+                <div class="row">
 
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Input Group</div>
+
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="card-title">Barang Masuk</h4>
+                                    <a class="btn btn-primary btn-round ml-auto text-light" href="/barangmasuk/add">
+
+                                        <i class="fa fa-plus"></i>
+                                        Add Row
+                                </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Modal tambah -->
+                                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+                                                    <span class="fw-mediumbold">
+                                                        New</span>
+                                                    <span class="fw-light">
+                                                        Row
+                                                    </span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="POST" action="/kategori/store" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label>Nama</label>
+                                                        <input type="text" class="form-control" name="nama_kategori"
+                                                            placeholder="Nama kategori..." required>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                                <div class="modal-footer ">
+                                                    <button type="submit" id="addRowButton" class="btn btn-primary"><i
+                                                            class="fa fa-save"></i> Tambah</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                                            class="fa fa-undo"></i> Close</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-4">
-                                            <label for="inputEmail4">Produk</label>
-                                            <input type="email" class="form-control" id="inputEmail4"
-                                                placeholder="Cari Produk" data-toggle="modal" data-target="#modalload">
+                                {{-- @foreach ($data as $d)
+                                    <!-- Modal edit -->
+                                    <div class="modal fade" id="EditRowModal{{ $d->id }}" tabindex="-1"
+                                        role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-bd">
+                                                    <h5 class="modal-title">
+                                                        <span class="fw-mediumbold">
+                                                            Edit</span>
+                                                        <span class="fw-light">
+                                                            Row
+                                                        </span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="/kategori/update/{{ $d->id }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label>Nama</label>
+                                                            <input type="text" class="form-control" name="nama_kategori"
+                                                                value="{{ $d->nama_kategori }}"
+                                                                placeholder="Nama kategori..." required>
 
-                                        </div>
+                                                        </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Tanggal transaksi</label>
-                                            <input type="date" class="form-control" id="inputPassword4" name="tanggal_transaksi"
-                                                placeholder="Pilih tanggal">
-                                        </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="inputEmail4">Salesman</label>
-                                            <select class="form-control select2" name="salesman_id" required>
-                                                <option value = "">Pilih Salesman</option>
-                                                @foreach ($salesman as $s)
-                                                    <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
-                                                @endforeach
-                                            </select>
+
+                                                    </div>
+                                                    <div class="modal-footer ">
+                                                        <button type="submit" id="addRowButton"
+                                                            class="btn btn-primary"><i class="fa fa-save"></i>
+                                                            Tambah</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
+                                @endforeach
 
-                                    <div class="form-row">
+                                @foreach ($data as $d)
+                                    <!-- Modal delete -->
+                                    <div class="modal fade" id="DeleteRowModal{{ $d->id }}" tabindex="-1"
+                                        role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-bd">
+                                                    <h5 class="modal-title">
+                                                        <span class="fw-mediumbold">
+                                                            Edit</span>
+                                                        <span class="fw-light">
+                                                            Row
+                                                        </span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="/kategori/delete/{{ $d->id }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <h4>Apakah Anda Ingin Menghapus data? </h4>
+                                                    </div> --}}
 
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Customer</label>
-                                            <select class="form-control select2" name="customer_id" required>
-                                                <option value = "">Pilih Customer</option>
-                                                @foreach ($customer as $c)
-                                                    <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Bayar</label>
-                                            <input type="text" class="form-control" id="inputPassword4" name="bayar"
-                                                placeholder="Nilai Bayar">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Total</label>
-                                            <input type="text" class="form-control" id="total_price" disabled
-                                                placeholder="Total bayar" value="{{ $total }}">
-                                        </div>
 
+
+                                                    {{-- <div class="modal-footer ">
+                                                        <button type="submit" id="addRowButton"
+                                                            class="btn btn-primary"><i class="fa fa-save"></i>
+                                                            Hapus</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
+                                @endforeach --}}
 
-                                    <table class="table">
+                                <div class="table-responsive">
+                                    <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th scope="col">No</th>
-                                                <th scope="col">Nama Produk</th>
-                                                <th scope="col">Qty</th>
-                                                <th scope="col">Harga</th>
-                                                <th scope="col">Action</th>
+                                                <th>No </th>
+                                                <th>Kode</th>
+                                                <th>Tanggal Transaksi</th>
+                                                <th>Harga Jual</th>
+                                                <th>Stok Keluar</th>
+                                                <th>Produk</th>
+                                                <th>Salesman</th>
+                                                <th>Customer</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @php $no = 1 @endphp
-                                            @foreach ($tes as $row)
+                                            @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->produk->nama_produk }}
-                                                    <td>{{ $row->qty }}</td>
-                                                    <td ><input type="hidden" name="total" value="{{ $row->qty * $row->produk->harga }}">{{ $row->qty * $row->produk->harga }}</td>
+                                                    <td>{{ $row->kode_transaksi }}</td>
+                                                    <td>{{ $row->tanggal_transaksi }}</td>
+                                                    <td>{{ $row->harga_jual }}</td>
+                                                    <td>{{ $row->stok_keluar }}</td>
+                                                    <td>{{ $row->produk->nama_produk }}</td>
+                                                    <td>{{ $row->salesman->nama_salesman }}</td>
+                                                    <td>{{ $row->customer->nama_customer }}</td>
                                                     <td>
-                                                        <a href="/deletecart/{{ $row->id }}" method="POST"
-                                                            class="btn btn-xs btn-danger"><i
-                                                                class="fa fa-trash"></i>Delete</a>
+                                                        <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
+                                                            class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
+                                                            Edit</a>
+                                                        <a href="#DeleteRowModal{{ $row->id }}" data-toggle="modal"
+                                                            class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
+                                                            Delete</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-
-                                    <div class="card-action">
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
                                 </div>
-
                             </div>
-
+                        </div>
                     </div>
-                    </form>
-
                 </div>
-
             </div>
         </div>
-    </div>
 
     </div>
-
-    {{-- @foreach ($data as $d) --}}
-    <!-- Modal edit -->
-    <div class="modal fade bd-example-modal-lg" id="modalload" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header ">
-                    <h5 class="modal-title">
-                        <span class="fw-mediumbold">
-                            Load</span>
-                        <span class="fw-light">
-                            Data
-                        </span>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body table-responsive">
-                    <table class="table table-bordered table-striped" id="add-row" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>No </th>
-                                <th>Nama </th>
-                                <th>Harga</th>
-                                <th>Stok tersisa</th>
-                                {{-- <th class="w-10">Qty</th> --}}
-                                <td>Action</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @php $no = 1 @endphp
-                            @foreach ($data as $row)
-                                <tr>
-                                    <form action="/addcart/" method="POST">
-                                        @csrf
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $row->nama_produk }}</td>
-                                        <input type="hidden" id="id" name="produk_id"
-                                            value="{{ $row->id }}">
-
-                                        <td>{{ $row->harga }}</td>
-                                        <input type="hidden" id="harga" name="harga"
-                                            value="{{ $row->harga }}">
-                                        <td>{{ $row->stok }}</td>
-
-                                        {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
-                                        <td>
-
-
-
-                                            <button class="btn btn-xs btn-info" type="submit">
-                                                <i class="fa fa-check"> Pilih </i>
-                                            </button>
-                                        </td>
-                                    </form>
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#select', function() {
-                var id = $(this).data('id');
-                var harga = $(this).data('harga');
-                var stok = $(this).data('stok');
-                $('#id').val(id);
-                $('#harga').val(harga)
-                $('#stok').val(stok)
-
-
-
-                $('#modalload').modal('hide');
-            });
-        });
-
-
-
-        $('#quantity').keyup(function() {
-            var quantity = $("#quantity").val();
-            // var iPrice = $("#item_price").val();
-
-            var total = quantity ;
-
-            $("#total_price").val(total); // sets the total price input to the quantity * price
-        });
-    </script>
-
-
-
-
-    {{-- @endforeach --}}
 @endsection

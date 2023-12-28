@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('kode_transaksi')->nullable();
             $table->date('tanggal_transaksi');
-            $table->integer('total');
-            $table->integer('bayar');
-            $table->foreignId('salesman_id')->references('id')->on('produk');
-            $table->foreignId('customer_id')->references('id')->on('produk');
+            $table->integer('harga_jual');
+            $table->integer('stok_keluar');
+            $table->foreignId('produk_id')->references('id')->on('produk');
+            // $table->integer('total');
+            // $table->integer('bayar');
+            $table->foreignId('salesman_id')->references('id')->on('salesman');
+            $table->foreignId('customer_id')->references('id')->on('customer');
             $table->timestamps();
         });
     }

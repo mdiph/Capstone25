@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->string('satuan');
             $table->integer('stok')->default(0);
-            $table->integer('unit');
+            // $table->integer('unit');
             $table->foreignId('kategori_id')->references('id')->on('kategori');
             $table->timestamps();
         });
