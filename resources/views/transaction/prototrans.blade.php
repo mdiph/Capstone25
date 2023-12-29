@@ -48,8 +48,8 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="inputPassword4">Tanggal transaksi</label>
-                                            <input type="date" class="form-control" id="inputPassword4" name="tanggal_transaksi"
-                                                placeholder="Pilih tanggal">
+                                            <input type="date" class="form-control" id="inputPassword4"
+                                                name="tanggal_transaksi" placeholder="Pilih tanggal">
                                         </div>
 
                                         <div class="form-group col-md-4">
@@ -74,28 +74,20 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Bayar salesman</label>
-                                            <input type="text" class="form-control" id="inputPassword4" name="bayar"
-                                                placeholder="Nilai Bayar">
-                                        </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Total</label>
-                                            <input type="text" class="form-control" id="total_price" disabled
-                                                placeholder="Total bayar" value="{{ $total }}">
-                                        </div>
 
                                     </div>
 
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">No</th>
-                                                <th scope="col">Nama Produk</th>
-                                                <th scope="col">Jumlah Keluar</th>
-                                                {{-- <th scope="col">Harga</th> --}}
-                                                <th scope="col">Action</th>
+                                                <th>No</th>
+                                                <th>Nama Produk</th>
+                                                <th>Harga Sales</th>
+                                                <th>Jumlah Keluar</th>
+                                                <th>Jumlah</th>
+                                                {{-- <th >Harga</th> --}}
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -104,8 +96,14 @@
                                             @foreach ($tes as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->produk->nama_produk }}
-                                                    <td>{{ $row->qty }}</td>
+                                                    <td>{{ $row->produk->nama_produk }}</td>
+                                                    <td><input class="harga" type="text" name="harga_sales"
+                                                            id="harga"></td>
+                                                    <td><input class="barangkeluar" type="text" name="stok_keluar"
+                                                            id="barangkeluar"></td>
+                                                    <td><input class="jumlah" type="text" name="jumlah" id="jumlah"
+                                                            disabled></td>
+
                                                     {{-- <td ><input type="hidden" name="total" value="{{ $row->qty * $row->produk->harga }}">{{ $row->qty * $row->produk->harga }}</td> --}}
                                                     <td>
                                                         <a href="/deletecart/{{ $row->id }}" method="POST"
@@ -116,6 +114,34 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+
+                                    <div class="row">
+                                        <div class="col-xl-8">
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Subtotal </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control subtotal" id="subtotal"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Diskon</label>
+                                                <div class="col-sm-8">
+                                                    <input type="email" class="form-control diskon" id="diskon"
+                                                        placeholder="diskon">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Total</label>
+                                                <div class="col-sm-8">
+                                                    <input type="email" class="form-control total" id="total"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="card-action">
                                         <button type="submit" class="btn btn-success">Submit</button>
@@ -219,15 +245,85 @@
             });
         });
 
+        // $(function() {
+        //     $('.harga').on('keyup', function() {
+        //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
+        //         var harga = parseFloat($thisRow.find('.harga').val());
+        //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
+        //         var jumlah = harga * barangKeluar;
+        //         $thisRow.find('.jumlah').val(jumlah);
+        //     });
+
+        //     $('.barangkeluar').on('keyup', function() {
+        //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
+        //         var harga = parseFloat($thisRow.find('.harga').val());
+        //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
+        //         var jumlah = harga * barangKeluar;
+        //         $thisRow.find('.jumlah').val(jumlah);
+        //     });
+
+        //     $('.jumlah').on('change', function() {
+        //         var $thisRow = $(this).closest('tr');
+        //         var jumlah = parseFloat($thisRow.find('.jumlah').val());
+        //         var subtotal = jumlah * $thisRow.find('.harga').val();
+        //         $thisRow.find('#subtotal').val(subtotal);
+        //     });
+
+        // });
+
+        $(function() {
+            // Elemen input harga, barang keluar, dan jumlah
+            const hargaInput = $('.harga');
+            const barangKeluarInput = $('.barangkeluar');
+            const jumlahInput = $('.jumlah');
+
+            // Elemen total subtotal dan diskon
+            const subtotalInput = $('#subtotal');
+            const diskonInput = $('#diskon');
+            const totalInput = $('#total');
+
+            // Fungsi update jumlah berdasarkan harga dan barang keluar
+            function updateJumlah(row) {
+                const harga = parseFloat(row.find(hargaInput).val());
+                const barangKeluar = parseInt(row.find(barangKeluarInput).val());
+                const jumlah = harga * barangKeluar;
+                row.find(jumlahInput).val(jumlah.toFixed(2));
+            }
+
+            // Fungsi hitung total
+            function calculateTotal() {
+                let subtotal = 0;
+                jumlahInput.each(function() {
+                    subtotal += parseFloat($(this).val());
+                });
 
 
-        $('#quantity').keyup(function() {
-            var quantity = $("#quantity").val();
-            // var iPrice = $("#item_price").val();
+                const diskon = parseFloat(diskonInput.val())|| 0;
+                const persen = diskon / 100;
+                const total = subtotal - (subtotal * persen);
 
-            var total = quantity ;
+                subtotalInput.val(subtotal.toFixed(2));
+                totalInput.val(total.toFixed(2));
+            }
 
-            $("#total_price").val(total); // sets the total price input to the quantity * price
+            // Event handler perubahan harga dan barang keluar
+            hargaInput.on('keyup change', function() {
+                updateJumlah($(this).closest('tr'));
+                calculateTotal();
+            });
+
+            barangKeluarInput.on('keyup change', function() {
+                updateJumlah($(this).closest('tr'));
+                calculateTotal();
+            });
+
+            // Event handler perubahan diskon
+            diskonInput.on('keyup change', function() {
+                calculateTotal();
+            });
+
+            // Hitung total awal
+            calculateTotal();
         });
     </script>
 

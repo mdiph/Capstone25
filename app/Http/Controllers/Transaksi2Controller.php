@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\cart;
+use App\Models\customer;
+use App\Models\detailtran;
+use App\Models\produk;
+use App\Models\salesman;
+use App\Models\Transaksi;
+use App\Models\transaksi2;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class Transaksi2Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+        $salesman = salesman::all();
+        $customer = customer::all();
+        $tes = cart::with('produk')->get();
+        // $total = $tes->sum('harga');
+
+        $total = DB::table('cart')
+            ->join('produk', 'cart.produk_id', '=', 'produk.id')
+            ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
+            ->get()
+            ->first()->total_harga;
+        $data = produk::with('kategori')->get();
+        return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
+    }
+
+
+
+    public function addCart(Request $request)
+    {
+
+
+        $validate = $request->all();
+        // $select = $validate['produk_id'];
+        // $qty =  $validate['qty'];
+
+
+
+        cart::create($validate);
+
+        // DB::transaction(function () use ($qty, $select) {
+        // });
+
+        return redirect('/tes');
+    }
+
+    public function DeleteCart(Request $request,  $id)
+    {
+
+        $id = cart::findOrFail($id);
+
+        $id->delete();
+
+
+
+
+
+        return redirect('/tes');
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+        $validate = $request->all();
+
+        $transaksi = transaksi2::create($validate);
+
+        // $cart = cart::with('produk')->get();
+
+        // foreach($cart as $key => $value){
+        //     $product = array(
+        //         'transaksi_id' =>$transaksi->id,
+        //         'qty' => $value->qty,
+        //         'total' => $value->qty * $value->produk->harga,
+        //         'created_at' => \Carbon\Carbon::now(),
+        //         'updated_at' => \Carbon\Carbon::now()
+        //     );
+
+        //     $orderproduct = detailtran::insert($product);
+
+        //     $deletecart = cart::where('id', $value->id)->delete();
+
+
+        // }
+
+        return redirect('/tes');
+
+
+
+
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Transaksi $transaksi)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Transaksi $transaksi)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Transaksi $transaksi)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Transaksi $transaksi)
+    {
+        //
+    }
+}

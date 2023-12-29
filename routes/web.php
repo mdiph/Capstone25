@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\BarangMasukController;
+use App\Models\Transaksi;
+use App\Models\Barangkeluar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -8,10 +9,10 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SalesmanController;
-use App\Http\Controllers\BarangkeluarController;
 use App\Http\Controllers\TransaksiController;
-use App\Models\Barangkeluar;
-use App\Models\Transaksi;
+use App\Http\Controllers\Transaksi2Controller;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangkeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +58,10 @@ Route::post('/barangkeluar/store', [BarangkeluarController::class, 'store']);
 
 Route::get('/transaksi', [TransaksiController::class, 'index']);
 Route::post('/transaksi/add', [TransaksiController::class, 'store']);
-Route::post('/addcart', [TransaksiController::class, 'addCart']);
-Route::get('/deletecart/{id}', [TransaksiController::class, 'DeleteCart']);
+Route::post('/addcart', [Transaksi2Controller::class, 'addCart']);
+Route::get('/deletecart/{id}', [Transaksi2Controller::class, 'DeleteCart']);
+
+Route::get('/tes', [Transaksi2Controller::class, 'index']);
 
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);
