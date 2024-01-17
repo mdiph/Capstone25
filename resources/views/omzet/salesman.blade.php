@@ -109,7 +109,7 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->tanggal_transaksi}}</td>
                                                     <td>{{ $row->nama_salesman }}</td>
-                                                    <td>{{ $row->harga_jual }}</td>
+                                                    <td>{{ $row->total_harga }}</td>
 
                                                     {{-- <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"

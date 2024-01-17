@@ -93,14 +93,22 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                {{-- <th>No</th>
                                                 <th>Tanggal Transaksi</th>
                                                 <th>Produk</th>
                                                 <th>Stok Terjual</th>
                                                 <th>Harga </th>
                                                 <th>Harga Jual</th>
                                                 <th>Keuntungan</th>
-                                                <th>Persentase</th>
+                                                <th>Persentase</th> --}}
+                                                <th>No</th>
+                                                <th>Tanggal Transaksi</th>
+                                                <th>Produk</th>
+                                                <th>Stok Terjual</th>
+                                                <th>Harga Jual(Rp) </th>
+                                                <th>Diskon</th>
+                                                <th>Satuan</th>
+                                                <th>Harga Total</th>
                                                 {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
@@ -108,14 +116,23 @@
                                             @php $no = 1 @endphp
                                             @foreach ($data as $row)
                                                 <tr>
-                                                    <td>{{ $no++ }}</td>
+                                                    {{-- <td>{{ $no++ }}</td>
                                                     <td>{{ $row->tanggal_transaksi}}</td>
                                                     <td>{{ $row->nama_produk }}</td>
                                                     <td>{{ $row->stok_keluar }}</td>
                                                     <td>{{ $row->harga }}</td>
                                                     <td>{{ $row->harga_jual }}</td>
                                                     <td>{{ $row->keuntungan }}</td>
-                                                    <td>{{ $row->persentase }} %</td>
+                                                    <td>{{ $row->persentase }} %</td> --}}
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $row->tanggal_transaksi}}</td>
+                                                    <td>{{ $row->nama_produk }}</td>
+                                                    <td>{{ $row->stok_keluar }}</td>
+                                                    <td>{{ number_format($row->harga_jual, 2, ',', '.') }}</td>
+                                                    <td>{{ $row->diskon }}</td>
+                                                    <td>{{ $row->satuan }}</td>
+                                                    <td>{{ number_format($row->harga_akhir, 2, ',', '.') }}</td>
+                                                    
                                                     {{-- <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
