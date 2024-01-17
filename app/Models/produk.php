@@ -37,4 +37,9 @@ class produk extends Model
 
         return $this->hasMany(cart::class);
     }
+
+    public function detail() {
+
+        return $this->hasMany(transaksi_detail::class);
+    }
 }

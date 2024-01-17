@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('kode_transaksi')->nullable();
             $table->date('tanggal_transaksi');
             $table->integer('total');
-            $table->integer('diskon');
-            $table->integer('bayar');
+            $table->integer('diskon')->nullable();
+            $table->integer('subtotal');
             $table->foreignId('salesman_id')->references('id')->on('salesman');
             $table->foreignId('customer_id')->references('id')->on('customer');
             $table->timestamps();

@@ -27,7 +27,7 @@
                 </div>
                 <div class="column">
                     <div class="">
-                        <form method="POST" action="/transaksi/add">
+                        <form method="POST" action="/tes/add">
 
                             @csrf
 
@@ -96,12 +96,12 @@
                                             @foreach ($tes as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->produk->nama_produk }}</td>
-                                                    <td><input class="harga" type="text" name="harga_sales"
+                                                    <td><input type="hidden" name="produk_id" value="{{ $row->produk_id }}">{{ $row->produk->nama_produk }}</td>
+                                                    <td><input class="harga" type="text" name="harga_jual"
                                                             id="harga"></td>
-                                                    <td><input class="barangkeluar" type="text" name="stok_keluar"
+                                                    <td><input class="barangkeluar" type="number" min="0" max="{{ $row->produk->stok }}" name="stok_keluar"
                                                             id="barangkeluar"></td>
-                                                    <td><input class="jumlah" type="text" name="jumlah" id="jumlah"
+                                                    <td><input class="jumlah" type="text"  id="jumlah"
                                                             disabled></td>
 
                                                     {{-- <td ><input type="hidden" name="total" value="{{ $row->qty * $row->produk->harga }}">{{ $row->qty * $row->produk->harga }}</td> --}}
@@ -122,21 +122,21 @@
                                             <div class="form-group row">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Subtotal </label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control subtotal" id="subtotal"
+                                                    <input type="text" class="form-control subtotal" name="subtotal" id="subtotal"
                                                         readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Diskon</label>
                                                 <div class="col-sm-8">
-                                                    <input type="email" class="form-control diskon" id="diskon"
+                                                    <input type="number" class="form-control diskon" id="diskon" name="diskon"
                                                         placeholder="diskon">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Total</label>
                                                 <div class="col-sm-8">
-                                                    <input type="email" class="form-control total" id="total"
+                                                    <input type="email" class="form-control total" id="total" name="total"
                                                         readonly>
                                                 </div>
                                             </div>
@@ -203,8 +203,7 @@
                                             value="{{ $row->id }}">
 
                                         <td>{{ $row->harga }}</td>
-                                        <input type="hidden" id="harga" name="harga"
-                                            value="{{ $row->harga }}">
+
                                         <td>{{ $row->stok }}</td>
 
                                         {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
@@ -248,7 +247,7 @@
         // $(function() {
         //     $('.harga').on('keyup', function() {
         //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
-        //         var harga = parseFloat($thisRow.find('.harga').val());
+        //         var harga = parseInt($thisRow.find('.harga').val());
         //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
         //         var jumlah = harga * barangKeluar;
         //         $thisRow.find('.jumlah').val(jumlah);
@@ -256,7 +255,7 @@
 
         //     $('.barangkeluar').on('keyup', function() {
         //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
-        //         var harga = parseFloat($thisRow.find('.harga').val());
+        //         var harga = parseInt($thisRow.find('.harga').val());
         //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
         //         var jumlah = harga * barangKeluar;
         //         $thisRow.find('.jumlah').val(jumlah);
@@ -264,7 +263,7 @@
 
         //     $('.jumlah').on('change', function() {
         //         var $thisRow = $(this).closest('tr');
-        //         var jumlah = parseFloat($thisRow.find('.jumlah').val());
+        //         var jumlah = parseInt($thisRow.find('.jumlah').val());
         //         var subtotal = jumlah * $thisRow.find('.harga').val();
         //         $thisRow.find('#subtotal').val(subtotal);
         //     });
@@ -284,26 +283,26 @@
 
             // Fungsi update jumlah berdasarkan harga dan barang keluar
             function updateJumlah(row) {
-                const harga = parseFloat(row.find(hargaInput).val());
+                const harga = parseInt(row.find(hargaInput).val());
                 const barangKeluar = parseInt(row.find(barangKeluarInput).val());
                 const jumlah = harga * barangKeluar;
-                row.find(jumlahInput).val(jumlah.toFixed(2));
+                row.find(jumlahInput).val(jumlah.toFixed(0));
             }
 
             // Fungsi hitung total
             function calculateTotal() {
                 let subtotal = 0;
                 jumlahInput.each(function() {
-                    subtotal += parseFloat($(this).val());
+                    subtotal += parseInt($(this).val());
                 });
 
 
-                const diskon = parseFloat(diskonInput.val())|| 0;
+                const diskon = parseInt(diskonInput.val())|| 0;
                 const persen = diskon / 100;
                 const total = subtotal - (subtotal * persen);
 
-                subtotalInput.val(subtotal.toFixed(2));
-                totalInput.val(total.toFixed(2));
+                subtotalInput.val(subtotal.toFixed(0));
+                totalInput.val(total.toFixed(0));
             }
 
             // Event handler perubahan harga dan barang keluar

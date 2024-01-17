@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('transaksi_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->references('id')->on('transaksi');
-            $table->integer('qty');
-            $table->integer('total');
+            $table->foreignId('transaksi_id')->references('id')->on('transaksi2s');
+            $table->foreignId('produk_id')->references('id')->on('produk');
+            $table->integer('stok_keluar');
+            $table->integer('harga_jual');
             $table->timestamps();
         });
     }

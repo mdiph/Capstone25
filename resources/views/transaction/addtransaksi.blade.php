@@ -27,135 +27,167 @@
                 </div>
                 <div class="column">
                     <div class="">
-                        <form method="POST" action="/transaksi/add">
+                        <form method="POST" action="/transaksi/store">
 
                             @csrf
 
 
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title">Input Group</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label for="email2">Nama Barang</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control"
-                                                            id="nama" placeholder="Cari barang. . ." aria-label=""
-                                                            aria-describedby="basic-addon1">
-                                                            <input type="hidden" class="form-control" name="produk_id"
-                                                            id="id" >
-                                                        <div class="input-group-prepend">
-                                                            <button class="btn btn-default btn-border" data-toggle="modal"
-                                                                data-target="#modalload" type="button">cari</button>
-                                                        </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Input Group</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Nama Barang</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="nama"
+                                                        placeholder="Cari barang. . ." aria-label=""
+                                                        aria-describedby="basic-addon1">
+                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                        id="id">
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn btn-default btn-border" data-toggle="modal"
+                                                            data-target="#modalload" type="button">cari</button>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Tanggal Transaksi</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="datepicker"
+                                                        name="tanggal_transaksi" name="datepicker"
+                                                        placeholder="tanggal masuk. . .">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Tanggal Transaksi</label>
-                                    <div class="input-group">
-                                        <input type="date" class="form-control" id="datepicker" name="tanggal_transaksi"
-                                            name="datepicker" placeholder="tanggal masuk. . .">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="email2">Harga Jual</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">RP</span>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Harga Jual</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">RP</span>
+                                                    </div>
+                                                    <input type="text" class="form-control harga_jual" name="harga_jual"
+                                                        id="harga" aria-label="Amount (to the nearest dollar)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Diskon</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">RP</span>
+                                                    </div>
+                                                    <input type="text" class="form-control diskon" name="diskon"
+                                                        id="diskon">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <input type="text" class="form-control" name="harga_jual" id="harga"
-                                        aria-label="Amount (to the nearest dollar)" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Saelsman</label>
-                                <div class="input-group">
-                                    <select class="form-control select2" name="salesman_id" required>
-                                        <option value = "">Pilih Salesman</option>
-                                        @foreach ($salesman as $s)
-                                            <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-user"></i>
-                                        </span>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Stok Keluar</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control jumlah_keluar" placeholder="Stok Masuk"
+                                                        name="stok_keluar" id="jumlah_keluar" aria-label="Recipient's username"
+                                                        aria-describedby="basic-addon2">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Harga Akhir</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">RP</span>
+                                                    </div>
+                                                    <input type="text" class="form-control harga_akhir" name="harga_akhir"
+                                                        id="harga_akhir" aria-label="Amount (to the nearest dollar)">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="email2">Stok Keluar</label>
-                                <div class="input-group mb-3">
-                                    <input type="number" class="form-control" placeholder="Stok Masuk" name="stok_keluar"
-                                        id="stok" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        >
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Salesman</label>
+                                                <div class="input-group">
+                                                    <select class="form-control select2" name="salesman_id" required>
+                                                        <option value = "">Pilih Salesman</option>
+                                                        @foreach ($salesman as $s)
+                                                            <option value="{{ $s->id }}">{{ $s->nama_salesman }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-user"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Customer</label>
+                                                <div class="input-group">
+                                                    <select class="form-control select2" name="customer_id" required>
+                                                        <option value = "">Pilih Customer</option>
+                                                        @foreach ($customer as $c)
+                                                            <option value="{{ $c->id }}">{{ $c->nama_customer }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-truck"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Customer</label>
-                                <div class="input-group">
-                                    <select class="form-control select2" name="customer_id" required>
-                                        <option value = "">Pilih Customer</option>
-                                        @foreach ($customer as $c)
-                                            <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-truck"></i>
-                                        </span>
+
+
+                                    <div class="form-group">
+
                                     </div>
+
+
+                                </div>
+                                <div class="card-action">
+                                    <button class="btn btn-success">Submit</button>
+
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
+                        </form>
 
                     </div>
-
-
-                </div>
-                <div class="card-action">
-                    <button class="btn btn-success">Submit</button>
 
                 </div>
             </div>
-            </form>
-
         </div>
-
-    </div>
-    </div>
-    </div>
 
     </div>
 
@@ -210,8 +242,9 @@
                                             class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
                                             Delete</a> --}}
 
-                                        <button class="btn btn-xs btn-info" id="select" data-id="{{ $row->id  }}"
-                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}" data-nama="{{ $row->nama_produk }}">
+                                        <button class="btn btn-xs btn-info" id="select" data-id="{{ $row->id }}"
+                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}"
+                                            data-nama="{{ $row->nama_produk }}">
                                             <i class="fa fa-check"> Pilih </i>
                                         </button>
                                     </td>
@@ -241,7 +274,28 @@
                 $('#modalload').modal('hide');
             });
         });
+
+
+        $(function() {
+            // Elemen input harga, barang keluar, dan jumlah
+            $(".harga_jual, .jumlah_keluar, .diskon").on("change keyup", function() {
+                var hargaJual = parseFloat($(".harga_jual").val());
+                var jumlahKeluar = parseFloat($(".jumlah_keluar").val());
+                var diskon = parseFloat($(".diskon").val()) /
+                100; // Dapatkan diskon dalam bentuk persentase
+
+                var hargaAkhir = hargaJual * jumlahKeluar;
+
+                if (!isNaN(diskon)) { // Periksa jika diskon valid
+                    hargaAkhir *= (1 - diskon); // Terapkan diskon
+                }
+
+                $(".harga_akhir").val(hargaAkhir.toFixed(
+                2)); // Tampilkan harga akhir dengan dua angka desimal
+            });
+        });
     </script>
+
 
 
 

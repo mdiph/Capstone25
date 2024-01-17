@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class detailtran extends Model
+class transaksi_detail extends Model
 {
     use HasFactory;
 
@@ -20,7 +20,7 @@ class detailtran extends Model
     }
 
     public function produk(){
-        return $this->belongsToMany(produk::class)->withPivot('stok_keluar', 'harga_jual');
+        return $this->belongsToMany(produk::class);
     }
 
 

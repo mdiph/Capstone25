@@ -172,12 +172,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../charts/sparkline.html">
+                                        <a href="/omzet/salesman">
                                             <span class="sub-item">Omzet Salesman</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../charts/sparkline.html">
+                                        <a href="/omzet/produk">
                                             <span class="sub-item">Omzet Produk</span>
                                         </a>
                                     </li>

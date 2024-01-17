@@ -14,7 +14,9 @@ class KategoriController extends Controller
     public function index()
     {
         //
-        $data = kategori::all();
+        $data = kategori::with('produk')->get();
+
+        
 
         return view ('DataMaster.kategori')->with('data', $data);
     }

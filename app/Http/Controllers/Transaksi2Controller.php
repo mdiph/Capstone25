@@ -20,18 +20,33 @@ class Transaksi2Controller extends Controller
     public function index()
     {
         //
-        $salesman = salesman::all();
-        $customer = customer::all();
-        $tes = cart::with('produk')->get();
-        // $total = $tes->sum('harga');
+        // $data = transaksi2::with(['salesman', 'customer', 'detail.produk'])->get();
 
-        $total = DB::table('cart')
-            ->join('produk', 'cart.produk_id', '=', 'produk.id')
-            ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
-            ->get()
-            ->first()->total_harga;
-        $data = produk::with('kategori')->get();
-        return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
+
+
+        $data = DB::table('transaksi2s')
+        ->leftJoin('salesman', 'transaksi2s.salesman_id', '=', 'salesman.id')
+        ->leftJoin('transaksi_detail', 'transaksi2s.id', '=', 'transaksi_detail.transaksi_id')
+        ->leftJoin('produk', 'transaksi_detail.produk_id', '=', 'produk.id')
+        ->leftJoin('customer', 'transaksi2s.customer_id', '=', 'customer.id')
+        ->select([
+            'transaksi2s.id',
+            'transaksi2s.kode_transaksi',
+            'transaksi2s.tanggal_transaksi',
+            'transaksi2s.diskon',
+            'transaksi2s.total',
+            'transaksi2s.subtotal',
+            'transaksi2s.diskon',
+            'salesman.nama_salesman',
+            'customer.nama_customer',
+            'transaksi_detail.harga_jual',
+            'transaksi_detail.stok_keluar',
+            'produk.nama_produk',
+        ])
+        ->get();
+
+
+        return view('transaction.transaksi')->with('data', $data);
     }
 
 
@@ -74,6 +89,15 @@ class Transaksi2Controller extends Controller
     {
         //
 
+        $salesman = salesman::all();
+        $customer = customer::all();
+        $tes = cart::with('produk')->get();
+        // $total = $tes->sum('harga');
+
+
+        $data = produk::with('kategori')->get();
+        return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
+
     }
 
     /**
@@ -84,25 +108,30 @@ class Transaksi2Controller extends Controller
         //
         $validate = $request->all();
 
+        dd($validate);
+
+
+
         $transaksi = transaksi2::create($validate);
 
-        // $cart = cart::with('produk')->get();
+        $cart = cart::with('produk')->get();
 
-        // foreach($cart as $key => $value){
-        //     $product = array(
-        //         'transaksi_id' =>$transaksi->id,
-        //         'qty' => $value->qty,
-        //         'total' => $value->qty * $value->produk->harga,
-        //         'created_at' => \Carbon\Carbon::now(),
-        //         'updated_at' => \Carbon\Carbon::now()
-        //     );
+        foreach($cart as $key => $value){
+            $product = array(
+                'transaksi_id' =>$transaksi->id,
+                'stok_keluar' => $request->stok_keluar,
+                'harga_jual' => $request->harga_jual,
+                'produk_id' => $value->produk_id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            );
 
-        //     $orderproduct = detailtran::insert($product);
+            $orderproduct = detailtran::create($product);
 
-        //     $deletecart = cart::where('id', $value->id)->delete();
+            $deletecart = cart::where('id', $value->id)->delete();
 
 
-        // }
+        }
 
         return redirect('/tes');
 
@@ -115,9 +144,13 @@ class Transaksi2Controller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transaksi $transaksi)
+    public function show(Request $request, $id)
     {
         //
+
+        $data = transaksi2::with('detail')->find($id);
+
+
     }
 
     /**

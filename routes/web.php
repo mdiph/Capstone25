@@ -13,6 +13,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\Transaksi2Controller;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangkeluarController;
+use App\Http\Controllers\OmzetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,11 +58,16 @@ Route::post('/barangkeluar/store', [BarangkeluarController::class, 'store']);
 
 
 Route::get('/transaksi', [TransaksiController::class, 'index']);
-Route::post('/transaksi/add', [TransaksiController::class, 'store']);
+Route::get('/transaksi/add', [TransaksiController::class, 'create']);
+Route::post('/transaksi/store', [TransaksiController::class, 'store']);
 Route::post('/addcart', [Transaksi2Controller::class, 'addCart']);
 Route::get('/deletecart/{id}', [Transaksi2Controller::class, 'DeleteCart']);
 
-Route::get('/tes', [Transaksi2Controller::class, 'index']);
+Route::get('/omzet/salesman', [OmzetController::class, 'salesman']);
+Route::get('/omzet/produk', [OmzetController::class, 'produk']);
+
+Route::get('/tes', [Transaksi2Controller::class, 'create']);
+Route::post('/tes/add', [Transaksi2Controller::class, 'store']);
 
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('admin');
 Route::post('/produk/store', [ProdukController::class, 'store']);

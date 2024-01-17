@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('kode_transaksi')->nullable();
             $table->date('tanggal_transaksi');
             $table->integer('harga_jual');
+            $table->integer('harga_akhir');
             $table->integer('stok_keluar');
+            $table->integer('diskon')->default(0);
             $table->foreignId('produk_id')->references('id')->on('produk');
             // $table->integer('total');
             // $table->integer('bayar');

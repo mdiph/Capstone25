@@ -18,6 +18,11 @@ class salesman extends Model
 
     ];
 
+    public function transaksi() {
+
+        return $this->hasMany(transaksi2::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

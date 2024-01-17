@@ -24,13 +24,13 @@ class TransaksiController extends Controller
         $tes = cart::with('produk')->get();
         // $total = $tes->sum('harga');
 
-        $total = DB::table('cart')
-            ->join('produk', 'cart.produk_id', '=', 'produk.id')
-            ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
-            ->get()
-            ->first()->total_harga;
-        $data = produk::with('kategori')->get();
-        return view('transaction.addtransaksi')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('total', $total)->with('customer', $customer);
+        // $total = DB::table('cart')
+        //     ->join('produk', 'cart.produk_id', '=', 'produk.id')
+        //     ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
+        //     ->get()
+        //     ->first()->total_harga;
+        $data = Transaksi::with('customer', 'salesman', 'produk')->get();
+        return view('transaction.transaksi2')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
     }
 
 
@@ -73,6 +73,14 @@ class TransaksiController extends Controller
     {
         //
 
+        $salesman = salesman::all();
+        $customer = customer::all();
+        $data = produk::all();
+
+
+
+        return view('transaction.addtransaksi')->with('salesman', $salesman)->with('customer', $customer)->with('data', $data);
+
     }
 
     /**
@@ -82,6 +90,11 @@ class TransaksiController extends Controller
     {
         //
         $validate = $request->all();
+
+        $select = $validate['produk_id'];
+        $qty = $validate['stok_keluar'];
+
+        
 
         $transaksi = Transaksi::create($validate);
 
@@ -102,6 +115,13 @@ class TransaksiController extends Controller
 
 
         // }
+
+        DB::transaction(function () use( $transaksi, $qty, $select) {
+            produk::where('id', $select)->decrement('stok', $qty);
+
+
+
+        });
 
         return redirect('/transaksi');
 
