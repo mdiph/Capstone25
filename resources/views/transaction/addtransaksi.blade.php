@@ -92,7 +92,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">RP</span>
                                                     </div>
-                                                    <input type="text" class="form-control diskon" name="diskon"
+                                                    <input type="text" class="form-control diskon" name="diskon" value="0"
                                                         id="diskon">
                                                 </div>
                                             </div>

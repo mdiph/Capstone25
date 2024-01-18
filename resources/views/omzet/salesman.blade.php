@@ -109,7 +109,8 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->tanggal_transaksi}}</td>
                                                     <td>{{ $row->nama_salesman }}</td>
-                                                    <td>{{ $row->total_harga }}</td>
+
+                                                    <td>RP. {{ number_format($row->total_harga, 2, ',', '.') }}</td>
 
                                                     {{-- <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"

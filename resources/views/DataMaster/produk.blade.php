@@ -86,12 +86,17 @@
 
                                                     <div class="form-group">
                                                         <label>Satuan</label>
-                                                        <input type="text" class="form-control" name="satuan"
-                                                            placeholder="satuan..." required>
+                                                        <select class="form-control select2" name="satuan" required>
+
+                                                            <option  value = "" >Pilih satuan</option>
+                                                            <option value="MDS">MDS</option>
+                                                            <option value="KTN">KTN</option>
+
+                                                        </select>
 
                                                     </div>
 
-                                                    
+
 
                                                     <div class="form-group">
                                                         <label>Kategori</label>

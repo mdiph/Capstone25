@@ -167,7 +167,7 @@
                             <div class="collapse" id="charts">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="../charts/charts.html">
+                                        <a href="/omzet/customer">
                                             <span class="sub-item">Omzet Customer</span>
                                         </a>
                                     </li>

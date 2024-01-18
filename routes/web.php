@@ -65,6 +65,7 @@ Route::get('/deletecart/{id}', [Transaksi2Controller::class, 'DeleteCart']);
 
 Route::get('/omzet/salesman', [OmzetController::class, 'salesman']);
 Route::get('/omzet/produk', [OmzetController::class, 'produk']);
+Route::get('/omzet/customer', [OmzetController::class, 'customer']);
 
 Route::get('/tes', [Transaksi2Controller::class, 'create']);
 Route::post('/tes/add', [Transaksi2Controller::class, 'store']);
