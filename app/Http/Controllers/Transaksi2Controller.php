@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barangkeluar;
+use App\Models\BarangMasuk;
 use App\Models\cart;
 use App\Models\customer;
 use App\Models\detailtran;
@@ -24,29 +26,46 @@ class Transaksi2Controller extends Controller
 
 
 
-        $data = DB::table('transaksi2s')
-        ->leftJoin('salesman', 'transaksi2s.salesman_id', '=', 'salesman.id')
-        ->leftJoin('transaksi_detail', 'transaksi2s.id', '=', 'transaksi_detail.transaksi_id')
-        ->leftJoin('produk', 'transaksi_detail.produk_id', '=', 'produk.id')
-        ->leftJoin('customer', 'transaksi2s.customer_id', '=', 'customer.id')
-        ->select([
-            'transaksi2s.id',
-            'transaksi2s.kode_transaksi',
-            'transaksi2s.tanggal_transaksi',
-            'transaksi2s.diskon',
-            'transaksi2s.total',
-            'transaksi2s.subtotal',
-            'transaksi2s.diskon',
-            'salesman.nama_salesman',
-            'customer.nama_customer',
-            'transaksi_detail.harga_jual',
-            'transaksi_detail.stok_keluar',
-            'produk.nama_produk',
-        ])
-        ->get();
+        // $data = DB::table('transaksi2s')
+        // ->leftJoin('salesman', 'transaksi2s.salesman_id', '=', 'salesman.id')
+        // ->leftJoin('transaksi_detail', 'transaksi2s.id', '=', 'transaksi_detail.transaksi_id')
+        // ->leftJoin('produk', 'transaksi_detail.produk_id', '=', 'produk.id')
+        // ->leftJoin('customer', 'transaksi2s.customer_id', '=', 'customer.id')
+        // ->select([
+        //     'transaksi2s.id',
+        //     'transaksi2s.kode_transaksi',
+        //     'transaksi2s.tanggal_transaksi',
+        //     'transaksi2s.diskon',
+        //     'transaksi2s.total',
+        //     'transaksi2s.subtotal',
+        //     'transaksi2s.diskon',
+        //     'salesman.nama_salesman',
+        //     'customer.nama_customer',
+        //     'transaksi_detail.harga_jual',
+        //     'transaksi_detail.stok_keluar',
+        //     'produk.nama_produk',
+        // ])
+        // ->get();
+
+        $query = Produk::query()
+            ->leftJoin(BarangMasuk::class, 'produk.id', '=', 'barang_masuk.produk_id')
+            ->leftJoin(Barangkeluar::class, 'produk.id', '=', 'barang_keluar.produk_id')
+            ->groupBy('produk.id', 'barang_masuk.tanggal_masuk')
+            ->select([
+                'produk.nama_produk',
+                'produk.stok AS stok_awal',
+                'SUM(barang_masuk.jumlah_masuk) AS stok_masuk',
+                'SUM(barang_keluar.jumlah_keluar) AS stok_keluar',
+                '(produk.stok + SUM(barang_masuk.jumlah_masuk) - SUM(barang_keluar.jumlah_keluar)) AS stok_akhir',
+                'barang_masuk.tanggal_masuk AS tanggal',
+            ]);
+
+        $data = $query->get();
+
+        dd($data);
 
 
-        return view('transaction.transaksi')->with('data', $data);
+        // return view('transaction.transaksi')->with('data', $data);
     }
 
 
@@ -89,15 +108,31 @@ class Transaksi2Controller extends Controller
     {
         //
 
-        $salesman = salesman::all();
-        $customer = customer::all();
-        $tes = cart::with('produk')->get();
-        // $total = $tes->sum('harga');
+        // $salesman = salesman::all();
+        // $customer = customer::all();
+        // $tes = cart::with('produk')->get();
+        // // $total = $tes->sum('harga');
 
 
-        $data = produk::with('kategori')->get();
-        return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
+        // $data = produk::with('kategori')->get();
 
+        $query = Produk::query()
+            ->leftJoin(BarangMasuk::class, 'produk.id', '=', 'barang_masuk.produk_id')
+            ->leftJoin(Barangkeluar::class, 'produk.id', '=', 'barang_keluar.produk_id')
+            ->groupBy('produk.id', 'barang_masuk.tanggal_masuk')
+            ->select([
+                'produk.nama_produk',
+                'produk.stok AS stok_awal',
+                'SUM(barang_masuk.jumlah_masuk) AS stok_masuk',
+                'SUM(barang_keluar.jumlah_keluar) AS stok_keluar',
+                '(produk.stok + SUM(barang_masuk.jumlah_masuk) - SUM(barang_keluar.jumlah_keluar)) AS stok_akhir',
+                'barang_masuk.tanggal_masuk AS tanggal',
+            ]);
+
+        $data = $query->get();
+
+        dd($data);
+        // return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
     }
 
     /**
@@ -116,9 +151,9 @@ class Transaksi2Controller extends Controller
 
         $cart = cart::with('produk')->get();
 
-        foreach($cart as $key => $value){
+        foreach ($cart as $key => $value) {
             $product = array(
-                'transaksi_id' =>$transaksi->id,
+                'transaksi_id' => $transaksi->id,
                 'stok_keluar' => $request->stok_keluar,
                 'harga_jual' => $request->harga_jual,
                 'produk_id' => $value->produk_id,
@@ -129,16 +164,9 @@ class Transaksi2Controller extends Controller
             $orderproduct = detailtran::create($product);
 
             $deletecart = cart::where('id', $value->id)->delete();
-
-
         }
 
         return redirect('/tes');
-
-
-
-
-
     }
 
     /**
@@ -149,8 +177,6 @@ class Transaksi2Controller extends Controller
         //
 
         $data = transaksi2::with('detail')->find($id);
-
-
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Models\salesman;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\produkrecord;
 
 class TransaksiController extends Controller
 {
@@ -89,14 +90,14 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         //
-        $validate = $request->all();
+        // $validate = $request->all();
 
-        $select = $validate['produk_id'];
-        $qty = $validate['stok_keluar'];
+        // $select = $validate['produk_id'];
+        // $qty = $validate['stok_keluar'];
 
-        
 
-        $transaksi = Transaksi::create($validate);
+
+
 
         // $cart = cart::with('produk')->get();
 
@@ -116,14 +117,53 @@ class TransaksiController extends Controller
 
         // }
 
-        DB::transaction(function () use( $transaksi, $qty, $select) {
+        // DB::transaction(function () use( $transaksi, $qty, $select) {
+        //     produk::where('id', $select)->decrement('stok', $qty);
+
+
+
+        // });
+
+        DB::beginTransaction();
+
+        try {
+
+            $validate = $request->all();
+            $select = $validate['produk_id'];
+            $qty = $validate['stok_keluar'];
+            $date = $validate['tanggal_transaksi'];
+
+
+
+
+
+            $produklama =  $validate['stok_lama'];
+            Transaksi::create($validate);
+
+            produkrecord::create([
+                'produk_id' => $select,
+                'stok' => $produklama,
+                'tanggal' => $date
+            ]);
+
             produk::where('id', $select)->decrement('stok', $qty);
+            // produk_record create
+            $queryStatus = 'Data berhasil ditambah';
 
 
 
-        });
+            // Jika semua query berhasil, simpan perubahan
+            DB::commit();
+        } catch (\Exception $e) {
+            // Tangani kesalahan jika ditemui
+            // Rollback untuk membatalkan transaksi
+            DB::rollBack();
+
+            $queryStatus = 'Data gagal ditambah. Error: ' . $e->getMessage();
+        }
 
         return redirect('/transaksi');
+
 
 
 

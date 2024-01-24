@@ -47,6 +47,8 @@
                                                             aria-describedby="basic-addon1">
                                                             <input type="hidden" class="form-control" name="produk_id"
                                                             id="id" >
+                                                            <input type="hidden" class="form-control" name="stok_lama"
+                                                            id="stok_lama" >
                                                         <div class="input-group-prepend">
                                                             <button class="btn btn-default btn-border" data-toggle="modal"
                                                                 data-target="#modalload" type="button">cari</button>
@@ -243,9 +245,10 @@
                 var nama = $(this).data('nama');
                 var harga = $(this).data('harga');
                 var stok = $(this).data('stok');
+                var stokold = $(this).data('stok');
                 $('#id').val(id);
                 $('#harga').val(harga)
-                $('#stok').val(stok)
+                $('#stok_lama').val(stok)
                 $('#nama').val(nama)
 
 

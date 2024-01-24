@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangMasuk;
 use App\Models\produk;
+use App\Models\produkrecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 
 class BarangMasukController extends Controller
 {
@@ -38,20 +40,63 @@ class BarangMasukController extends Controller
 
     public function store(Request $request)
     {
-        $validate = $request->all();
-        $select = $validate['produk_id'];
-        $qty =  $validate['jumlah_masuk'];
 
 
 
-        $query = BarangMasuk::create($validate);
+        DB::beginTransaction();
 
-        if($query){
+        try {
+
+            $validate = $request->all();
+            $select = $validate['produk_id'];
+            $qty =  $validate['jumlah_masuk'];
+            $date = $validate['tanggal_masuk'];
+
+
+
+
+
+            $produklama =  $validate['stok_lama'];
+            BarangMasuk::create($validate);
+
+            produkrecord::create([
+                'produk_id' => $select,
+                'stok' => $produklama,
+                'tanggal' => $date
+            ]);
+
             produk::where('id', $select)->increment('stok', $qty);
+            // produk_record create
             $queryStatus = 'Data berhasil ditambah';
-        } else {
-            $queryStatus = 'Data gagal ditambah';
+
+
+
+            // Jika semua query berhasil, simpan perubahan
+            DB::commit();
+        } catch (\Exception $e) {
+            // Tangani kesalahan jika ditemui
+            // Rollback untuk membatalkan transaksi
+            DB::rollBack();
+
+            $queryStatus = 'Data gagal ditambah. Error: ' . $e->getMessage();
         }
+
+
+
+
+
+        // Lakukan operasi-opsi query di sini
+        // ...
+
+
+
+
+
+
+
+
+
+
 
 
         return redirect('/barangmasuk')->with('message', $queryStatus);
