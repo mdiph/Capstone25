@@ -104,10 +104,11 @@
                                                 <th>No</th>
                                                 <th>Tanggal Transaksi</th>
                                                 <th>Produk</th>
+                                                <th>Satuan</th>
                                                 <th>Stok Terjual</th>
                                                 <th>Harga Jual(Rp) </th>
                                                 <th>Diskon</th>
-                                                <th>Satuan</th>
+
                                                 <th>Harga Total</th>
                                                 {{-- <th>Action</th> --}}
                                             </tr>
@@ -126,12 +127,16 @@
                                                     <td>{{ $row->persentase }} %</td> --}}
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $row->tanggal_transaksi}}</td>
+
                                                     <td>{{ $row->nama_produk }}</td>
-                                                    <td>{{ $row->stok_keluar }}</td>
-                                                    <td>{{ number_format($row->harga_jual, 2, ',', '.') }}</td>
-                                                    <td>{{ $row->diskon }}</td>
                                                     <td>{{ $row->satuan }}</td>
-                                                    <td>{{ number_format($row->harga_akhir, 2, ',', '.') }}</td>
+                                                    <td>{{ $row->stok_keluar }}</td>
+                                                    <td>{{ number_format($row->harga, 2, ',', '.') }}</td>
+                                                    <td>{{ $row->diskon }} %</td>
+
+                                                    <td>{{ number_format($row->total, 2, ',', '.') }}</td>
+
+
 
                                                     {{-- <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"

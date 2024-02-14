@@ -34,118 +34,211 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Input Group</div>
+                                    <div class="card-title">Transaksi</div>
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-4">
-                                            <label for="inputEmail4">Produk</label>
-                                            <input type="email" class="form-control" id="inputEmail4"
-                                                placeholder="Cari Produk" data-toggle="modal" data-target="#modalload">
-
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Tanggal transaksi</label>
-                                            <input type="date" class="form-control" id="inputPassword4"
-                                                name="tanggal_transaksi" placeholder="Pilih tanggal">
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputEmail4">Salesman</label>
-                                            <select class="form-control select2" name="salesman_id" required>
-                                                <option value = "">Pilih Salesman</option>
-                                                @foreach ($salesman as $s)
-                                                    <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Customer</label>
-                                            <select class="form-control select2" name="customer_id" required>
-                                                <option value = "">Pilih Customer</option>
-                                                @foreach ($customer as $c)
-                                                    <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-
-                                    </div>
-
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama Produk</th>
-                                                <th>Harga Sales</th>
-                                                <th>Jumlah Keluar</th>
-                                                <th>Jumlah</th>
-                                                {{-- <th >Harga</th> --}}
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @php $no = 1 @endphp
-                                            @foreach ($tes as $row)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td><input type="hidden" name="produk_id" value="{{ $row->produk_id }}">{{ $row->produk->nama_produk }}</td>
-                                                    <td><input class="harga" type="text" name="harga_jual"
-                                                            id="harga"></td>
-                                                    <td><input class="barangkeluar" type="number" min="0" max="{{ $row->produk->stok }}" name="stok_keluar"
-                                                            id="barangkeluar"></td>
-                                                    <td><input class="jumlah" type="text"  id="jumlah"
-                                                            disabled></td>
-
-                                                    {{-- <td ><input type="hidden" name="total" value="{{ $row->qty * $row->produk->harga }}">{{ $row->qty * $row->produk->harga }}</td> --}}
-                                                    <td>
-                                                        <a href="/deletecart/{{ $row->id }}" method="POST"
-                                                            class="btn btn-xs btn-danger"><i
-                                                                class="fa fa-trash"></i>Delete</a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
 
                                     <div class="row">
-                                        <div class="col-xl-8">
+                                        <div class="col">
+
+                                            <div class="form-group row">
+                                                <label for="inputEmail4">Kode Transaksi</label>
+                                                <input type="text" class="form-control" placeholder="Kode Transaksi . ."
+                                                    name="kode_transaksi">
+                                            </div>
+
+                                            <div class="form-group row ">
+                                                <label for="inputPassword4">Tanggal transaksi</label>
+                                                <input type="date" class="form-control" id="inputPassword4"
+                                                    name="tanggal_transaksi" placeholder="Pilih tanggal">
+                                            </div>
+
+
+
+                                            <div class="form-group row">
+                                                <label for="inputEmail4">Salesman</label>
+                                                <select class="form-control select2" name="salesman_id" required>
+                                                    <option value = "">Pilih Salesman</option>
+                                                    @foreach ($salesman as $s)
+                                                        <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="inputPassword4">Customer</label>
+                                                <select class="form-control select2" name="customer_id" required>
+                                                    <option value = "">Pilih Customer</option>
+                                                    @foreach ($customer as $c)
+                                                        <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
+
+
                                         </div>
-                                        <div class="col-xl-3">
+
+                                        <div class="col">
+
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Subtotal </label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control subtotal" name="subtotal" id="subtotal"
-                                                        readonly>
-                                                </div>
+                                                <label for="inputEmail4">No Batch</label>
+                                                <input type="text" class="form-control" placeholder="No batch. . ."
+                                                    name="no_batch" id="batch">
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Diskon</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" class="form-control diskon" id="diskon" name="diskon"
-                                                        placeholder="diskon">
-                                                </div>
+
+                                            <div class="form-group row ">
+                                                <label for="inputPassword4">Tanggal Kedaluwarsa</label>
+                                                <input type="date" class="form-control" id="kedaluwarsa"
+                                                    name="tanggal_kedaluwarsa" placeholder="Pilih tanggal">
                                             </div>
+
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Total</label>
-                                                <div class="col-sm-8">
-                                                    <input type="email" class="form-control total" id="total" name="total"
-                                                        readonly>
+                                                <label for="inputEmail4">Produk</label>
+                                                <input type="text" class="form-control" id="nama"
+                                                    placeholder="Cari Produk" data-toggle="modal" data-target="#modalload">
+                                                <input type="hidden" class="form-control" name="produk_id" id="id">
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="inputEmail4">Diskon</label>
+                                                <input type="number" class="form-control" id="diskonp" name="diskon">
+
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="inputEmail4">Jumlah Keluar</label>
+                                                <input type="number" class="form-control" id="jumlah_keluar"
+                                                    name="jumlah_keluar">
+                                                <input type="hidden" class="form-control" id="harga_jual"
+                                                    name="harga_jual">
+
+                                            </div>
+
+
+
+
+
+
+                                            <button type="submit" class="btn btn-primary" id="addcart"><i
+                                                    class="fa fa-plus"> </i>
+                                                Tambah ke Keranjang</button>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title">Keranjang</div>
                                                 </div>
+
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered" id="carttable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Nama Produk</th>
+                                                                    <th>Harga Sales</th>
+                                                                    <th>Jumlah Keluar</th>
+                                                                    <th>Diskon</th>
+                                                                    <th>Jumlah</th>
+                                                                    {{-- <th >Harga</th> --}}
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="">Subtotal </label>
+
+                                                            <input type="text" class="form-control subtotal"
+                                                                name="subtotal" id="subtotal" readonly>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="card">
+
+                                                <div class="card-header">
+                                                    <div class="card-title">Pembayaran</div>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    {{-- <div class="form-group row">
+                                                        <label for="inputEmail3" class="">Subtotal </label>
+
+                                                        <input type="text" class="form-control subtotal" name="subtotal"
+                                                            id="subtotal"  readonly>
+
+                                                    </div> --}}
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="">Diskon</label>
+
+                                                        <input type="number" class="form-control diskon" id="diskon"
+                                                            name="diskon" placeholder="diskon">
+
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="">Total</label>
+
+                                                        <input type="text" class="form-control total" id="total"
+                                                            name="total" readonly>
+
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="inputPassword4">Metode Pembayaran</label>
+                                                        <select class="form-control select2" name="metode" required>
+                                                            <option value = "">Pilih metode</option>
+
+                                                            <option value="Cash">Cash</option>
+                                                            <option value="Tempo">tempo</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="">Bayar</label>
+
+                                                        <input type="number" class="form-control total" name="bayar">
+
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Bayar</button>
+
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="card-action">
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
+
+
+
+
+
+
+
+
                                 </div>
 
                             </div>
@@ -193,29 +286,30 @@
                         <tbody>
 
                             @php $no = 1 @endphp
-                            @foreach ($data as $row)
+                            @foreach ($produk as $row)
                                 <tr>
-                                    <form action="/addcart/" method="POST">
-                                        @csrf
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $row->nama_produk }}</td>
-                                        <input type="hidden" id="id" name="produk_id"
-                                            value="{{ $row->id }}">
-
-                                        <td>{{ $row->harga }}</td>
-
-                                        <td>{{ $row->stok }}</td>
-
-                                        {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
-                                        <td>
+                                    {{-- <form action="/addcart/" method="POST">
+                                        @csrf --}}
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $row->nama_produk }}</td>
 
 
+                                    <td>{{ $row->harga }}</td>
 
-                                            <button class="btn btn-xs btn-info" type="submit">
-                                                <i class="fa fa-check"> Pilih </i>
-                                            </button>
-                                        </td>
-                                    </form>
+                                    <td>{{ $row->stok }}</td>
+
+                                    {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
+                                    <td>
+
+
+
+                                        <button class="btn btn-xs btn-info" type="submit" id="select"
+                                            data-id="{{ $row->id }}" data-nama = "{{ $row->nama_produk }}"
+                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}">
+                                            <i class="fa fa-check"> Pilih </i>
+                                        </button>
+                                    </td>
+                                    {{-- </form> --}}
 
                                 </tr>
                             @endforeach
@@ -230,101 +324,213 @@
 
     <script>
         $(document).ready(function() {
+
+            fetchData();
+
+            function fetchData() {
+                $.ajax({
+                    url: '/tes/cart',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        var cartData = response.cartData;
+                        var total = response.total;
+                        displayData(cartData);
+                        $('#subtotal').val(total);
+
+                    },
+                    error: function(error) {
+                        console.log('Error: ' + error);
+                    }
+                });
+            }
+
+            function displayData(data) {
+                var tableBody = $('#carttable tbody');
+                tableBody.empty();
+
+                $.each(data, function(index, item) {
+
+                    var row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td><input type="hidden" name="produk_id" value="' + item.produk_id + '">' + item
+                        .produk.nama_produk + '</td>' +
+                        '<td><input class="harga" type="hidden" name="harga_jual" id="harga">' + item
+                        .harga_jual + '</td>' +
+                        '<input type = "hidden" name ="stok_lama" value="' + item.produk.stok + '">' +
+                        '<td><input class="barangkeluar" type="hidden" min="0" max="' + item.jumlah_keluar +
+                        '" name="stok_keluar" id="barangkeluar">' + item.jumlah_keluar + '</td>' +
+                        '<td><input class="jumlah" type="hidden" id="diskonp" >' + item.diskon + '</td>' +
+                        '<td><input class="jumlah" type="hidden" id="jumlah" >' + item.total + '</td>' +
+                        '<td><a class="btn btn-xs btn-danger delete-item" data-id="' + item.id +
+                        '"><i class="fa fa-trash"></i>Delete</a></td>' +
+                        '</tr>';
+                    tableBody.append(row);
+
+
+                });
+            }
+
+            $(document).on('click', '.delete-item', function(e) {
+
+                e.preventDefault(); // Mencegah aksi default dari link
+
+                var itemId = $(this).data('id');
+
+                // Lakukan penghapusan menggunakan AJAX
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/deletecart/' + itemId,
+                    type: 'GET',
+
+
+                    success: function(response) {
+                        fetchData();
+
+
+
+                    },
+                    error: function(error) {
+                        console.log('Error: ' + error);
+                    }
+                });
+            });
+
+            $(document).on('click', '#addcart', function(e) {
+
+                e.preventDefault(); // Mencegah aksi default dari link
+
+                var itemId = $('#id').val();
+                var jumlahK = $('#jumlah_keluar').val();
+                var hargaJ = $('#harga_jual').val();
+                var diskonp = $('#diskonp').val();
+                var batch = $('#batch').val();
+                var tk = $('#kedaluwarsa').val();
+
+
+
+                // Lakukan penghapusan menggunakan AJAX
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/addcart',
+                    type: 'POST',
+                    data: {
+                        produk_id: itemId,
+                        harga_jual: hargaJ,
+                        jumlah_keluar: jumlahK,
+                        diskon: diskonp,
+                        no_batch: batch,
+                        tanggal_kedaluwarsa: tk,
+                    },
+
+                    success: function(response) {
+
+                        fetchData();
+                        calculateTotal();
+
+
+                    },
+                    error: function(error) {
+                        console.log('Error: ' + error);
+                    }
+                });
+            });
+
             $(document).on('click', '#select', function() {
                 var id = $(this).data('id');
+                var nama = $(this).data('nama');
                 var harga = $(this).data('harga');
                 var stok = $(this).data('stok');
                 $('#id').val(id);
-                $('#harga').val(harga)
-                $('#stok').val(stok)
+                $('#harga_jual').val(harga);
+
+
+                $('#nama').val(nama + ' | ' + ' Stok ' + stok + ' | ' + ' Harga ' + harga)
+
+                // $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //     }
+                // });
+                // $.ajax({
+
+                //     url: '/addcart',
+                //     type: 'POST',
+                //     data: {
+                //         produk_id: $(this).data('id')
+                //     },
+                //     success: function(response) {
+                //         fetchData();
+                //         calculateTotal();
+                //     }
+
+
+                // })
 
 
 
                 $('#modalload').modal('hide');
             });
-        });
 
-        // $(function() {
-        //     $('.harga').on('keyup', function() {
-        //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
-        //         var harga = parseInt($thisRow.find('.harga').val());
-        //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
-        //         var jumlah = harga * barangKeluar;
-        //         $thisRow.find('.jumlah').val(jumlah);
-        //     });
-
-        //     $('.barangkeluar').on('keyup', function() {
-        //         var $thisRow = $(this).closest('tr'); // Asumsikan elemen berada dalam tabel
-        //         var harga = parseInt($thisRow.find('.harga').val());
-        //         var barangKeluar = parseInt($thisRow.find('.barangkeluar').val());
-        //         var jumlah = harga * barangKeluar;
-        //         $thisRow.find('.jumlah').val(jumlah);
-        //     });
-
-        //     $('.jumlah').on('change', function() {
-        //         var $thisRow = $(this).closest('tr');
-        //         var jumlah = parseInt($thisRow.find('.jumlah').val());
-        //         var subtotal = jumlah * $thisRow.find('.harga').val();
-        //         $thisRow.find('#subtotal').val(subtotal);
-        //     });
-
-        // });
-
-        $(function() {
-            // Elemen input harga, barang keluar, dan jumlah
-            const hargaInput = $('.harga');
-            const barangKeluarInput = $('.barangkeluar');
-            const jumlahInput = $('.jumlah');
-
-            // Elemen total subtotal dan diskon
-            const subtotalInput = $('#subtotal');
-            const diskonInput = $('#diskon');
-            const totalInput = $('#total');
-
-            // Fungsi update jumlah berdasarkan harga dan barang keluar
-            function updateJumlah(row) {
-                const harga = parseInt(row.find(hargaInput).val());
-                const barangKeluar = parseInt(row.find(barangKeluarInput).val());
-                const jumlah = harga * barangKeluar;
-                row.find(jumlahInput).val(jumlah.toFixed(0));
-            }
+            $(document).on('keyup change', '#diskon', function() {
+                calculateTotal();
+            });
 
             // Fungsi hitung total
+
             function calculateTotal() {
-                let subtotal = 0;
-                jumlahInput.each(function() {
-                    subtotal += parseInt($(this).val());
-                });
-
-
-                const diskon = parseInt(diskonInput.val())|| 0;
+                let subtotal = $('#subtotal').val();
+                const diskon = parseInt($('#diskon').val()) || 0;
                 const persen = diskon / 100;
                 const total = subtotal - (subtotal * persen);
 
-                subtotalInput.val(subtotal.toFixed(0));
-                totalInput.val(total.toFixed(0));
+                console.log("subtotal:", subtotal);
+                console.log("diskon:", diskon);
+                console.log("persen:", persen);
+                console.log("total:", total);
+                $('#total').val(total);
             }
-
-            // Event handler perubahan harga dan barang keluar
-            hargaInput.on('keyup change', function() {
-                updateJumlah($(this).closest('tr'));
-                calculateTotal();
-            });
-
-            barangKeluarInput.on('keyup change', function() {
-                updateJumlah($(this).closest('tr'));
-                calculateTotal();
-            });
-
-            // Event handler perubahan diskon
-            diskonInput.on('keyup change', function() {
-                calculateTotal();
-            });
 
             // Hitung total awal
             calculateTotal();
         });
+
+
+        $(function() {
+            // Event handler perubahan harga dan barang keluar
+
+            // $(document).on('keyup change', '#diskon', function() {
+            //     calculateTotal();
+            // });
+
+            // // Fungsi hitung total
+
+            // function calculateTotal() {
+            //     let subtotal = $('#subtotal').val();
+            //     const diskon = parseInt($('#diskon').val()) || 0;
+            //     const persen = diskon / 100;
+            //     const total = subtotal - (subtotal * persen);
+
+            //     $('#subtotal').val(subtotal);
+            //     $('#total').val(total);
+            // }
+
+            // // Hitung total awal
+            // calculateTotal();
+        });
     </script>
+
+
 
 
 

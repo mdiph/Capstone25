@@ -36,12 +36,16 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Barang Masuk</h4>
-                                    <a class="btn btn-primary btn-round ml-auto text-light" href="/transaksi/add">
-
-                                        <i class="fa fa-plus"></i>
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="">
+                                        <i class="fa fa-money-bill"></i>
+                                        Piutang
+                                    </a>
+                                    <a class="btn btn-primary btn-round ml-2 text-light" href="/transaksi/add"> <i
+                                            class="fa fa-plus"></i>
                                         Add Row
-                                </a>
+                                    </a>
                                 </div>
+
                             </div>
                             <div class="card-body">
                                 <!-- Modal tambah -->
@@ -162,7 +166,7 @@
 
 
 
-                                                    {{-- <div class="modal-footer ">
+                                {{-- <div class="modal-footer ">
                                                         <button type="submit" id="addRowButton"
                                                             class="btn btn-primary"><i class="fa fa-save"></i>
                                                             Hapus</button>
@@ -177,6 +181,28 @@
                                 @endforeach --}}
 
                                 <div class="table-responsive">
+                                    <form method="POST" action="{{ route('caritransaksi') }}">
+                                        @csrf
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="form-group row mx-auto">
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                        </div>
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <button type="submit" class="btn" name="search" >search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
@@ -227,4 +253,34 @@
         </div>
 
     </div>
+
+    <script type="text/javascript">
+        $(function() {
+
+            //   $('#add-row').DataTable({
+            //       processing: false,
+            //       serverSide: true,
+            //       ajax: "{{ route('transaksi') }}",
+            //       columns: [
+            //           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            //           {data: 'kode_transaksi', name: 'kode_transaksi'},
+            //           {data: 'tanggal_transaksi', name: 'tanggal_transaksi'},
+            //           {data: 'harga_jual', name: 'harga_jual'},
+            //           {data: 'stok_keluar', name: 'stok_keluar'},
+            //           {data: 'produk.nama_produk', name: 'produk.nama_produk'},
+            //           {data: 'salesman.nama_salesman', name: 'salesman.nama_salesman'},
+            //           {data: 'customer.nama_customer', name: 'customer.nama_customer'},
+            //           {
+            //               data: 'action',
+            //               name: 'action',
+            //               orderable: true,
+            //               searchable: true
+            //           },
+            //       ]
+            //   });
+
+
+
+        });
+    </script>
 @endsection

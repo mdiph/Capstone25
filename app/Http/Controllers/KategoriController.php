@@ -16,7 +16,7 @@ class KategoriController extends Controller
         //
         $data = kategori::with('produk')->get();
 
-        
+
 
         return view ('DataMaster.kategori')->with('data', $data);
     }
@@ -35,6 +35,12 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         //
+
+        $rules = [
+            'nama_kategori' => 'required|max:255',
+            
+        ];
+        $validate = $request->validate($rules);
         $validate = $request->all();
 
         kategori::create($validate);

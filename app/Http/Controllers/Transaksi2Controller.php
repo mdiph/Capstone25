@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barangkeluar;
-use App\Models\BarangMasuk;
 use App\Models\cart;
-use App\Models\customer;
-use App\Models\detailtran;
 use App\Models\produk;
+use App\Models\customer;
 use App\Models\salesman;
 use App\Models\Transaksi;
+use App\Models\detailtran;
 use App\Models\transaksi2;
+use App\Models\BarangMasuk;
+use App\Models\Barangkeluar;
+use App\Models\Pembayaran;
+use App\Models\Piutang;
+use App\Models\produkrecord;
 use Illuminate\Http\Request;
+use App\Models\transaksi_detail;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Transaksi2Controller extends Controller
 {
@@ -22,50 +27,12 @@ class Transaksi2Controller extends Controller
     public function index()
     {
         //
-        // $data = transaksi2::with(['salesman', 'customer', 'detail.produk'])->get();
+        $data = Transaksi::with(['salesman', 'customer', 'pembayaran'])->get();
 
 
 
-        // $data = DB::table('transaksi2s')
-        // ->leftJoin('salesman', 'transaksi2s.salesman_id', '=', 'salesman.id')
-        // ->leftJoin('transaksi_detail', 'transaksi2s.id', '=', 'transaksi_detail.transaksi_id')
-        // ->leftJoin('produk', 'transaksi_detail.produk_id', '=', 'produk.id')
-        // ->leftJoin('customer', 'transaksi2s.customer_id', '=', 'customer.id')
-        // ->select([
-        //     'transaksi2s.id',
-        //     'transaksi2s.kode_transaksi',
-        //     'transaksi2s.tanggal_transaksi',
-        //     'transaksi2s.diskon',
-        //     'transaksi2s.total',
-        //     'transaksi2s.subtotal',
-        //     'transaksi2s.diskon',
-        //     'salesman.nama_salesman',
-        //     'customer.nama_customer',
-        //     'transaksi_detail.harga_jual',
-        //     'transaksi_detail.stok_keluar',
-        //     'produk.nama_produk',
-        // ])
-        // ->get();
 
-        $query = Produk::query()
-            ->leftJoin(BarangMasuk::class, 'produk.id', '=', 'barang_masuk.produk_id')
-            ->leftJoin(Barangkeluar::class, 'produk.id', '=', 'barang_keluar.produk_id')
-            ->groupBy('produk.id', 'barang_masuk.tanggal_masuk')
-            ->select([
-                'produk.nama_produk',
-                'produk.stok AS stok_awal',
-                'SUM(barang_masuk.jumlah_masuk) AS stok_masuk',
-                'SUM(barang_keluar.jumlah_keluar) AS stok_keluar',
-                '(produk.stok + SUM(barang_masuk.jumlah_masuk) - SUM(barang_keluar.jumlah_keluar)) AS stok_akhir',
-                'barang_masuk.tanggal_masuk AS tanggal',
-            ]);
-
-        $data = $query->get();
-
-        dd($data);
-
-
-        // return view('transaction.transaksi')->with('data', $data);
+        return view('transaction.transaksi')->with('data', $data);
     }
 
 
@@ -75,17 +42,27 @@ class Transaksi2Controller extends Controller
 
 
         $validate = $request->all();
+
         // $select = $validate['produk_id'];
         // $qty =  $validate['qty'];
+        $diskon = $validate['harga_jual'] * $validate['jumlah_keluar'] - ($validate['harga_jual'] * $validate['jumlah_keluar']  * $validate['diskon'] / 100);
 
 
 
-        cart::create($validate);
+        cart::create([
+            'produk_id' => $request->produk_id,
+            'no_batch' => $request->no_batch,
+            'tanggal_kedaluwarsa' => $request->tanggal_kedaluwarsa,
+            'jumlah_keluar' => $request->jumlah_keluar,
+            'diskon' => $request->diskon,
+            'harga_jual' => $request->harga_jual,
+            'total' => $diskon
+        ]);
 
         // DB::transaction(function () use ($qty, $select) {
         // });
 
-        return redirect('/tes');
+
     }
 
     public function DeleteCart(Request $request,  $id)
@@ -94,45 +71,38 @@ class Transaksi2Controller extends Controller
         $id = cart::findOrFail($id);
 
         $id->delete();
-
-
-
-
-
-        return redirect('/tes');
     }
     /**
      * Show the form for creating a new resource.
      */
+
+    public function getCart()
+    {
+        $tes = cart::with('produk')->get();
+        $total = $tes->sum('total');
+
+        $responseData = [
+            'cartData' => $tes,
+            'total' => $total,
+        ];
+
+        return response()->json($responseData);
+    }
     public function create()
     {
         //
 
-        // $salesman = salesman::all();
-        // $customer = customer::all();
-        // $tes = cart::with('produk')->get();
-        // // $total = $tes->sum('harga');
+        $salesman = salesman::all();
+        $customer = customer::all();
+        $tes = cart::with('produk')->get();
+        $total = $tes->sum('total');
 
 
-        // $data = produk::with('kategori')->get();
 
-        $query = Produk::query()
-            ->leftJoin(BarangMasuk::class, 'produk.id', '=', 'barang_masuk.produk_id')
-            ->leftJoin(Barangkeluar::class, 'produk.id', '=', 'barang_keluar.produk_id')
-            ->groupBy('produk.id', 'barang_masuk.tanggal_masuk')
-            ->select([
-                'produk.nama_produk',
-                'produk.stok AS stok_awal',
-                'SUM(barang_masuk.jumlah_masuk) AS stok_masuk',
-                'SUM(barang_keluar.jumlah_keluar) AS stok_keluar',
-                '(produk.stok + SUM(barang_masuk.jumlah_masuk) - SUM(barang_keluar.jumlah_keluar)) AS stok_akhir',
-                'barang_masuk.tanggal_masuk AS tanggal',
-            ]);
 
-        $data = $query->get();
+        $produk = produk::with('kategori')->get();
 
-        dd($data);
-        // return view('transaction.prototrans')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
+        return view('transaction.prototrans')->with('produk', $produk)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer)->with('total', $total);
     }
 
     /**
@@ -141,32 +111,112 @@ class Transaksi2Controller extends Controller
     public function store(Request $request)
     {
         //
-        $validate = $request->all();
-
-        dd($validate);
 
 
 
-        $transaksi = transaksi2::create($validate);
+        DB::beginTransaction();
 
+        try {
+
+            $validate = $request->all();
+
+        $salesman_id = $validate['salesman_id'];
+        $customer_id = $validate['customer_id'];
+        $date = Carbon::parse($validate['tanggal_transaksi'])->format('Ymd');
+        $transaction_code = "TRA{$date}{$salesman_id}{$customer_id}";
+
+
+        $transaksi = Transaksi::create([
+            'kode_transaksi' => $validate['kode_transaksi'],
+            'tanggal_transaksi' => $validate['tanggal_transaksi'],
+
+            'total' => $validate['total'],
+            'diskon' => $validate['diskon'] ?? 0,
+            'subtotal' => $validate['subtotal'],
+            'salesman_id' => $validate['salesman_id'],
+            'customer_id' => $validate['customer_id']
+
+        ]);
         $cart = cart::with('produk')->get();
+
+        if ($validate['metode'] == "Cash") {
+            $konfirmasi = "Lunas";
+            $jatuhTempo = $validate['tanggal_transaksi'];
+        }
+        if ($validate['metode'] == "Tempo") {
+            $konfirmasi = "Belum Lunas";
+            $jatuhTempo = Carbon::parse($validate['tanggal_transaksi'])->addDays(30);
+        }
+        $pembayaran = Pembayaran::create([
+            'transaksi_id' => $transaksi->id,
+            'status' => $konfirmasi,
+            'metode' => $validate['metode'],
+            'tanggal_bayar' => $validate['tanggal_transaksi'],
+            'bayar' => $validate['bayar'],
+            'jatuh_tempo' => $jatuhTempo
+        ]);
+
+        if ($pembayaran->status == 'Belum Lunas') {
+
+            Piutang::create([
+                'pembayaran_id' => $pembayaran->id,
+                'tanggal_bayar' => $pembayaran->tanggal_bayar,
+                'angsuran' => 0,
+
+            ]);
+        }
+
+
 
         foreach ($cart as $key => $value) {
             $product = array(
                 'transaksi_id' => $transaksi->id,
-                'stok_keluar' => $request->stok_keluar,
-                'harga_jual' => $request->harga_jual,
+                'stok_keluar' => $value->jumlah_keluar,
+                'harga_jual' => $value->harga_jual,
+                'diskon' => $value->diskon,
                 'produk_id' => $value->produk_id,
+                'no_batch' => $value->no_batch,
+                'tanggal_kedaluwarsa' => $value->tanggal_kedaluwarsa,
+                'total' => $value->total,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             );
 
-            $orderproduct = detailtran::create($product);
+
+
+            produkrecord::create([
+                'produk_id' => $value->produk_id,
+                'stok' => $value->produk->stok,
+                'tanggal' => $validate['tanggal_transaksi']
+            ]);
+
+            Barangkeluar::create([
+                'tanggal_keluar' => $validate['tanggal_transaksi'],
+                'jumlah_keluar' => $value->jumlah_keluar,
+                'produk_id' => $value->produk_id
+            ]);
+            produk::where('id', $value->produk_id)->decrement('stok', $value->jumlah_keluar);
+            transaksi_detail::create($product);
+
 
             $deletecart = cart::where('id', $value->id)->delete();
         }
 
-        return redirect('/tes');
+
+
+
+
+
+            // Jika semua query berhasil, simpan perubahan
+            DB::commit();
+        } catch (\Exception $e) {
+            // Tangani kesalahan jika ditemui
+            // Rollback untuk membatalkan transaksi
+            DB::rollBack();
+        }
+
+
+        return redirect('/transaksi');
     }
 
     /**
@@ -176,7 +226,62 @@ class Transaksi2Controller extends Controller
     {
         //
 
-        $data = transaksi2::with('detail')->find($id);
+        $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
+
+
+
+
+        return view('transaction.detailtransaksi')->with('data', $data);
+    }
+
+    public function piutang(Request $request, $id)
+    {
+        //
+
+        $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
+
+
+
+
+        return view('transaction.detailpiutang')->with('data', $data);
+    }
+
+    public function bayarUtang(Request $request, $id)
+    {
+        $validate = $request->all();
+        $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
+
+
+        Piutang::create([
+            'pembayaran_id' => $id,
+            'tanggal_bayar' => $validate['tanggal_bayar'],
+            'angsuran' => $validate['angsuran']
+        ]);
+
+        Pembayaran::where('id', $id)->increment('bayar', $validate['angsuran']);
+
+
+
+        $pembayaran = Pembayaran::find($id);
+        $transaksiTotal = $data->total;
+
+
+
+        if ($pembayaran->bayar >= $transaksiTotal) {
+            // Jika sama, ubah kolom 'status' menjadi 'Lunas'
+            $pembayaran->update([
+                'status' => 'Lunas'
+            ]);
+        }
+
+        if ($pembayaran->bayar <= $transaksiTotal && now()->greaterThan($pembayaran->jatuh_tempo)) {
+            // Jika sama, ubah kolom 'status' menjadi 'Lunas'
+            $pembayaran->update([
+                'status' => 'Telat'
+            ]);
+        }
+
+        return redirect('/transaksi');
     }
 
     /**

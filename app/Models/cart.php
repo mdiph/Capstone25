@@ -13,6 +13,12 @@ class cart extends Model
 
     protected $fillable = [
          "produk_id",
+         "no_batch",
+         "tanggal_kedaluwarsa",
+         "harga_jual",
+         "jumlah_keluar",
+         "diskon",
+         "total"
     ];
 
     public function produk(){

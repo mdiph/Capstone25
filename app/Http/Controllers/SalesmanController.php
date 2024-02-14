@@ -17,7 +17,7 @@ class SalesmanController extends Controller
         //
         $data = salesman::all();
 
-        return view ('DataMaster.salesman')->with('data', $data);
+        return view('DataMaster.salesman')->with('data', $data);
     }
 
     /**
@@ -25,8 +25,9 @@ class SalesmanController extends Controller
      */
     public function create(Request $request)
     {
-
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -34,12 +35,16 @@ class SalesmanController extends Controller
     public function store(Request $request)
     {
         //
-        $validate = $request->all();
 
-      salesman::create($validate);
+        $rules = [
+            'nama_salesman' => 'required|max:255',
+            'no_telp' => 'required|string|min:10|max:13',
+        ];
+        $validate = $request->validate($rules);
 
-      return redirect('/salesman')->with('success', 'Data berhasil disimpan');
+        salesman::create($validate);
 
+        return redirect('/salesman')->with('success', 'Data berhasil disimpan');
     }
 
     /**

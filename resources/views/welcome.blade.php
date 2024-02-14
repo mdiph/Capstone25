@@ -101,6 +101,10 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                {!! $chart->container() !!}
+            </div>
+
 
 
 
@@ -108,5 +112,7 @@
     </div>
 
 </div>
+<script src="{{ $chart->cdn() }}"></script>
 
+{{ $chart->script() }}
 @endsection

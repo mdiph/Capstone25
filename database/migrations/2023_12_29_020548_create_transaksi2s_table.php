@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi2s', function (Blueprint $table) {
+        Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_transaksi')->nullable();
             $table->date('tanggal_transaksi');
+            
             $table->integer('total');
             $table->integer('diskon')->nullable();
             $table->integer('subtotal');

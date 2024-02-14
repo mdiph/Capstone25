@@ -32,103 +32,87 @@
                             @csrf
 
 
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title">Input Group</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label for="email2">Kode Barang</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control"
-                                                            id="nama" placeholder="Cari barang. . ." aria-label=""
-                                                            aria-describedby="basic-addon1">
-                                                            <input type="hidden" class="form-control" name="produk_id"
-                                                            id="id" >
-                                                            <input type="hidden" class="form-control" name="stok_lama"
-                                                            id="stok_lama" >
-                                                        <div class="input-group-prepend">
-                                                            <button class="btn btn-default btn-border" data-toggle="modal"
-                                                                data-target="#modalload" type="button">cari</button>
-                                                        </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Input Group</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Kode Barang</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="nama"
+                                                        placeholder="Cari barang. . ." aria-label=""
+                                                        aria-describedby="basic-addon1">
+                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                        id="id">
+                                                    <input type="hidden" class="form-control" name="stok_lama"
+                                                        id="stok_lama">
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn btn-default btn-border" data-toggle="modal"
+                                                            data-target="#modalload" type="button">cari</button>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Tanggal Masuk</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="datepicker"
+                                                        name="tanggal_masuk" name="datepicker"
+                                                        placeholder="tanggal masuk. . .">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Harga</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">RP</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="harga" id="harga"
+                                                        aria-label="Amount (to the nearest dollar)" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="email2">No transaksi</label>
-                                    <input type="text" class="form-control" id="" name="id_masuk"
-                                        placeholder="No transaksi. . ." disabled>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="email2">Harga</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">RP</span>
                                     </div>
-                                    <input type="text" class="form-control" name="harga" id="harga"
-                                        aria-label="Amount (to the nearest dollar)" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Tanggal Masuk</label>
-                                <div class="input-group">
-                                    <input type="date" class="form-control" id="datepicker" name="tanggal_masuk"
-                                        name="datepicker" placeholder="tanggal masuk. . .">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Stok Barang</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" placeholder="Stok Masuk"
+                                                        name="stok" id="stok" aria-label="Recipient's username"
+                                                        aria-describedby="basic-addon2" disabled>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="email2">Stok Barang</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Stok Masuk" name="stok"
-                                        id="stok" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        disabled>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Tanggal Expired</label>
-                                <div class="input-group">
-                                    <input type="date" class="form-control" id="datepicker" name="tanggal_expired"
-                                        name="datepicker" placeholder="tanggal expired. . .">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
-                    <div class="form-group">
+                                    <div class="form-group">
 
-                    </div>
-                    {{-- <div class="form-group">
+                                    </div>
+                                    {{-- <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">With textarea</span>
@@ -136,7 +120,7 @@
                                             <textarea class="form-control" aria-label="With textarea"></textarea>
                                         </div>
                                     </div> --}}
-                    {{-- <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-default btn-border" type="button">Button</button>
@@ -145,29 +129,30 @@
                                                 aria-describedby="basic-addon1">
                                         </div>
                                     </div> --}}
-                    <div class="form-group w-50">
-                        <label for="email2">Stok Masuk</label>
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Stok Masuk" name="jumlah_masuk"
-                                aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                    <div class="form-group w-50">
+                                        <label for="email2">Stok Masuk</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" placeholder="Stok Masuk"
+                                                name="jumlah_masuk" aria-label="Recipient's username"
+                                                aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button class="btn btn-success">Submit</button>
+
+                                </div>
                             </div>
-                        </div>
+                        </form>
+
                     </div>
-                </div>
-                <div class="card-action">
-                    <button class="btn btn-success">Submit</button>
 
                 </div>
             </div>
-            </form>
-
         </div>
-
-    </div>
-    </div>
-    </div>
 
     </div>
 
@@ -222,8 +207,9 @@
                                             class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
                                             Delete</a> --}}
 
-                                        <button class="btn btn-xs btn-info" id="select" data-id="{{ $row->id  }}"
-                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}" data-nama="{{ $row->nama_produk }}">
+                                        <button class="btn btn-xs btn-info" id="select" data-id="{{ $row->id }}"
+                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}"
+                                            data-nama="{{ $row->nama_produk }}">
                                             <i class="fa fa-check"> Pilih </i>
                                         </button>
                                     </td>

@@ -10,13 +10,13 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $table = 'transaksi';
+    protected $primaryKey = 'id';
 
-    protected $fillable = ["kode_transaksi", "tanggal_transaksi", "harga_jual", "stok_keluar", "produk_id","salesman_id", "customer_id", "diskon", "harga_akhir"];
-
+    protected $fillable = ["kode_transaksi", "tanggal_transaksi", "tanggal_kedaluwarsa", "subtotal", "total", "diskon", "customer_id", "salesman_id"];
 
     public function salesman() {
 
-        return $this->belongsTo(salesman::class);
+        return $this->belongsTo(salesman::class, 'salesman_id', 'id');
     }
 
     public function customer() {
@@ -24,9 +24,14 @@ class Transaksi extends Model
         return $this->belongsTo(customer::class);
     }
 
-    public function produk(){
-        return $this->belongsTo(produk::class);
+    public function detailTransaksi() {
+
+        return $this->hasMany(transaksi_detail::class);
     }
+
+    public function pembayaran() {
+
+        return $this->hasOne(Pembayaran::class);
+    }
+
 }
-
-

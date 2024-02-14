@@ -11,13 +11,14 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\produkrecord;
+use Yajra\DataTables\Facades\DataTables;
 
 class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request  $request)
     {
         //
         $salesman = salesman::all();
@@ -30,8 +31,35 @@ class TransaksiController extends Controller
         //     ->select(DB::raw('SUM(produk.harga * cart.qty) as total_harga'))
         //     ->get()
         //     ->first()->total_harga;
+
+
         $data = Transaksi::with('customer', 'salesman', 'produk')->get();
-        return view('transaction.transaksi2')->with('data', $data)->with('tes', $tes)->with('salesman', $salesman)->with('customer', $customer);
+
+        if ($request->ajax()) {
+            $data = Transaksi::with('customer', 'salesman', 'produk')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('transaction.transaksi2')->with('data', $data)->with('salesman', $salesman)->with('customer', $customer);
+    }
+
+    public function dateRange(Request $request){
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        $data = Transaksi::with('customer', 'salesman', 'produk')
+        ->whereBetween('tanggal_transaksi', [$fromDate, $toDate])->get()
+        ;
+
+        return view('transaction.transaksi2')->with('data', $data);
+
     }
 
 

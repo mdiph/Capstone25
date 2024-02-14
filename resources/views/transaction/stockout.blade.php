@@ -36,11 +36,11 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Barang Keluar</h4>
-                                    <a class="btn btn-primary btn-round ml-auto text-light" href="/barangkeluar/add">
+                                    {{-- <a class="btn btn-primary btn-round ml-auto text-light" href="/barangkeluar/add">
 
                                         <i class="fa fa-plus"></i>
                                         Add Row
-                                </a>
+                                </a> --}}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -181,13 +181,13 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
-                                                <th>id_keluar</th>
+                                                <th>Id Keluar</th>
                                                 <th>Tanggal Keluar</th>
                                                 <th>Tanggal Expired</th>
                                                 <th>Jumlah Keluar</th>
                                                 <th>Harga Jual</th>
                                                 <th>Produk</th>
-                                                <th>Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -199,16 +199,9 @@
                                                     <td>{{ $row->tanggal_keluar }}</td>
                                                     <td>{{ $row->tanggal_expired }}</td>
                                                     <td>{{ $row->jumlah_keluar }}</td>
-                                                    <td>{{ $row->harga_jual }}</td>
+                                                    <td>{{ $row->produk->harga }}</td>
                                                     <td>{{ $row->produk->nama_produk }}</td>
-                                                    <td>
-                                                        <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
-                                                            class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                                            Edit</a>
-                                                        <a href="#DeleteRowModal{{ $row->id }}" data-toggle="modal"
-                                                            class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
-                                                            Delete</a>
-                                                    </td>
+                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>

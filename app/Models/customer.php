@@ -19,7 +19,7 @@ class customer extends Model
 
     public function transaksi() {
 
-        return $this->hasMany(transaksi2::class);
+        return $this->hasMany(Transaksi::class);
     }
 
     protected static function boot()

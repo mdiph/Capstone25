@@ -7,6 +7,7 @@ use App\Models\kategori;
 use App\Http\Requests\StoreprodukRequest;
 use App\Http\Requests\UpdateprodukRequest;
 use Illuminate\Http\Request;
+use yajra\Datatables\Facades\DataTables;
 
 class ProdukController extends Controller
 {
@@ -19,6 +20,8 @@ class ProdukController extends Controller
 
         $data = produk::with('kategori')->get();
         $kategori = kategori::all();
+
+        
         return view ('DataMaster.produk')->with('data', $data)->with('kategori', $kategori);
     }
 

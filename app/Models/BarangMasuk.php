@@ -12,7 +12,7 @@ class BarangMasuk extends Model
     protected $table = 'barang_masuk';
 
     protected $fillable = [
-        "id_masuk", 'tanggal_masuk', 'tanggal_expired', 'jumlah_masuk', 'produk_id'
+        "id_masuk", 'tanggal_masuk',  'jumlah_masuk', 'produk_id'
     ];
 
 

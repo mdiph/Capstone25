@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_masuk')->nullable();
             $table->date('tanggal_masuk');
-            $table->date('tanggal_expired');
+            
             $table->integer('jumlah_masuk');
             $table->foreignId('produk_id')->references('id')->on('produk');
             $table->timestamps();

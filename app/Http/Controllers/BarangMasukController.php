@@ -20,22 +20,22 @@ class BarangMasukController extends Controller
 
     public function create(Request $request)
     {
-
-
-        //     $tes = BarangMasuk::create([
-        //         "id_masuk" => "BA002",
-        //         "tanggal_masuk" => "2023-01-01",
-        //         "tanggal_expired" => "2024-01-01",
-        //         "jumlah_masuk" => 20,
-        //         "produk_id" => 1,
-        //     ]);
-
-
-        //    $qty =  $tes['jumlah_masuk'];
-
-        //    produk::where('id', 1)->increment('stok', $qty);
         $data = produk::with('kategori')->get();
         return view('transaction.addstockin')->with('data', $data);
+    }
+
+
+    public function dateRange(Request $request){
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        $data = BarangMasuk::with('produk')
+        ->whereBetween('tanggal_masuk', [$fromDate, $toDate])->get()
+        ;
+
+        return view('transaction.stockin')->with('data', $data);
+
     }
 
     public function store(Request $request)

@@ -90,16 +90,38 @@
 
 
                                 <div class="table-responsive">
+                                    <form method="POST" action="{{ route('cariomzetcs') }}">
+                                        @csrf
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="form-group row mx-auto">
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                        </div>
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <button type="submit" class="btn" name="search" >search</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Tanggal Transaksi</th>
                                                 <th>Customer</th>
-                                                <th>Produk</th>
+                                                {{-- <th>Produk</th>
                                                 <th>Jumlah</th>
                                                 <th>Satuan</th>
-                                                <th>Harga</th>
+                                                <th>Harga</th> --}}
                                                 <th>Total penjualan</th>
 
 
@@ -113,10 +135,10 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $row->tanggal_transaksi}}</td>
                                                     <td>{{ $row->nama_customer }}</td>
-                                                    <td>{{ $row->nama_produk }}</td>
+                                                    {{-- <td>{{ $row->nama_produk }}</td>
                                                     <td>{{ $row->stok_keluar }}</td>
                                                     <td>RP. {{ number_format($row->harga_jual, 2, ',', '.') }}</td>
-                                                    <td>{{ $row->satuan }}</td>
+                                                    <td>{{ $row->satuan }}</td> --}}
 
 
                                                     <td>RP. {{ number_format($row->total_harga, 2, ',', '.') }}</td>

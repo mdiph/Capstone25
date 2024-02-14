@@ -35,8 +35,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Barang Masuk</h4>
-                                    <a class="btn btn-primary btn-round ml-auto text-light" href="/tes">
+                                    <h4 class="card-title">Transaksi</h4>
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="">
+                                        <i class="fa fa-money-bill"></i>
+                                        Telat Bayar
+                                    </a>
+                                    <a class="btn btn-primary btn-round ml-2 text-light" href="/tes">
 
                                         <i class="fa fa-plus"></i>
                                         Add Row
@@ -233,52 +237,41 @@
                                                 <th>Harga Total</th>
                                                 <th>Salesman</th>
                                                 <th>Customer</th>
-                                                <th>Produk apa aja jir</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php $no = 1 @endphp
-                                            @foreach ($data->groupBy('id') as $groupedRows)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td>{{ $groupedRows->first()->kode_transaksi }}</td>
-                                                    <td>{{ $groupedRows->first()->tanggal_transaksi }}</td>
-                                                    <td>{{ $groupedRows->first()->subtotal }}</td>
-                                                    <td>{{ $groupedRows->first()->diskon }}</td>
-                                                    <td>{{ $groupedRows->first()->total }}</td>
-                                                    <td>{{ $groupedRows->first()->nama_salesman }}</td>
-                                                    <td>{{ $groupedRows->first()->nama_customer }}</td>
-                                                    <td>
-                                                        <ul>
-                                                            @foreach ($groupedRows as $row)
-                                                                @php $produkArray = explode(',', $row->nama_produk) @endphp
-                                                                @foreach ($produkArray as $nama_produk)
-                                                                    <li>{{ $nama_produk }} {{  }}</li>
-                                                                @endforeach
-                                                            @endforeach
-                                                        </ul>
-                                                    </td>
-                                                    <td>{{ $groupedRows->first()->harga_jual }}</td>
-                                                    <td>{{ $groupedRows->first()->stok_keluar }}</td>
-                                                </tr>
 
+                                            @foreach($data as $transaksi)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $transaksi->kode_transaksi }}</td>
+                                                <td>{{ $transaksi->tanggal_transaksi }}</td>
+                                                <td>{{ $transaksi->subtotal }}</td>
+                                                <td>{{ $transaksi->diskon }} %</td>
+                                                <td>{{ $transaksi->total }}</td>
+                                                <td>{{ $transaksi->salesman->nama_salesman }}</td>
+                                                <td>{{ $transaksi->customer->nama_customer }}</td>
 
+                                                <td>{{ $transaksi->pembayaran->status}}</td>
+                                                <td>
+                                                    <a href="#EditRowModal{{ $transaksi->id }}" data-toggle="modal"
+                                                        class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
+                                                        Edit</a>
+                                                    <a href="#DeleteRowModal{{ $transaksi->id }}" data-toggle="modal"
+                                                        class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
+                                                        Delete</a>
+                                                    @if($transaksi->pembayaran->status == 'Belum Lunas')
+                                                        <a href="/transaksi/detail/piutang/{{ $transaksi->id }}" class="btn btn-xs btn-warning">
+                                                            <i class="fa fa-money"></i> Pelunasan
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
-                                                        <td>
-                                                            <a href="#ShowRowModal" data-toggle="modal"
-                                                                class="btn btn-xs btn-secondary"><i class="fa fa-cash"></i>
-                                                                Show</a>
-                                                            <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
-                                                                class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                                                Edit</a>
-                                                            <a href="#DeleteRowModal{{ $row->id }}"
-                                                                data-toggle="modal" class="btn btn-xs btn-danger"><i
-                                                                    class="fa fa-trash"></i>
-                                                                Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

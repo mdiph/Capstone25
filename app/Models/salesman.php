@@ -20,7 +20,7 @@ class salesman extends Model
 
     public function transaksi() {
 
-        return $this->hasMany(transaksi2::class);
+        return $this->hasMany(Transaksi::class, 'salesman_id', 'id');
     }
 
     protected static function boot()
