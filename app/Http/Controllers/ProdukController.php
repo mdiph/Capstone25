@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\produk;
 use App\Models\kategori;
+use Illuminate\Http\Request;
+
+use Flasher\Prime\FlasherInterface;
+use yajra\Datatables\Facades\DataTables;
 use App\Http\Requests\StoreprodukRequest;
 use App\Http\Requests\UpdateprodukRequest;
-use Illuminate\Http\Request;
-use yajra\Datatables\Facades\DataTables;
 
 class ProdukController extends Controller
 {
@@ -21,7 +23,7 @@ class ProdukController extends Controller
         $data = produk::with('kategori')->get();
         $kategori = kategori::all();
 
-        
+
         return view ('DataMaster.produk')->with('data', $data)->with('kategori', $kategori);
     }
 
@@ -36,13 +38,14 @@ class ProdukController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FlasherInterface $flasher, Request $request)
     {
         //
 
         $validate = $request->all();
         $kategori = kategori::all();
         produk::create($validate);
+
 
         return redirect('/produk')->with('kategori',$kategori)->with('success', 'Data berhasil disimpan');
     }
@@ -89,6 +92,6 @@ class ProdukController extends Controller
 
         $sales->delete();
 
-        return redirect('/salesman')->with('success', 'Data berhasil dihapus');
+        return redirect('/produk')->with('success', 'Data berhasil dihapus');
     }
 }

@@ -75,7 +75,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        {{-- <div class="col">
                                             <div class="form-group">
                                                 <label for="email2">Harga</label>
                                                 <div class="input-group mb-3">
@@ -86,11 +86,11 @@
                                                         aria-label="Amount (to the nearest dollar)" readonly>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        {{-- <div class="col">
                                             <div class="form-group">
                                                 <label for="email2">Stok Barang</label>
                                                 <div class="input-group mb-3">
@@ -102,7 +102,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col">
 
                                         </div>

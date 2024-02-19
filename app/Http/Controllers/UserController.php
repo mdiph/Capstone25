@@ -16,6 +16,9 @@ class UserController extends Controller
             abort(403);
         }
         $user = User::all();
+
+
+
         return view('Admin.list')->with('user', $user);
     }
 
@@ -43,6 +46,8 @@ class UserController extends Controller
     public function update(Request $request, $id){
 
         $user  =  User::find($id);
+
+
 
         // $validateData = $request->validate([
         //     'nama' => 'required|max:255',

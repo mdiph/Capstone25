@@ -116,7 +116,7 @@
                             <a href="/">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
-                                
+
                             </a>
                         </li>
                         <li class="nav-section">
@@ -233,7 +233,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="/hutang">
                                             <span class="sub-item">Piutang</span>
                                         </a>
                                     </li>

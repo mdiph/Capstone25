@@ -40,6 +40,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
+
+                                <div class="container px-4 mx-auto">
+
+                                    <div class="bg-white rounded shadow">
+                                        {!! $chart->container() !!}
+                                    </div>
+
+                                </div>
                                 <!-- Modal tambah -->
                                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -116,12 +124,10 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tanggal Transaksi</th>
+
                                                 <th>Customer</th>
-                                                {{-- <th>Produk</th>
-                                                <th>Jumlah</th>
-                                                <th>Satuan</th>
-                                                <th>Harga</th> --}}
+                                                <th>Alamat</th>
+
                                                 <th>Total penjualan</th>
 
 
@@ -133,8 +139,9 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $row->tanggal_transaksi}}</td>
+
                                                     <td>{{ $row->nama_customer }}</td>
+                                                    <td>{{ $row->alamat }}</td>
                                                     {{-- <td>{{ $row->nama_produk }}</td>
                                                     <td>{{ $row->stok_keluar }}</td>
                                                     <td>RP. {{ number_format($row->harga_jual, 2, ',', '.') }}</td>
@@ -164,4 +171,9 @@
         </div>
 
     </div>
+
+
+    <script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
 @endsection

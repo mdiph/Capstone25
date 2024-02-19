@@ -26,6 +26,10 @@
                         </li>
                     </ul>
 
+
+                </div>
+                <div class="row">
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -35,10 +39,6 @@
                             </ul>
                         </div>
                     @endif
-                </div>
-                <div class="row">
-
-
 
 
 

@@ -136,7 +136,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
 
                                 @foreach ($data as $d)
                                     <!-- Modal delete -->
@@ -157,16 +157,16 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form method="POST" action="/kategori/delete/{{ $d->id }}"
+                                                <form method="POST" action="transaksi/delete/{{ $d->id }}"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="form-group">
                                                         <h4>Apakah Anda Ingin Menghapus data? </h4>
-                                                    </div> --}}
+                                                    </div>
 
 
 
-                                {{-- <div class="modal-footer ">
+                                 <div class="modal-footer ">
                                                         <button type="submit" id="addRowButton"
                                                             class="btn btn-primary"><i class="fa fa-save"></i>
                                                             Hapus</button>
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach --}}
+                                @endforeach
 
 
 

@@ -54,6 +54,7 @@ Route::get('/stok', [ControllersPersediaanBarangController::class, 'index']);
 Route::get('/hai', [TransaksiController::class, 'index'])->name('transaksi');
 // Route::post('/transaksi', [TransaksiController::class, 'dateRange'])->name('caritransaksi');
 Route::get('/transaksi/add', [TransaksiController::class, 'create']);
+Route::post('/transaksi/delete/{id}', [Transaksi2Controller::class, 'destroy']);
 Route::post('/transaksi/store', [TransaksiController::class, 'store']);
 Route::post('/addcart', [Transaksi2Controller::class, 'addCart']);
 Route::get('/deletecart/{id}', [Transaksi2Controller::class, 'DeleteCart']);
@@ -69,8 +70,8 @@ Route::get('/transaksi', [Transaksi2Controller::class, 'index']);
 Route::get('/tes', [Transaksi2Controller::class, 'create']);
 Route::get('/tes/cart', [Transaksi2Controller::class, 'getCart']);
 Route::post('/tes/add', [Transaksi2Controller::class, 'store']);
-Route::get('utang', [PiutangController::class, 'Index']);
-Route::get('utang/{id}', [PiutangController::class, 'show']);
+Route::get('hutang', [PiutangController::class, 'Index']);
+Route::get('hutang/{id}', [PiutangController::class, 'show']);
 
 
 

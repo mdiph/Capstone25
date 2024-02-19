@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\CodeCheckController;
+use App\Http\Controllers\API\ResetPasswordController;
+use App\Http\Controllers\API\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +39,6 @@ Route::get('hutang/{nama}', [\App\Http\Controllers\API\PiutangController::class,
 });
 
 Route::post('login', [\App\Http\Controllers\API\UserController::class, 'login']);
+Route::post('password/email',  ForgotPasswordController::class);
+Route::post('password/code/check', CodeCheckController::class);
+Route::post('password/reset', ResetPasswordController::class);

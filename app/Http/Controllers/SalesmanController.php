@@ -42,9 +42,13 @@ class SalesmanController extends Controller
         ];
         $validate = $request->validate($rules);
 
-        salesman::create($validate);
-
-        return redirect('/salesman')->with('success', 'Data berhasil disimpan');
+        try {
+            salesman::create($validate);
+            return redirect('/salesman')->with('success', 'Data berhasil disimpan');
+        } catch (\Exception $e) {
+            // Tangani kesalahan penyimpanan
+            return redirect('/salesman')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
     /**

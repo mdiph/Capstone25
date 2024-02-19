@@ -27,13 +27,15 @@ class LoginController extends Controller
 
 
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(array_merge($credentials, ['role' => 'Admin'])) || Auth::attempt(array_merge($credentials, ['role' => 'Gudang']))) {
+
+
             $request->session()->regenerate();
 
-            return redirect()->intended('/salesman');
+            return redirect()->intended('/')->with('success', 'Login Berhasil');
         }
 
-        return back()->with('LoginFailed', 'Password atau email salah');
+        return back()->with('error', 'Password atau email salah');
     }
 
 

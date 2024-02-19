@@ -12,10 +12,29 @@ class produk extends Model
     protected $table = 'produk';
 
     protected $fillable = [
-        "nama_produk", "deskripsi", "harga", "satuan",  "kategori_id"
+        "kode", "nama_produk", "deskripsi", "harga", "satuan",  "kategori_id"
 
 
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($model) {
+
+            $kategoriPrefix = strtoupper(substr($model->kategori->nama_kategori, 0, 2));
+
+            // Count the number of models with the same category
+            $count = static::where('kategori_id', $model->kategori->id)->count();
+
+            // Combine the prefix with the count and padded id
+            $model->kode = $kategoriPrefix . '-' . str_pad($count + 1, 3, '0', STR_PAD_LEFT);
+
+            $model->save();
+
+        });
+    }
 
 
     public function kategori() {

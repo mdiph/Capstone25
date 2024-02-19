@@ -440,8 +440,12 @@
 
 
                     },
-                    error: function(error) {
-                        console.log('Error: ' + error);
+                    error: function(xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                        console.log('Error: ' + err.error);
+
+                        // Tampilkan pesan error ke pengguna, misalnya dengan menggunakan alert atau menambahkannya ke elemen HTML tertentu
+                        alert('Error: Pastikan form yang anda isi benar dan jumlah keluar tidak melebihi stok');
                     }
                 });
             });
@@ -494,10 +498,10 @@
                 const persen = diskon / 100;
                 const total = subtotal - (subtotal * persen);
 
-                console.log("subtotal:", subtotal);
-                console.log("diskon:", diskon);
-                console.log("persen:", persen);
-                console.log("total:", total);
+                // console.log("subtotal:", subtotal);
+                // console.log("diskon:", diskon);
+                // console.log("persen:", persen);
+                // console.log("total:", total);
                 $('#total').val(total);
             }
 

@@ -102,14 +102,13 @@
                                                 <th>Keuntungan</th>
                                                 <th>Persentase</th> --}}
                                                 <th>No</th>
-                                                <th>Tanggal Transaksi</th>
-                                                <th>Produk</th>
-                                                <th>Satuan</th>
-                                                <th>Stok Terjual</th>
-                                                <th>Harga Jual(Rp) </th>
-                                                <th>Diskon</th>
+                                                <th>Nama Produk</th>
 
+                                                <th>Stok Keluar</th>
+                                                <th>Harga</th>
+                                                <th>Satuan</th>
                                                 <th>Harga Total</th>
+
                                                 {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
@@ -117,24 +116,17 @@
                                             @php $no = 1 @endphp
                                             @foreach ($data as $row)
                                                 <tr>
-                                                    {{-- <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->tanggal_transaksi}}</td>
-                                                    <td>{{ $row->nama_produk }}</td>
-                                                    <td>{{ $row->stok_keluar }}</td>
-                                                    <td>{{ $row->harga }}</td>
-                                                    <td>{{ $row->harga_jual }}</td>
-                                                    <td>{{ $row->keuntungan }}</td>
-                                                    <td>{{ $row->persentase }} %</td> --}}
+
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $row->tanggal_transaksi}}</td>
+
 
                                                     <td>{{ $row->nama_produk }}</td>
-                                                    <td>{{ $row->satuan }}</td>
-                                                    <td>{{ $row->stok_keluar }}</td>
-                                                    <td>{{ number_format($row->harga, 2, ',', '.') }}</td>
-                                                    <td>{{ $row->diskon }} %</td>
+                                                    <td>{{ $row->total_stok_keluar }}</td>
 
-                                                    <td>{{ number_format($row->total, 2, ',', '.') }}</td>
+                                                    <td>{{ number_format($row->harga, 2, ',', '.') }}</td>
+                                                    <td>{{ $row->satuan}}</td>
+
+                                                    <td>{{ number_format($row->total_transaksi, 2, ',', '.') }}</td>
 
 
 

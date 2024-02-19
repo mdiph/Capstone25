@@ -19,6 +19,20 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('rahasia123'),
         ]);
 
+        \App\Models\User::create([
+            'nama' => 'Ivan Danis',
+            'email' => 'Ivan@gmail.com',
+            'role' => 'Salesman',
+            'password' => Hash::make('rahasia123'),
+        ]);
+
+        \App\Models\User::create([
+            'nama' => 'Noor Ibra',
+            'email' => 'noor@gmail.com',
+            'role' => 'Kepala Cabang',
+            'password' => Hash::make('rahasia123'),
+        ]);
+
         \App\Models\kategori::create([
             'nama_kategori' => 'Obat'
         ]);
@@ -39,7 +53,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\salesman::create([
             'kode' => 'SLS-001',
-            'nama_salesman' => 'Ivan',
+            'nama_salesman' => 'Ivan Danis',
             'no_telp' => '083132121',
         ]);
 
@@ -50,6 +64,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\produk::create([
+            'kode' => 'OB-001',
             'nama_produk' => 'Ultraflu',
             'deskripsi' => 'ini ultraflu',
             'harga' => '3000',
@@ -59,6 +74,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\produk::create([
+            'kode' => 'OB-002',
             'nama_produk' => 'Diatab',
             'deskripsi' => 'ini diatab',
             'harga' => '4000',

@@ -40,6 +40,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
+
+                                <div class="container px-4 mx-auto">
+
+                                    <div class="bg-white rounded shadow">
+                                        {!! $chart->container() !!}
+                                    </div>
+
+                                </div>
                                 <!-- Modal tambah -->
                                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -94,7 +102,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tanggal Transaksi</th>
+
                                                 <th>Salesman</th>
 
                                                 <th>Total</th>
@@ -107,7 +115,7 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->tanggal_transaksi}}</td>
+
                                                     <td>{{ $row->nama_salesman }}</td>
 
                                                     <td>RP. {{ number_format($row->total_harga, 2, ',', '.') }}</td>
@@ -133,4 +141,7 @@
         </div>
 
     </div>
+    <script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
 @endsection

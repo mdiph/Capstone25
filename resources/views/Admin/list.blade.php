@@ -148,7 +148,12 @@
                                                         </div>
 
 
+                                                        {{-- <div class="form-group">
+                                                            <label>password</label>
+                                                            <input type="password" class="form-control" name="password" value="{{ decrypt }}"
+                                                                placeholder="password..." required>
 
+                                                        </div> --}}
 
 
 

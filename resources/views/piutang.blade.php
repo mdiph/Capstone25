@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Persediaan Barang</h4>
+                                    <h4 class="card-title">Hutang</h4>
 
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                                     <td>{{ $row->sisa_utang}}</td>
 
                                                     <td>
-                                                        <a href="/utang/{{ $row->id}}" class="btn btn-xs btn-info">
+                                                        <a href="/hutang/{{ $row->id}}" class="btn btn-xs btn-info">
                                                             <i class="fa fa-money"></i> Detail
                                                         </a>
                                                     </td>

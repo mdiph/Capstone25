@@ -72,6 +72,7 @@ class OmzetController extends Controller
         $query = "SELECT
         salesman.nama_salesman,
         customer.nama_customer,
+        customer.alamat,
         SUM(transaksi.total) as total_omzet
     FROM
         salesman
@@ -88,7 +89,9 @@ class OmzetController extends Controller
     $query2 = "SELECT
     salesman.nama_salesman,
     produk.nama_produk,
-    SUM(transaksi.total) as total_omzet
+    produk.satuan,
+    SUM(transaksi_detail.stok_keluar) as stok_keluar,
+    SUM(transaksi_detail.total) as total_omzet
 FROM
     salesman
 JOIN
@@ -101,20 +104,19 @@ JOIN
 WHERE
     transaksi.tanggal_transaksi BETWEEN ? AND ? AND salesman.nama_salesman = ?
 GROUP BY
-    salesman.nama_salesman, produk.nama_produk;";
+    salesman.nama_salesman, produk.nama_produk, produk.satuan;";
 
         $data = DB::select($query, [$fromDate, $toDate, $nama]);
 
-        $data2 = DB::select($query, [$fromDate, $toDate, $nama]);
+        $data2 = DB::select($query2, [$fromDate, $toDate, $nama]);
 
         $data = [
             'customer' => $data,
             'produk' => $data2,
         ];
 
-
-        if ($data) {
-            return ApiFormatter::createApi(200, 'Success', $data, $data2);
+        if (!empty($data['customer']) && !empty($data['produk'])) {
+            return ApiFormatter::createApi(200, 'Success', $data);
         } else {
             return ApiFormatter::createApi(400, 'Data not Found');
         }

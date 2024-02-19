@@ -34,7 +34,7 @@ class PersediaanBarangController extends Controller
     $date = Carbon::today();
 
     $query = "SELECT
-    p.id,
+    p.kode,
     p.nama_produk,
     p.satuan,
     COALESCE(sr.stok, p.stok) AS stok_awal,
@@ -45,7 +45,7 @@ FROM produk p
 LEFT JOIN produk_record sr ON p.id = sr.produk_id AND sr.tanggal = ?
 LEFT JOIN barang_masuk bm ON p.id = bm.produk_id AND bm.tanggal_masuk = ?
 LEFT JOIN barang_keluar bk ON p.id = bk.produk_id AND bk.tanggal_keluar = ?
-GROUP BY p.id, p.nama_produk, sr.stok, bm.jumlah_masuk, bk.jumlah_keluar
+GROUP BY  p.nama_produk;
 ";
 
 

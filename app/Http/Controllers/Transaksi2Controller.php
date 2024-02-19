@@ -38,32 +38,41 @@ class Transaksi2Controller extends Controller
 
 
     public function addCart(Request $request)
-    {
+{
+    // Validasi input
+    $validate = $request->validate([
+        'produk_id' => 'required',
+        'no_batch' => 'required',
+        'tanggal_kedaluwarsa' => 'required',
+        'jumlah_keluar' => 'required|numeric|min:1',
+        'diskon' => 'numeric|min:0|max:100',
+        'harga_jual' => 'required|numeric|min:0',
+    ]);
 
-
-        $validate = $request->all();
-
-        // $select = $validate['produk_id'];
-        // $qty =  $validate['qty'];
-        $diskon = $validate['harga_jual'] * $validate['jumlah_keluar'] - ($validate['harga_jual'] * $validate['jumlah_keluar']  * $validate['diskon'] / 100);
-
-
-
-        cart::create([
-            'produk_id' => $request->produk_id,
-            'no_batch' => $request->no_batch,
-            'tanggal_kedaluwarsa' => $request->tanggal_kedaluwarsa,
-            'jumlah_keluar' => $request->jumlah_keluar,
-            'diskon' => $request->diskon,
-            'harga_jual' => $request->harga_jual,
-            'total' => $diskon
-        ]);
-
-        // DB::transaction(function () use ($qty, $select) {
-        // });
-
-
+    // Validasi apakah jumlah keluar tidak melebihi stok produk
+    $produk = Produk::findOrFail($validate['produk_id']);
+    if ($validate['jumlah_keluar'] > $produk->stok) {
+        // Jika jumlah keluar melebihi stok, kembalikan response dengan pesan error
+        return response()->json(['message' => 'Jumlah keluar melebihi stok produk'], 422);
     }
+
+    // Hitung diskon
+    $diskon = $validate['harga_jual'] * $validate['jumlah_keluar'] - ($validate['harga_jual'] * $validate['jumlah_keluar'] * $validate['diskon'] / 100);
+
+    // Tambahkan ke keranjang jika validasi berhasil
+    cart::create([
+        'produk_id' => $request->produk_id,
+        'no_batch' => $request->no_batch,
+        'tanggal_kedaluwarsa' => $request->tanggal_kedaluwarsa,
+        'jumlah_keluar' => $request->jumlah_keluar,
+        'diskon' => $request->diskon,
+        'harga_jual' => $request->harga_jual,
+        'total' => $diskon
+    ]);
+
+    // Redirect atau lanjutkan dengan logika lainnya...
+}
+
 
     public function DeleteCart(Request $request,  $id)
     {
@@ -161,7 +170,7 @@ class Transaksi2Controller extends Controller
             Piutang::create([
                 'pembayaran_id' => $pembayaran->id,
                 'tanggal_bayar' => $pembayaran->tanggal_bayar,
-                'angsuran' => 0,
+                'angsuran' => $pembayaran->bayar ,
 
             ]);
         }
@@ -303,8 +312,28 @@ class Transaksi2Controller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaksi $transaksi)
-    {
-        //
+    public function destroy(Request $request, $id)
+{
+    // Temukan transaksi
+    $transaksi = Transaksi::findOrFail($id);
+
+
+    // Temukan detail transaksi
+    $transaksiDetails =transaksi_detail::where('transaksi_id', $id)->get();
+
+    // Kembalikan stok produk yang sebelumnya dikurangkan oleh transaksi
+    foreach ($transaksiDetails as $detail) {
+        produk::where('id', $detail->produk_id)->increment('stok', $detail->stok_keluar);
+        $transaksiDetails =transaksi_detail::where('transaksi_id', $detail->id)->delete();
     }
+
+
+
+    // Hapus transaksi
+    // Pembayaran::where('transaksi_id', $id)->delete();
+    $transaksi->delete();
+
+    return redirect('/transaksi')->with('success', 'Transaksi berhasil dihapus');
+}
+
 }
