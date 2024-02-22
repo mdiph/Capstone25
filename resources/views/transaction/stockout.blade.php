@@ -183,8 +183,8 @@
                                                 <th>No </th>
                                                 <th>Id Keluar</th>
                                                 <th>Tanggal Keluar</th>
-                                                <th>Tanggal Expired</th>
-                                                <th>Jumlah Keluar</th>
+                                                
+
                                                 <th>Harga Jual</th>
                                                 <th>Produk</th>
 
@@ -197,11 +197,11 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->id_keluar }}</td>
                                                     <td>{{ $row->tanggal_keluar }}</td>
-                                                    <td>{{ $row->tanggal_expired }}</td>
+
                                                     <td>{{ $row->jumlah_keluar }}</td>
-                                                    <td>{{ $row->produk->harga }}</td>
+
                                                     <td>{{ $row->produk->nama_produk }}</td>
-                                                    
+
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -39,4 +39,27 @@ class OmzetCustomerChart
         ->addData($dataArray)
         ->setLabels($labelArray);
     }
+
+    public function buildByDateRange($fromDate, $toDate): \ArielMejiaDev\LarapexCharts\PieChart
+    {
+        $query = "
+            SELECT customer.nama_customer AS label, SUM(transaksi.total) AS data
+            FROM customer
+            JOIN transaksi ON customer.id = transaksi.customer_id
+            WHERE transaksi.tanggal_transaksi BETWEEN ? AND ?
+            GROUP BY customer.nama_customer;
+        ";
+
+        $data = DB::select($query, [$fromDate, $toDate]);
+        $dataArray = array_column($data, 'data');
+        $dataArray = array_map('intval', $dataArray);
+        $labelArray = array_column($data, 'label');
+
+        return $this->chart->pieChart()
+            ->setTitle('Omzet Customer')
+            ->setHeight(250)
+            ->setSubtitle("2024 - $fromDate to $toDate")
+            ->addData($dataArray)
+            ->setLabels($labelArray);
+    }
 }

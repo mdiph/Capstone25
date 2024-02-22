@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode')->nullable();
             $table->string('nama_salesman');
             $table->string('no_telp');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -112,8 +112,11 @@
                                                         <div class="col-sm-3">
                                                             <input type="date" class="form-control input-sm" id="form" name="todate" required>
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <button type="submit" class="btn" name="search" >search</button>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-primary" name="search" >search</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="/omzet/customer" class="btn btn-success" >Clear</a>
                                                         </div>
                                                     </div>
                                                 </div>

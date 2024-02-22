@@ -8,7 +8,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Dashboard {{ $date->format('d F Y') }}</h4>
                 {{-- <div class="btn-group btn-group-page-header ml-auto">
                     <button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-ellipsis-h"></i>
@@ -30,13 +30,13 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-users"></i>
+                                        <i class="fa fa-box"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
+                                        <p class="card-category">Barang Masuk</p>
+                                        <h4 class="card-title">{{ $data1[0]->total_masuk }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -49,13 +49,13 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="far fa-newspaper"></i>
+                                        <i class="fa fa-truck"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
+                                        <p class="card-category">Transaksi</p>
+                                        <h4 class="card-title">{{ $data2[0]->total_transaksi }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -73,8 +73,8 @@
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
+                                        <p class="card-category">Omzet</p>
+                                        <h4 class="card-title">RP. {{ number_format($data3[0]->omzet, 2, ',', '.') }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -87,13 +87,13 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                        <i class="far fa-check-circle"></i>
+                                        <i class="fa fa-file-invoice-dollar"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
+                                        <p class="card-category">Piutang</p>
+                                        <h4 class="card-title">RP. {{ number_format($data4[0]->total_hutang, 2, ',', '.') }}</h4>
                                     </div>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Pembayaran Piutang</h4>
+                                    <h4 class="card-title font-weight-bold">Detail Transaksi #{{ $data->kode_transaksi }}</h4>
                                     <div id="datarange" class="float-end">
 
                                     </div>
@@ -46,83 +46,44 @@
 
                                 <div class="row">
                                     <div class="col">
-                                     <p>Kode Transaksi : {{ $data->kode_transaksi }}</p>
-                                     <p>Bill to : {{ $data->customer->nama_customer }}</p>
+                                        <p>Tanggal Transaksi : {{ $data->pembayaran->tanggal_bayar }}</p>
+                                        <p>Bill to : {{ $data->customer->nama_customer }}</p>
+                                        <p>Alamat: {{ $data->customer->alamat }}</p>
+                                        <p>Telfon : {{ $data->customer->no_telp }}</p>
 
                                     </div>
 
                                     <div class="col">
-                                     <p>Salesmsan : {{ $data->salesman->nama_salesman }}</p>
-
-                                    </div>
-                                 </div>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <h1>Tenggat waktu {{ $data->pembayaran->tanggal_bayar}} - {{ $data->pembayaran->jatuh_tempo }} </h1>
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Subtotal</td>
-                                                    <td>{{ $data->total }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Jumlah Bayar</td>
-                                                    <td>{{ $data->pembayaran->bayar }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Sisa Piutang</td>
-                                                    <td>{{ $data->total - $data->pembayaran->bayar }} </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="col">
-                                        <h1>Rincian Cicilan </h1>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Tanggal Bayar</th>
-                                                    <th scope="col">Angsuran</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($data->pembayaran->piutang as $p )
-                                                <tr>
-                                                    <td>{{ $p->tanggal_bayar}}</td>
-                                                    <td>{{ $p->angsuran }}</td>
-                                                </tr>
-
-                                                @endforeach
-
-
-                                            </tbody>
-                                        </table>
+                                        <p>Salesmsan : {{ $data->salesman->nama_salesman }}</p>
+                                        <p>Telfon : {{ $data->salesman->no_telp }}</p>
+                                        @if ($data->pembayaran->status == 'Lunas')
+                                        <h1 class="text-success font-weight-bold">LUNAS</h1>
+                                        @elseif ($data->pembayaran->status == 'Belum Lunas')
+                                            <h1 class="text-danger font-weight-bold">Belum LUNAS</h1>
+                                        @else
+                                        @endif
                                     </div>
                                 </div>
 
-                                @if ($data->pembayaran->status == "Lunas")
-                                    <h1>LUNAS</h1>
-                                @else
-                                <form method="POST" action="/bayar/angsuran/{{ $data->pembayaran->id }}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Bayar Piutang</label>
-                                        <input type="date" class="form-control " name="tanggal_bayar">
-                                        <input type="hidden" name="pembayaran_id" value="{{ $data->pembayaran->id }}">
+                                <div class="row">
+                                    <div class="col">
+
 
                                     </div>
-                                    <div class="form-group">
 
-                                        <input type="number" class="form-control" placeholder="Jumlah Bayar" name="angsuran">
-                                    </div>
+                                    {{-- <div class="col">
+                                        <h1>Status Transaksi</h1>
+                                        @if ($data->pembayaran->status == 'Lunas')
+                                        <h1 class="text-success">LUNAS</h1>
+                                        @elseif ($data->pembayaran->status == 'Belum Lunas')
+                                            <h1 class="text-danger">Belum LUNAS</h1>
+                                        @else
+                                        @endif
+                                    </div> --}}
+                                </div>
 
-                                    <button type="submit" class="btn btn-primary">Bayar</button>
-                                </form>
-                                @endif
+
+
 
 
 
@@ -140,23 +101,53 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data->detailTransaksi as $p )
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $p->produk->nama_produk}}</td>
-                                            <td>{{ $p->stok_keluar }}</td>
-                                            <td>{{ $p->produk->satuan}}</td>
-                                            <td>{{ $p->produk->harga }}</td>
-                                            <td>{{ $p->diskon }}</td>
-                                            <td>{{ $p->total }}</td>
-
-                                        </tr>
-
+                                        @foreach ($data->detailTransaksi as $p)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $p->produk->nama_produk }}</td>
+                                                <td>{{ $p->stok_keluar }}</td>
+                                                <td>{{ $p->produk->satuan }}</td>
+                                                <td>RP. {{ number_format($p->produk->harga, 2, ',', '.') }}</td>
+                                                <td>{{ $p->diskon }} %</td>
+                                                <td>RP. {{ number_format($p->total, 2, ',', '.') }}</td>
+                                            </tr>
                                         @endforeach
 
 
                                     </tbody>
+
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" ></td>
+                                            <td  class="font-weight-bold">Subtotal</td>
+                                            <td>RP. {{ number_format($data->subtotal, 2, ',', '.') }}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
+
+
+                                <div class="col-md-4 offset-md-8">
+                                    <table class="table  table-hover table-bordered">
+                                        <tbody>
+
+                                            <tr>
+                                                <td>Diskon</td>
+                                                <td>{{ $data->diskon }} %</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td>RP. {{ number_format($data->total, 2, ',', '.') }} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah Bayar</td>
+                                                <td>RP. {{ number_format($data->pembayaran->bayar, 2, ',', '.') }}</td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -54,6 +54,7 @@
                                                 <th>Alamat</th>
 
                                                 <th>Total Hutang</th>
+                                                <th>Action</th>
 
 
                                             </tr>
@@ -73,8 +74,12 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $row->nama_customer}}</td>
                                                     <td>{{ $row->alamat }}</td>
-                                                    <td>{{ $row->sisa_utang}}</td>
-
+                                                    <td>RP. {{ number_format($row->sisa_utang , 2, ',', '.') }}</td>
+                                                    <td>
+                                                        <a href="/transaksi/detail/piutang/{{ $row->transaksi_id }}" class="btn btn-xs btn-warning">
+                                                            <i class="fa fa-money"></i> Pelunasan
+                                                        </a>
+                                                    </td>
 
 
 

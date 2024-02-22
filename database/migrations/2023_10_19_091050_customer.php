@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_customer');
             $table->string('no_telp');
             $table->string('alamat');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

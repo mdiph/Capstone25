@@ -32,7 +32,7 @@
 <body class="login">
     <div class="wrapper wrapper-login">
         <div class="container container-login animated fadeIn">
-            <h3 class="text-center">Sign In To Admin</h3>
+            <h3 class="text-center">Sign In </h3>
             <form action="/login" method="post">
                 @csrf
                 <div class="login-form">
@@ -55,42 +55,34 @@
                     </div>
             </form>
 
+
+
+
+
             <div class="login-account">
-                <span class="msg">Don't have an account yet ?</span>
-                <a href="#" id="show-signup" class="link">Sign Up</a>
+                <a href="#" id="show-signup" class="link float-cente">Forget Password ?</a>
             </div>
         </div>
         </form>
     </div>
     <!-- register -->
     <div class="container container-signup animated fadeIn">
-        <h3 class="text-center">Sign Up</h3>
-        <form action="/register" method="post">
+        <h3 class="text-center">Forgot Password</h3>
+        <form action="/forgot/password/email" method="post">
             @csrf
             <div class="login-form">
-                <div class="form-group form-floating-label">
-                    <input id="nama" name="nama" type="text" class="form-control input-border-bottom"
-                        required>
-                    <label for="nama" class="placeholder">Nama</label>
-                </div>
+
                 <div class="form-group form-floating-label">
                     <input id="email" name="email" type="email" class="form-control input-border-bottom"
                         required>
                     <label for="email" class="placeholder">Email</label>
                 </div>
-                <div class="form-group form-floating-label">
-                    <input id="password" name="password" type="password"
-                        class="form-control input-border-bottom" required>
-                    <label for="passwordsignin" class="placeholder">Password</label>
-                    <div class="show-password">
-                        <i class="flaticon-interface"></i>
-                    </div>
-                </div>
+
 
 
                 <div class="form-action">
 
-                    <button type="submit" class="btn btn-primary btn-rounded btn-login">Sign Up</button>
+                    <button type="submit" class="btn btn-primary btn-rounded btn-login">Send Mail</button>
                 </div>
         </form>
 

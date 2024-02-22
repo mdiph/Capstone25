@@ -29,6 +29,18 @@
                 <div class="row">
 
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+
+                                    <li>{{ $error }}</li>
+
+                                @endforeach
+                            </ul>
+                            <button class="btn-close" type="button" data-dismiss="alert" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div>
+                    @endif
 
 
                     <div class="col-md-12">

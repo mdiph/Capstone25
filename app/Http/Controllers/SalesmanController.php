@@ -95,4 +95,17 @@ class SalesmanController extends Controller
 
         return redirect('/salesman')->with('success', 'Data berhasil dihapus');
     }
+
+    public function trash(){
+        $data = salesman::onlyTrashed()->get();
+
+        return view('trash.salesman')->with('data', $data);
+    }
+
+    public function kembalikan($id)
+{
+     $sales = salesman::onlyTrashed()->where('id',$id);
+     $sales->restore();
+     return redirect('/salesman/trash')->with('success', 'Data berhasil dikembalikan');
+}
 }

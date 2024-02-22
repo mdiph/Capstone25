@@ -28,6 +28,18 @@
                 </div>
                 <div class="row">
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+
+                                    <li>{{ $error }}</li>
+
+                                @endforeach
+                            </ul>
+                            <button class="btn-close" type="button" data-dismiss="alert" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div>
+                    @endif
 
 
 
@@ -36,7 +48,11 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">produk</h4>
-                                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="/produk/trash">
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </a>
+                                    <button class="btn btn-primary btn-round ml-2" data-toggle="modal"
                                         data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
                                         Add Row
@@ -248,6 +264,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
+                                                <th>Kode </th>
                                                 <th>Nama </th>
                                                 <th>Deskripsi</th>
                                                 <th>Harga</th>
@@ -263,6 +280,7 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
+                                                    <td>{{ $row->kode }}</td>
                                                     <td>{{ $row->nama_produk }}</td>
                                                     <td>{{ $row->deskripsi}}</td>
                                                     <td>{{ $row->harga }}</td>

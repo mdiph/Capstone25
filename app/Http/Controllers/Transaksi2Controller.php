@@ -27,7 +27,12 @@ class Transaksi2Controller extends Controller
     public function index()
     {
         //
-        $data = Transaksi::with(['salesman', 'customer', 'pembayaran'])->get();
+        $data = Transaksi::with(['salesman' => function ($query) {
+            $query->withTrashed();
+        },
+        'customer' => function ($query) {
+            $query->withTrashed();
+        }, 'pembayaran'])->get();
 
 
 
@@ -147,6 +152,10 @@ class Transaksi2Controller extends Controller
 
         ]);
         $cart = cart::with('produk')->get();
+        if ($cart->isEmpty()) {
+            // Redirect back or display an error message
+            return redirect()->back()->with('error', 'Keranjang kosong, silahkan masukan barang.');
+        }
 
         if ($validate['metode'] == "Cash") {
             $konfirmasi = "Lunas";
@@ -233,21 +242,53 @@ class Transaksi2Controller extends Controller
      */
     public function show(Request $request, $id)
     {
-        //
+        // Mengambil data transaksi beserta relasinya, termasuk yang di-soft delete
+        $data = Transaksi::with([
+            'salesman' => function ($query) {
+                $query->withTrashed();
+            },
+            'customer' => function ($query) {
+                $query->withTrashed();
+            },
+            'detailTransaksi' => function ($query) {
+                $query->with(['produk' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            },
+            'pembayaran.piutang'
+        ])
+        ->find($id);
 
-        $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
+
+
+
+        // Memeriksa apakah data ditemukan
 
 
 
 
-        return view('transaction.detailtransaksi')->with('data', $data);
-    }
+            // Menampilkan view dengan data yang telah disiapkan
+            return view('transaction.detailtransaksi')->with('data', $data);
+        }
 
     public function piutang(Request $request, $id)
     {
         //
 
-        $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
+        $data = Transaksi::with([
+            'salesman' => function ($query) {
+                $query->withTrashed();
+            },
+            'customer' => function ($query) {
+                $query->withTrashed();
+            },
+            'detailTransaksi' => function ($query) {
+                $query->with(['produk' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            },
+            'pembayaran.piutang'
+        ])->find($id);
 
 
 

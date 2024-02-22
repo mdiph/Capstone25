@@ -28,7 +28,18 @@
                 </div>
                 <div class="row">
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
 
+                                    <li>{{ $error }}</li>
+
+                                @endforeach
+                            </ul>
+                            <button class="btn-close" type="button" data-dismiss="alert" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div>
+                    @endif
 
 
                     <div class="col-md-12">
@@ -66,10 +77,7 @@
                                         <h1>Tenggat waktu {{ $data->pembayaran->tanggal_bayar}} - {{ $data->pembayaran->jatuh_tempo }} </h1>
                                         <table class="table">
                                             <tbody>
-                                                <tr>
-                                                    <td>Subtotal</td>
-                                                    <td>{{ $data->subtotal }}</td>
-                                                </tr>
+
 
                                                 <tr>
                                                     <td>Diskon</td>
@@ -77,21 +85,21 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Total</td>
-                                                    <td>{{ $data->total }}</td>
+                                                    <td>RP. {{ number_format($data->total, 2, ',', '.') }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Jumlah Bayar</td>
-                                                    <td>{{ $data->pembayaran->bayar }}</td>
+                                                    <td>RP. {{ number_format($data->pembayaran->bayar , 2, ',', '.') }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Sisa Piutang</td>
-                                                    <td>{{ $data->total - $data->pembayaran->bayar }} </td>
+                                                    <td>RP. {{ number_format($data->total - $data->pembayaran->bayar, 2, ',', '.') }} </td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
                                     </div>
-                                    
+
                                     <div class="col">
                                         <h1>Rincian Cicilan </h1>
                                         <table class="table table-bordered">
@@ -106,13 +114,14 @@
                                                 @foreach ($data->pembayaran->piutang as $p )
                                                 <tr>
                                                     <td>{{ $p->tanggal_bayar}}</td>
-                                                    <td>{{ $p->angsuran }}</td>
+                                                    <td>RP. {{ number_format($p->angsuran, 2, ',', '.') }}</td>
                                                 </tr>
 
                                                 @endforeach
 
 
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -161,9 +170,9 @@
                                             <td>{{ $p->produk->nama_produk}}</td>
                                             <td>{{ $p->stok_keluar }}</td>
                                             <td>{{ $p->produk->satuan}}</td>
-                                            <td>{{ $p->produk->harga }}</td>
+                                            <td>RP. {{ number_format($p->produk->harga, 2, ',', '.') }}</td>
                                             <td>{{ $p->diskon }}</td>
-                                            <td>{{ $p->total }}</td>
+                                            <td>RP. {{ number_format($p->total, 2, ',', '.') }}</td>
 
                                         </tr>
 
@@ -171,6 +180,13 @@
 
 
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" ></td>
+                                            <td  class="font-weight-bold">Subtotal</td>
+                                            <td>RP. {{ number_format($data->subtotal, 2, ',', '.') }}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>

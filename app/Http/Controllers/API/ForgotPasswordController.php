@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Models\User;
 
 class ForgotPasswordController extends Controller
 {
@@ -22,7 +23,13 @@ class ForgotPasswordController extends Controller
     {
         $data = $request->all(); // Use validated() method for validation
 
-        ResetCodePassword::where('email', $request->email)->delete();
+
+        if(User::where('email', $request->email)->exists()){
+            ResetCodePassword::where('email', $request->email)->delete();
+        } else{
+            return ApiFormatter::createApi(422, 'Email not registered');
+        }
+
 
         $data['code'] = mt_rand(100000, 999999);
 

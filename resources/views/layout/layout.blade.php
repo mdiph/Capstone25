@@ -41,12 +41,14 @@
         <!--
     Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
   -->
-        <div class="main-header" data-background-color="purple">
+        <div class="main-header" data-background-color="blue">
             <!-- Logo Header -->
             <div class="logo-header">
 
                 <a href="#" class="logo">
-                    <img src="/assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+                    <div class="navbar-brand" style="width: 150px; font-size: 24px;">
+                        <img src="/SMP2.png" alt="navbar brand" style="height: 50px; float: left; margin-right: 7px;">
+                    </div>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,12 +86,12 @@
                                 <span>
                                     {{ auth()->user()->nama }}
                                     <span class="user-level">{{ auth()->user()->role }}</span>
-                                    <span class="caret"></span>
+                                    {{-- <span class="caret"></span> --}}
                                 </span>
                             </a>
                             <div class="clearfix"></div>
 
-                            <div class="collapse in" id="collapseExample">
+                            {{-- <div class="collapse in" id="collapseExample">
                                 <ul class="nav">
                                     <li>
                                         <a href="#profile">
@@ -108,7 +110,7 @@
                                     </li>
 
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <ul class="nav">

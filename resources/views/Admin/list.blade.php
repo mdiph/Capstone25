@@ -28,6 +28,15 @@
                 </div>
                 <div class="row">
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
 
@@ -136,7 +145,7 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>Nama</label>
-                                                            <input type="text" class="form-control" name="user" value="{{ $d->nama }}"
+                                                            <input type="text" class="form-control" name="nama" value="{{ $d->nama }}"
                                                                 placeholder="Nama User..." required>
 
                                                         </div>
@@ -148,12 +157,12 @@
                                                         </div>
 
 
-                                                        {{-- <div class="form-group">
+                                                        <div class="form-group">
                                                             <label>password</label>
-                                                            <input type="password" class="form-control" name="password" value="{{ decrypt }}"
-                                                                placeholder="password..." required>
+                                                            <input type="password" class="form-control" name="password"
+                                                                placeholder="password..." >
 
-                                                        </div> --}}
+                                                        </div>
 
 
 

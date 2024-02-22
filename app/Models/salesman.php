@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class salesman extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
 
     protected $table = 'salesman';
@@ -17,6 +19,7 @@ class salesman extends Model
 
 
     ];
+    protected $dates = ['deleted_at'];
 
     public function transaksi() {
 

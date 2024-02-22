@@ -25,24 +25,14 @@
                         </li>
                     </ul>
                 </div>
-
-                @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-
-                                    <li>{{ $error }}</li>
-
-                                @endforeach
-                            </ul>
-                            <button class="btn-close" type="button" data-dismiss="alert" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                        </div>
-                    @endif
                 <div class="column">
                     <div class="">
-                        <form method="POST" action="/barangmasuk/store">
+
+
+                        <form method="POST" action="/barangmasuk/edit/{{ $data->id }}">
 
                             @csrf
+
 
 
                             <div class="card">
@@ -56,12 +46,13 @@
                                                 <label for="email2">Kode Barang</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="nama"
-                                                        placeholder="Cari barang. . ." aria-label=""
+                                                        placeholder="Cari barang. . ." aria-label="" value="{{ $data->produk->nama_produk}}"
                                                         aria-describedby="basic-addon1">
-                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                    <input type="hidden" class="form-control" name="produk_id" value="{{ $data->produk_id }}"
                                                         id="id">
-                                                    <input type="hidden" class="form-control" name="stok_lama"
-                                                        id="stok_lama">
+                                                        <input type="hidden" class="form-control" name="produk_idlama" value="{{ $data->produk_id }}"
+                                                        id="id">
+
                                                     <div class="input-group-prepend">
                                                         <button class="btn btn-default btn-border" data-toggle="modal"
                                                             data-target="#modalload" type="button">cari</button>
@@ -75,7 +66,7 @@
                                             <div class="form-group">
                                                 <label>Tanggal Masuk</label>
                                                 <div class="input-group">
-                                                    <input type="date" class="form-control" id="datepicker"
+                                                    <input type="date" class="form-control" id="datepicker" value="{{ $data->tanggal_masuk }}"
                                                         name="tanggal_masuk" name="datepicker"
                                                         placeholder="tanggal masuk. . .">
                                                     <div class="input-group-append">
@@ -88,34 +79,11 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        {{-- <div class="col">
-                                            <div class="form-group">
-                                                <label for="email2">Harga</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">RP</span>
-                                                    </div>
-                                                    <input type="text" class="form-control" name="harga" id="harga"
-                                                        aria-label="Amount (to the nearest dollar)" readonly>
-                                                </div>
-                                            </div>
-                                        </div> --}}
+
 
                                     </div>
                                     <div class="row">
-                                        {{-- <div class="col">
-                                            <div class="form-group">
-                                                <label for="email2">Stok Barang</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Stok Masuk"
-                                                        name="stok" id="stok" aria-label="Recipient's username"
-                                                        aria-describedby="basic-addon2" disabled>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
+
                                         <div class="col">
 
                                         </div>
@@ -125,28 +93,16 @@
                                     <div class="form-group">
 
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">With textarea</span>
-                                            </div>
-                                            <textarea class="form-control" aria-label="With textarea"></textarea>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-default btn-border" type="button">Button</button>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="" aria-label=""
-                                                aria-describedby="basic-addon1">
-                                        </div>
-                                    </div> --}}
+
                                     <div class="form-group w-50">
                                         <label for="email2">Stok Masuk</label>
                                         <div class="input-group mb-3">
-                                            <input type="number" class="form-control" placeholder="Stok Masuk"
+                                            <input type="number" class="form-control" placeholder="Stok Masuk" value="{{ $data->jumlah_masuk }}"
                                                 name="jumlah_masuk" aria-label="Recipient's username"
+                                                aria-describedby="basic-addon2">
+
+                                                <input type="hidden" class="form-control" placeholder="Stok Masuk" value="{{ $data->jumlah_masuk }}"
+                                                name="jumlah_lama" aria-label="Recipient's username"
                                                 aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Pcs</span>
@@ -159,7 +115,11 @@
 
                                 </div>
                             </div>
+
+
                         </form>
+
+
 
                     </div>
 
@@ -202,7 +162,7 @@
                         </thead>
                         <tbody>
                             @php $no = 1 @endphp
-                            @foreach ($data as $row)
+                            @foreach ($produk as $row)
                                 <tr id="tes">
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $row->nama_produk }}</td>

@@ -49,14 +49,23 @@ class UserController extends Controller
 
 
 
-        // $validateData = $request->validate([
-        //     'nama' => 'required|max:255',
-        //     'email' => 'required|email:dns|unique:users',
+        $validateData = $request->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required|email:dns|unique:users,email,' . $id, // Gunakan unique rule dengan pengecualian untuk email yang sama
+            'role' => 'required',
+            'password' => 'nullable|min:5|max:30',
+        ]);
 
-        //     'role' => 'required',
-        //   ]);
+        // Cek apakah password diisi atau tidak
+        if (!isset($validateData['password'])) {
+            // Jika password tidak diisi, hapus kunci 'password' dari array
+            unset($validateData['password']);
+        } else {
+            // Jika password diisi, hash password baru
+            $validateData['password'] = bcrypt($validateData['password']);
+        }
 
-        $validateData = $request->all();
+
           //enkripsi password di my sql
 
         $user->update($validateData);

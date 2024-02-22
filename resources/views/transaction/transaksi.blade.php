@@ -249,17 +249,20 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $transaksi->kode_transaksi }}</td>
                                                 <td>{{ $transaksi->tanggal_transaksi }}</td>
-                                                <td>{{ $transaksi->subtotal }}</td>
+                                                <td>RP. {{ number_format($transaksi->subtotal , 2, ',', '.') }}</td>
                                                 <td>{{ $transaksi->diskon }} %</td>
-                                                <td>{{ $transaksi->total }}</td>
+                                                <td>RP. {{ number_format($transaksi->total , 2, ',', '.') }}</td>
                                                 <td>{{ $transaksi->salesman->nama_salesman }}</td>
                                                 <td>{{ $transaksi->customer->nama_customer }}</td>
 
                                                 <td>{{ $transaksi->pembayaran->status}}</td>
                                                 <td>
-                                                    <a href="#EditRowModal{{ $transaksi->id }}" data-toggle="modal"
+                                                    <a href="/transaksi/detail/{{ $transaksi->id }}"
+                                                        class="btn btn-xs btn-secondary"><i class="fa fa-info"></i>
+                                                        Detail</a>
+                                                    {{-- <a href="#EditRowModal{{ $transaksi->id }}" data-toggle="modal"
                                                         class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                                        Edit</a>
+                                                        Edit</a> --}}
                                                     <a href="#DeleteRowModal{{ $transaksi->id }}" data-toggle="modal"
                                                         class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
                                                         Delete</a>

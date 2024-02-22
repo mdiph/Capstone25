@@ -94,4 +94,17 @@ class ProdukController extends Controller
 
         return redirect('/produk')->with('success', 'Data berhasil dihapus');
     }
+
+    public function trash(){
+        $data = produk::onlyTrashed()->get();
+
+        return view('trash.produk')->with('data', $data);
+    }
+
+    public function kembalikan($id)
+{
+     $sales = produk::onlyTrashed()->where('id',$id);
+     $sales->restore();
+     return redirect('/produk/trash')->with('success', 'Data berhasil dikembalikan');
+}
 }
