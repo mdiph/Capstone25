@@ -3,28 +3,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">Forms</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Forms</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Basic Form</a>
-                        </li>
-                    </ul>
-                </div>
+
 
                 @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -35,7 +14,9 @@
 
                                 @endforeach
                             </ul>
-                            <button class="btn-close" type="button" data-dismiss="alert" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                         </div>
                     @endif
                 <div class="column">
@@ -47,7 +28,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Input Group</div>
+                                    <div class="card-title">Tambah Barang Masuk</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

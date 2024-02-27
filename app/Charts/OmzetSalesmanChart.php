@@ -27,7 +27,7 @@ class OmzetSalesmanChart
         $labelArray = array_column($data, 'label');
         return $this->chart->pieChart()
             ->setTitle('Omzet Salesman')
-            ->setSubtitle('Season 2021.')
+            ->setSubtitle('Season 2024.')
             ->setHeight(250)
             ->addData($dataArray)
             ->setLabels($labelArray);

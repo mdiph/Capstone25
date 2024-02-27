@@ -38,7 +38,7 @@ class SalesmanController extends Controller
 
         $rules = [
             'nama_salesman' => 'required|max:255',
-            'no_telp' => 'required|string|min:10|max:13',
+            'no_telp' => ['required', 'regex:^(?:\+62|62|0)(?:\d{8,15})$^'],
         ];
         $validate = $request->validate($rules);
 
@@ -73,9 +73,14 @@ class SalesmanController extends Controller
     public function update(Request $request, salesman $salesman, $id)
     {
         //
+
+        $rules = [
+            'nama_salesman' => 'required|max:255',
+            'no_telp' => ['required', 'regex:^(?:\+62|62|0)(?:\d{8,15})$^'],
+        ];
         $sales = salesman::find($id);
 
-        $validate = $request->all();
+        $validate = $request->validate($rules);
 
         $sales->update($validate);
 

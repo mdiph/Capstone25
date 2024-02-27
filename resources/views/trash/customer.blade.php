@@ -4,11 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    
-
-
-                </div>
+                
                 <div class="row">
 
                     @if ($errors->any())
@@ -49,9 +45,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
-                                                <th>Kode </th>
-                                                <th>Name Produk</th>
-
+                                                <th>Nama Customer </th>
+                                                <th>No Telfon</th>
+                                                <th>alamat</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -60,11 +56,12 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->kode }}</td>
-                                                    <td>{{ $row->nama_produk }}</td>
+                                                    <td>{{ $row->nama_customer }}</td>
 
+                                                    <td>{{ $row->no_telp }}</td>
+                                                    <td>{{ $row->alamat }}</td>
                                                     <td>
-                                                        <form method="POST" action="/produk/kembali/{{ $row->id }}">
+                                                        <form method="POST" action="/customer/kembali/{{ $row->id }}">
                                                             @csrf
                                                             <button type="submit" class="btn btn-xs btn-success">
                                                                 <i class="fa fa-back"></i> Kembalikan

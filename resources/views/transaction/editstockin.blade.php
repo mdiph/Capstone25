@@ -3,28 +3,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">Forms</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Forms</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Basic Form</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <div class="column">
                     <div class="">
 
@@ -37,7 +16,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Input Group</div>
+                                    <div class="card-title">Ubah Barang Masuk</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

@@ -11,17 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi2s', function (Blueprint $table) {
+        // Schema::create('transaksi2s', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('kode_transaksi')->nullable();
+        //     $table->date('tanggal_transaksi');
+        //     $table->integer('harga_jual');
+        //     $table->integer('harga_akhir');
+        //     $table->integer('stok_keluar');
+        //     $table->integer('diskon')->default(0);
+        //     $table->foreignId('produk_id')->references('id')->on('produk');
+        //     // $table->integer('total');
+        //     // $table->integer('bayar');
+        //     $table->foreignId('salesman_id')->references('id')->on('salesman');
+        //     $table->foreignId('customer_id')->references('id')->on('customer');
+        //     $table->timestamps();
+        // });
+        Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_transaksi')->nullable();
             $table->date('tanggal_transaksi');
-            $table->integer('harga_jual');
-            $table->integer('harga_akhir');
-            $table->integer('stok_keluar');
-            $table->integer('diskon')->default(0);
-            $table->foreignId('produk_id')->references('id')->on('produk');
-            // $table->integer('total');
-            // $table->integer('bayar');
+
+            $table->integer('total');
+            $table->integer('diskon')->nullable();
+            $table->integer('subtotal');
             $table->foreignId('salesman_id')->references('id')->on('salesman');
             $table->foreignId('customer_id')->references('id')->on('customer');
             $table->timestamps();

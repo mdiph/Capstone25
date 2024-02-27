@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+
                 <div class="row">
 
 
@@ -89,6 +68,48 @@
                                     </div>
                                 </div>
 
+                                @foreach ($data as $d)
+                                    <!-- Modal delete -->
+                                    <div class="modal fade" id="DeleteRowModal{{ $d->id }}" tabindex="-1"
+                                        role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-bd">
+                                                    <h5 class="modal-title">
+                                                        <span class="fw-mediumbold">
+                                                            Delete</span>
+                                                        <span class="fw-light">
+                                                            Row
+                                                        </span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="/barangmasuk/delete/{{ $d->id }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <h4>Apakah Anda Ingin Menghapus data? </h4>
+                                                    </div>
+
+
+
+                                                    <div class="modal-footer ">
+                                                        <button type="submit" id="addRowButton"
+                                                            class="btn btn-primary"><i class="fa fa-save"></i>
+                                                            Hapus</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
 
                                 <div class="table-responsive">
                                     <form method="POST" action="{{ route('caristockin') }}">
@@ -117,7 +138,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
-                                                <th>id_masuk</th>
+                                                <th>ID</th>
                                                 <th>tanggal_masuk</th>
 
                                                 <th>jumlah_masuk</th>

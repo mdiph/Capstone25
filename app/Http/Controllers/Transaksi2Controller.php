@@ -27,12 +27,14 @@ class Transaksi2Controller extends Controller
     public function index()
     {
         //
-        $data = Transaksi::with(['salesman' => function ($query) {
-            $query->withTrashed();
-        },
-        'customer' => function ($query) {
-            $query->withTrashed();
-        }, 'pembayaran'])->get();
+        $data = Transaksi::with([
+            'salesman' => function ($query) {
+                $query->withTrashed();
+            },
+            'customer' => function ($query) {
+                $query->withTrashed();
+            }, 'pembayaran'
+        ])->get();
 
 
 
@@ -43,40 +45,40 @@ class Transaksi2Controller extends Controller
 
 
     public function addCart(Request $request)
-{
-    // Validasi input
-    $validate = $request->validate([
-        'produk_id' => 'required',
-        'no_batch' => 'required',
-        'tanggal_kedaluwarsa' => 'required',
-        'jumlah_keluar' => 'required|numeric|min:1',
-        'diskon' => 'numeric|min:0|max:100',
-        'harga_jual' => 'required|numeric|min:0',
-    ]);
+    {
+        // Validasi input
+        $validate = $request->validate([
+            'produk_id' => 'required',
+            'no_batch' => 'required',
+            'tanggal_kedaluwarsa' => 'required',
+            'jumlah_keluar' => 'required|numeric|min:1',
+            'diskon' => 'numeric|min:0|max:100',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
 
-    // Validasi apakah jumlah keluar tidak melebihi stok produk
-    $produk = Produk::findOrFail($validate['produk_id']);
-    if ($validate['jumlah_keluar'] > $produk->stok) {
-        // Jika jumlah keluar melebihi stok, kembalikan response dengan pesan error
-        return response()->json(['message' => 'Jumlah keluar melebihi stok produk'], 422);
+        // Validasi apakah jumlah keluar tidak melebihi stok produk
+        $produk = Produk::findOrFail($validate['produk_id']);
+        if ($validate['jumlah_keluar'] > $produk->stok) {
+            // Jika jumlah keluar melebihi stok, kembalikan response dengan pesan error
+            return response()->json(['message' => 'Jumlah keluar melebihi stok produk'], 422);
+        }
+
+        // Hitung diskon
+        $diskon = $validate['harga_jual'] * $validate['jumlah_keluar'] - ($validate['harga_jual'] * $validate['jumlah_keluar'] * $validate['diskon'] / 100);
+
+        // Tambahkan ke keranjang jika validasi berhasil
+        cart::create([
+            'produk_id' => $request->produk_id,
+            'no_batch' => $request->no_batch,
+            'tanggal_kedaluwarsa' => $request->tanggal_kedaluwarsa,
+            'jumlah_keluar' => $request->jumlah_keluar,
+            'diskon' => $request->diskon,
+            'harga_jual' => $request->harga_jual,
+            'total' => $diskon
+        ]);
+
+        // Redirect atau lanjutkan dengan logika lainnya...
     }
-
-    // Hitung diskon
-    $diskon = $validate['harga_jual'] * $validate['jumlah_keluar'] - ($validate['harga_jual'] * $validate['jumlah_keluar'] * $validate['diskon'] / 100);
-
-    // Tambahkan ke keranjang jika validasi berhasil
-    cart::create([
-        'produk_id' => $request->produk_id,
-        'no_batch' => $request->no_batch,
-        'tanggal_kedaluwarsa' => $request->tanggal_kedaluwarsa,
-        'jumlah_keluar' => $request->jumlah_keluar,
-        'diskon' => $request->diskon,
-        'harga_jual' => $request->harga_jual,
-        'total' => $diskon
-    ]);
-
-    // Redirect atau lanjutkan dengan logika lainnya...
-}
 
 
     public function DeleteCart(Request $request,  $id)
@@ -130,7 +132,12 @@ class Transaksi2Controller extends Controller
 
         DB::beginTransaction();
 
+
+
+
+
         try {
+
 
             $validate = $request->all();
 
@@ -157,14 +164,16 @@ class Transaksi2Controller extends Controller
             return redirect()->back()->with('error', 'Keranjang kosong, silahkan masukan barang.');
         }
 
-        if ($validate['metode'] == "Cash") {
-            $konfirmasi = "Lunas";
-            $jatuhTempo = $validate['tanggal_transaksi'];
-        }
         if ($validate['metode'] == "Tempo") {
             $konfirmasi = "Belum Lunas";
             $jatuhTempo = Carbon::parse($validate['tanggal_transaksi'])->addDays(30);
+        }else if ($validate['metode'] == "Cash" && $validate['bayar'] == $validate['total']) {
+            $konfirmasi = "Lunas";
+            $jatuhTempo = $validate['tanggal_transaksi'];
+        } else {
+            return redirect()->back()->with('error', 'Bayar harus sesuai total.');
         }
+
         $pembayaran = Pembayaran::create([
             'transaksi_id' => $transaksi->id,
             'status' => $konfirmasi,
@@ -179,7 +188,7 @@ class Transaksi2Controller extends Controller
             Piutang::create([
                 'pembayaran_id' => $pembayaran->id,
                 'tanggal_bayar' => $pembayaran->tanggal_bayar,
-                'angsuran' => $pembayaran->bayar ,
+                'angsuran' => $pembayaran->bayar,
 
             ]);
         }
@@ -207,11 +216,21 @@ class Transaksi2Controller extends Controller
                 'stok' => $value->produk->stok,
                 'tanggal' => $validate['tanggal_transaksi']
             ]);
+            $lastDigitOfYear = substr($validate['tanggal_transaksi'], -2, 2); // Mengambil 2 digit terakhir tahun
+            $month = date('m', strtotime($validate['tanggal_transaksi'])); // Mengambil bulan dari tanggal transaksi
+            $day = date('d', strtotime($validate['tanggal_transaksi'])); // Mengambil tanggal dari tanggal transaksi
+
+            // Mendapatkan digit terakhir dari barangkeluar dibuat ke berapa pada tanggal tersebut
+            $lastDigitFromBarangKeluar = Barangkeluar::whereDate('tanggal_keluar', $validate['tanggal_transaksi'])->count() + 1;
+
+            $id_keluar = "BK-" . $lastDigitOfYear . $month . $day . $lastDigitFromBarangKeluar . $value->produk_id;
 
             Barangkeluar::create([
+                'id_keluar' => $id_keluar,
                 'tanggal_keluar' => $validate['tanggal_transaksi'],
                 'jumlah_keluar' => $value->jumlah_keluar,
-                'produk_id' => $value->produk_id
+                'produk_id' => $value->produk_id,
+                'transaksi_id' => $transaksi->id
             ]);
             produk::where('id', $value->produk_id)->decrement('stok', $value->jumlah_keluar);
             transaksi_detail::create($product);
@@ -231,10 +250,11 @@ class Transaksi2Controller extends Controller
             // Tangani kesalahan jika ditemui
             // Rollback untuk membatalkan transaksi
             DB::rollBack();
+            return redirect()->back()->with('error', 'Terdapat kesalahan');
         }
 
 
-        return redirect('/transaksi');
+        return redirect('/transaksi')->with('success', 'Transaksi Berhasil');
     }
 
     /**
@@ -257,7 +277,7 @@ class Transaksi2Controller extends Controller
             },
             'pembayaran.piutang'
         ])
-        ->find($id);
+            ->find($id);
 
 
 
@@ -267,9 +287,9 @@ class Transaksi2Controller extends Controller
 
 
 
-            // Menampilkan view dengan data yang telah disiapkan
-            return view('transaction.detailtransaksi')->with('data', $data);
-        }
+        // Menampilkan view dengan data yang telah disiapkan
+        return view('transaction.detailtransaksi')->with('data', $data);
+    }
 
     public function piutang(Request $request, $id)
     {
@@ -354,27 +374,27 @@ class Transaksi2Controller extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, $id)
-{
-    // Temukan transaksi
-    $transaksi = Transaksi::findOrFail($id);
+    {
+        // Temukan transaksi
+        $transaksi = Transaksi::findOrFail($id);
 
 
-    // Temukan detail transaksi
-    $transaksiDetails =transaksi_detail::where('transaksi_id', $id)->get();
+        // Temukan detail transaksi
+        $transaksiDetails = transaksi_detail::where('transaksi_id', $id)->get();
 
-    // Kembalikan stok produk yang sebelumnya dikurangkan oleh transaksi
-    foreach ($transaksiDetails as $detail) {
-        produk::where('id', $detail->produk_id)->increment('stok', $detail->stok_keluar);
-        $transaksiDetails =transaksi_detail::where('transaksi_id', $detail->id)->delete();
+        // Kembalikan stok produk yang sebelumnya dikurangkan oleh transaksi
+        foreach ($transaksiDetails as $detail) {
+            produk::where('id', $detail->produk_id)->increment('stok', $detail->stok_keluar);
+            Barangkeluar::where('transaksi_id', $detail->id)->delete();
+            $transaksiDetails = transaksi_detail::where('transaksi_id', $detail->id)->delete();
+        }
+
+
+
+        // Hapus transaksi
+        // Pembayaran::where('transaksi_id', $id)->delete();
+        $transaksi->delete();
+
+        return redirect('/transaksi')->with('success', 'Transaksi berhasil dihapus');
     }
-
-
-
-    // Hapus transaksi
-    // Pembayaran::where('transaksi_id', $id)->delete();
-    $transaksi->delete();
-
-    return redirect('/transaksi')->with('success', 'Transaksi berhasil dihapus');
-}
-
 }

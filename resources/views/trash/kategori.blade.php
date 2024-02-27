@@ -5,7 +5,8 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    
+
+
 
 
                 </div>
@@ -28,9 +29,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">produk Trash</h4>
+                                    <h4 class="card-title">Kategori Trash</h4>
                                     <a class="btn btn-primary btn-round ml-auto"
-                                        href="/produk">
+                                        href="/kategori">
                                         <i class="fa fa-back"></i>
                                         Kembali
                                 </a>
@@ -49,8 +50,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
-                                                <th>Kode </th>
-                                                <th>Name Produk</th>
+                                                <th>Nama Kategori</th>
 
                                                 <th>Action</th>
                                             </tr>
@@ -60,11 +60,11 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->kode }}</td>
-                                                    <td>{{ $row->nama_produk }}</td>
+
+                                                    <td>{{ $row->nama_kategori }}</td>
 
                                                     <td>
-                                                        <form method="POST" action="/produk/kembali/{{ $row->id }}">
+                                                        <form method="POST" action="/kategori/kembali/{{ $row->id }}">
                                                             @csrf
                                                             <button type="submit" class="btn btn-xs btn-success">
                                                                 <i class="fa fa-back"></i> Kembalikan

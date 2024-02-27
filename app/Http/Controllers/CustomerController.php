@@ -32,7 +32,12 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        $validate = $request->all();
+        $rules = [
+            'nama_customer' => 'required|max:255',
+            'no_telp' => ['required', 'regex:^(?:\+62|62|0)(?:\d{8,15})$^'],
+            'alamat' => 'required|max:255'
+        ];
+        $validate = $request->validate($rules);
 
       customer::create($validate);
 
@@ -61,9 +66,15 @@ class CustomerController extends Controller
     public function update(Request $request, customer $customer, $id)
     {
         //
+
+        $rules = [
+            'nama_customer' => 'required|max:255',
+            'no_telp' => ['required', 'regex:^(?:\+62|62|0)(?:\d{8,15})$^'],
+            'alamat' => 'required|max:255'
+        ];
         $sales = customer::find($id);
 
-        $validate = $request->all();
+        $validate = $request->validate($rules);
 
         $sales->update($validate);
 
@@ -82,4 +93,17 @@ class CustomerController extends Controller
 
         return redirect('/customer')->with('success', 'Data berhasil dihapus');
     }
+
+    public function trash(){
+        $data = customer::onlyTrashed()->get();
+
+        return view('trash.customer')->with('data', $data);
+    }
+
+    public function kembalikan($id)
+{
+     $sales = customer::onlyTrashed()->where('id',$id);
+     $sales->restore();
+     return redirect('/customer/trash')->with('success', 'Data berhasil dikembalikan');
+}
 }

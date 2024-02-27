@@ -38,7 +38,7 @@ class KategoriController extends Controller
 
         $rules = [
             'nama_kategori' => 'required|max:255',
-            
+
         ];
         $validate = $request->validate($rules);
         $validate = $request->all();
@@ -72,7 +72,11 @@ class KategoriController extends Controller
         //
         $sales = kategori::find($id);
 
-        $validate = $request->all();
+        $rules = [
+            'nama_kategori' => 'required|max:255',
+
+        ];
+        $validate = $request->validate($rules);
 
         $sales->update($validate);
 
@@ -91,4 +95,17 @@ class KategoriController extends Controller
 
         return redirect('/kategori')->with('success', 'Data berhasil dihapus');
     }
+
+    public function trash(){
+        $data = kategori::onlyTrashed()->get();
+
+        return view('trash.kategori')->with('data', $data);
+    }
+
+    public function kembalikan($id)
+{
+     $sales = kategori::onlyTrashed()->where('id',$id);
+     $sales->restore();
+     return redirect('/kategori/trash')->with('success', 'Data berhasil dikembalikan');
+}
 }

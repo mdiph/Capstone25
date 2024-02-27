@@ -67,10 +67,10 @@ class BarangMasukController extends Controller
         }])->find($id);
 
         $rules = [
-            'jumlah_lama' => 'required|integer',
+            'jumlah_lama' => 'required',
             'produk_id' => 'required',
             'produk_idlama' => 'required',
-            'jumlah_masuk' => 'required|integer',
+            'jumlah_masuk' => 'required|numeric',
             'tanggal_masuk' => 'required|date',
         ];
 
@@ -83,7 +83,7 @@ class BarangMasukController extends Controller
         $qty =  $validate['jumlah_masuk'];
         $date = $validate['tanggal_masuk'];
 
-       
+
 
 
 
@@ -140,11 +140,29 @@ class BarangMasukController extends Controller
 
         try {
 
-            $validate = $request->all();
+            $rules = [
+
+                'produk_id' => 'required',
+                'stok_lama' => 'required',
+                'jumlah_masuk' => 'required|numeric',
+                'tanggal_masuk' => 'required|date',
+            ];
+
+
+
+            $validate = $request->validate($rules);
             $select = $validate['produk_id'];
             $qty =  $validate['jumlah_masuk'];
             $date = $validate['tanggal_masuk'];
 
+            $lastDigitOfYear = substr($date, -2, 2); // Mengambil 2 digit terakhir tahun
+            $month = date('m', strtotime($date)); // Mengambil bulan dari tanggal transaksi
+            $day = date('d', strtotime($date)); // Mengambil tanggal dari tanggal transaksi
+
+            // Mendapatkan digit terakhir dari barangkeluar dibuat ke berapa pada tanggal tersebut
+            $lastDigitFromBarangKeluar = BarangMasuk::whereDate('tanggal_masuk', $date)->count() + 1;
+
+            $validate['id_masuk'] = "BM-" . $lastDigitOfYear . $month . $day . $lastDigitFromBarangKeluar . $select ;
 
 
 
@@ -160,6 +178,7 @@ class BarangMasukController extends Controller
 
             produk::where('id', $select)->increment('stok', $qty);
             // produk_record create
+            $message = 'success';
             $queryStatus = 'Data berhasil ditambah';
 
 
@@ -192,6 +211,18 @@ class BarangMasukController extends Controller
 
 
 
-        return redirect('/barangmasuk')->with('message', $queryStatus);
+        return redirect('/barangmasuk')->with($message , $queryStatus);
+    }
+
+    public function delete($id){
+       $bm =  BarangMasuk::find($id);
+
+       $select = $bm->produk_id;
+       $stok = $bm->jumlah_masuk;
+
+       produk::where('id', $select)->decrement('stok', $stok);
+       $bm->delete();
+
+       return redirect('/barangmasuk')->with('success', 'Barang berhasil dihapus.');
     }
 }

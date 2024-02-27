@@ -42,6 +42,15 @@ class ProdukController extends Controller
     {
         //
 
+        $rules = [
+            'nama_produk' => 'required|max:255',
+            'deskripsi' => 'required|max:255',
+            'harga' => 'required|numeric',
+            'satuan' => 'required',
+            'kategori_id' => 'required'
+
+        ];
+        $validate = $request->validate($rules);
         $validate = $request->all();
         $kategori = kategori::all();
         produk::create($validate);
@@ -74,7 +83,15 @@ class ProdukController extends Controller
         //
         $sales = produk::with('kategori')->findOrFail($id);
 
-        $validate = $request->all();
+        $rules = [
+            'nama_produk' => 'required|max:255',
+            'deskripsi' => 'required|max:255',
+            'harga' => 'required|numeric',
+            'satuan' => 'required',
+            'kategori_id' => 'required'
+
+        ];
+        $validate = $request->validate($rules);
         $kategori = kategori::all();
 
         $sales->update($validate);

@@ -17,7 +17,8 @@ class Barangkeluar extends Model
         'tanggal_expired',
         'jumlah_keluar',
         'harga_jual',
-        'produk_id'
+        'produk_id',
+        'transaksi_id'
     ];
 
 
