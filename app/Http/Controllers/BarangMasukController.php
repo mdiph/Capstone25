@@ -190,6 +190,7 @@ class BarangMasukController extends Controller
             // Rollback untuk membatalkan transaksi
             DB::rollBack();
 
+            $message = 'error';
             $queryStatus = 'Data gagal ditambah. Error: ' . $e->getMessage();
         }
 

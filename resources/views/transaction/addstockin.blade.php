@@ -6,19 +6,17 @@
 
 
                 @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-
-                                    <li>{{ $error }}</li>
-
-                                @endforeach
-                            </ul>
-                            <button type="button" class="close" aria-label="Close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                        </div>
-                    @endif
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="column">
                     <div class="">
                         <form method="POST" action="/barangmasuk/store">
@@ -26,132 +24,126 @@
                             @csrf
 
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Tambah Barang Masuk</div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="email2">Kode Barang</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="nama"
-                                                        placeholder="Cari barang. . ." aria-label=""
-                                                        aria-describedby="basic-addon1">
-                                                    <input type="hidden" class="form-control" name="produk_id"
-                                                        id="id">
-                                                    <input type="hidden" class="form-control" name="stok_lama"
-                                                        id="stok_lama">
-                                                    <div class="input-group-prepend">
-                                                        <button class="btn btn-default btn-border" data-toggle="modal"
-                                                            data-target="#modalload" type="button">cari</button>
-                                                    </div>
-
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Tambah Barang Masuk</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="email2">Kode Barang</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="nama"
+                                                    placeholder="Cari barang. . ." aria-label=""
+                                                    aria-describedby="basic-addon1" required>
+                                                    <input type="hidden" class="form-control" name="produk_id" id="id">
+                                                    <input type="hidden" class="form-control" name="stok_lama" id="stok_lama">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-default btn-border" data-toggle="modal"
+                                                        data-target="#modalload" type="button">cari</button>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Tanggal Masuk</label>
-                                                <div class="input-group">
-                                                    <input type="date" class="form-control" id="datepicker"
-                                                        name="tanggal_masuk" name="datepicker"
-                                                        placeholder="tanggal masuk. . .">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        {{-- <div class="col">
-                                            <div class="form-group">
-                                                <label for="email2">Harga</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">RP</span>
-                                                    </div>
-                                                    <input type="text" class="form-control" name="harga" id="harga"
-                                                        aria-label="Amount (to the nearest dollar)" readonly>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Tanggal Masuk</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" id="datepicker" name="tanggal_masuk"
+                                                    placeholder="tanggal masuk. . ." required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
                                                 </div>
-                                            </div>
-                                        </div> --}}
-
-                                    </div>
-                                    <div class="row">
-                                        {{-- <div class="col">
-                                            <div class="form-group">
-                                                <label for="email2">Stok Barang</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Stok Masuk"
-                                                        name="stok" id="stok" aria-label="Recipient's username"
-                                                        aria-describedby="basic-addon2" disabled>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col">
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">With textarea</span>
-                                            </div>
-                                            <textarea class="form-control" aria-label="With textarea"></textarea>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-default btn-border" type="button">Button</button>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="" aria-label=""
-                                                aria-describedby="basic-addon1">
-                                        </div>
-                                    </div> --}}
-                                    <div class="form-group w-50">
-                                        <label for="email2">Stok Masuk</label>
-                                        <div class="input-group mb-3">
-                                            <input type="number" class="form-control" placeholder="Stok Masuk"
-                                                name="jumlah_masuk" aria-label="Recipient's username"
-                                                aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2">Pcs</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-action">
-                                    <button class="btn btn-success">Submit</button>
+                                <div class="row">
 
                                 </div>
                             </div>
-                        </form>
+                            <div class="row">
 
+                                <div class="col">
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+
+                            </div>
+
+                            <div class="form-group w-50">
+                                <label for="email2">Stok Masuk</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" placeholder="Stok Masuk" name="jumlah_masuk"
+                                        aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success"
+                                type="submit">Submit</button>
+
+                        </div>
                     </div>
+                    </form>
 
                 </div>
+
             </div>
         </div>
+    </div>
 
     </div>
 
-    {{-- @foreach ($data as $d) --}}
-    <!-- Modal edit -->
+    {{-- <div class="modal fade" id="modalconfir" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header no-bd">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            confirmation</span>
+                        <span class="fw-light">
+                            Row
+                        </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="/barangmasuk/store" enctype="multipart/form-data">
+                    @csrf
+
+
+                    <input type="hidden" class="form-control" name="tanggal_masuk" id="tanggal_masuk">
+                    <div class="form-group">
+                        <h4 id="produkIdLabel"> </h4>
+                    </div>
+
+
+
+                    <div class="modal-footer ">
+                        <button type="submit" id="addRowButton" class="btn btn-primary"><i class="fa fa-save"></i>
+                            Hapus</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-undo"></i>
+                            Close</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div> --}}
+    <!-- Modal data -->
     <div class="modal fade" id="modalload" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -231,9 +223,19 @@
                 $('#stok_lama').val(stok)
                 $('#nama').val(nama)
 
+                $('#produkIdLabel').text('Apakah Anda Ingin Menambah data? ' + nama);
 
 
                 $('#modalload').modal('hide');
+            });
+
+
+            $('#datepicker').on('change', function() {
+                // Mendapatkan nilai tanggal yang baru
+                var tanggalMasukValue = $(this).val();
+
+                // Menetapkan nilai tersebut pada elemen input dengan nama "tanggal_masuk"
+                $('#tanggal_masuk').val(tanggalMasukValue);
             });
         });
     </script>
