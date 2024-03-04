@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <div class="row">
 
 
@@ -54,6 +33,7 @@
                                                 <th>Alamat</th>
 
                                                 <th>Total Hutang</th>
+                                                <th>Action</th>
 
 
                                             </tr>
@@ -73,8 +53,12 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $row->nama_customer}}</td>
                                                     <td>{{ $row->alamat }}</td>
-                                                    <td>{{ $row->sisa_utang}}</td>
-
+                                                    <td>RP. {{ number_format($row->sisa_utang , 2, ',', '.') }}</td>
+                                                    <td>
+                                                        <a href="/transaksi/detail/piutang/{{ $row->transaksi_id }}" class="btn btn-xs btn-warning">
+                                                            <i class="fa fa-money"></i> Pelunasan
+                                                        </a>
+                                                    </td>
 
 
 

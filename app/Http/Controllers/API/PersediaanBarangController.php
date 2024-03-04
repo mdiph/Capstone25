@@ -34,19 +34,32 @@ class PersediaanBarangController extends Controller
     $date = Carbon::today();
 
     $query = "SELECT
-    p.kode,
-    p.nama_produk,
-    p.satuan,
-    COALESCE(sr.stok, p.stok) AS stok_awal,
-    COALESCE(bm.jumlah_masuk, 0) AS stok_masuk,
-    COALESCE(bk.jumlah_keluar, 0) AS stok_keluar,
-    COALESCE((sr.stok + COALESCE(bm.jumlah_masuk, 0) - COALESCE(bk.jumlah_keluar, 0)), 0) AS stok_akhir
-FROM produk p
-LEFT JOIN produk_record sr ON p.id = sr.produk_id AND sr.tanggal = ?
-LEFT JOIN barang_masuk bm ON p.id = bm.produk_id AND bm.tanggal_masuk = ?
-LEFT JOIN barang_keluar bk ON p.id = bk.produk_id AND bk.tanggal_keluar = ?
-GROUP BY  p.nama_produk;
-";
+        p.nama_produk,
+        p.satuan,
+        COALESCE(sr.stok_awal, p.stok) AS stok_awal,
+        COALESCE(bm.stok_masuk, 0) AS stok_masuk,
+        COALESCE(bk.stok_keluar, 0) AS stok_keluar,
+        COALESCE(sr.stok_awal, 0) + COALESCE(bm.stok_masuk, 0) - COALESCE(bk.stok_keluar, 0) AS stok_akhir
+    FROM produk p
+    LEFT JOIN (
+        SELECT pr.produk_id, COALESCE(pr.stok, 0) AS stok_awal
+        FROM produk_record pr
+        WHERE pr.tanggal = ?
+    ) sr ON p.id = sr.produk_id
+    LEFT JOIN (
+        SELECT bm.produk_id, COALESCE(SUM(bm.jumlah_masuk), 0) AS stok_masuk
+        FROM barang_masuk bm
+        WHERE bm.tanggal_masuk = ?
+        GROUP BY bm.produk_id
+    ) bm ON p.id = bm.produk_id
+    LEFT JOIN (
+        SELECT bk.produk_id, COALESCE(SUM(bk.jumlah_keluar), 0) AS stok_keluar
+        FROM barang_keluar bk
+        WHERE bk.tanggal_keluar = ?
+        GROUP BY bk.produk_id
+    ) bk ON p.id = bk.produk_id
+    GROUP BY p.nama_produk, p.satuan;";
+
 
 
     $data = DB::select($query, [$date, $date, $date]);
@@ -69,18 +82,31 @@ if ($data) {
         // $date = Carbon::today();
 
         $query = "SELECT
-        p.id,
         p.nama_produk,
-        COALESCE(sr.stok, 0) AS stok_awal,
-        COALESCE(bm.jumlah_masuk, 0) AS stok_masuk,
+        p.satuan,
+        COALESCE(sr.stok_awal, p.stok) AS stok_awal,
+        COALESCE(bm.stok_masuk, 0) AS stok_masuk,
         COALESCE(bk.stok_keluar, 0) AS stok_keluar,
-        COALESCE((sr.stok + COALESCE(bm.jumlah_masuk, 0) - COALESCE(bk.stok_keluar, 0)), 0) AS stok_akhir
+        COALESCE(sr.stok_awal, 0) + COALESCE(bm.stok_masuk, 0) - COALESCE(bk.stok_keluar, 0) AS stok_akhir
     FROM produk p
-    LEFT JOIN produk_record sr ON p.id = sr.produk_id AND sr.tanggal = ?
-    LEFT JOIN barang_masuk bm ON p.id = bm.produk_id AND bm.tanggal_masuk = ?
-    LEFT JOIN transaksi bk ON p.id = bk.produk_id AND bk.tanggal_transaksi = ?
-    GROUP BY p.id, p.nama_produk, sr.stok, bm.jumlah_masuk, bk.stok_keluar
-";
+    LEFT JOIN (
+        SELECT pr.produk_id, COALESCE(pr.stok, 0) AS stok_awal
+        FROM produk_record pr
+        WHERE pr.tanggal = ?
+    ) sr ON p.id = sr.produk_id
+    LEFT JOIN (
+        SELECT bm.produk_id, COALESCE(SUM(bm.jumlah_masuk), 0) AS stok_masuk
+        FROM barang_masuk bm
+        WHERE bm.tanggal_masuk = ?
+        GROUP BY bm.produk_id
+    ) bm ON p.id = bm.produk_id
+    LEFT JOIN (
+        SELECT bk.produk_id, COALESCE(SUM(bk.jumlah_keluar), 0) AS stok_keluar
+        FROM barang_keluar bk
+        WHERE bk.tanggal_keluar = ?
+        GROUP BY bk.produk_id
+    ) bk ON p.id = bk.produk_id
+    GROUP BY p.nama_produk, p.satuan;";
 
 
         $stockData = DB::select($query, [$date, $date, $date]);

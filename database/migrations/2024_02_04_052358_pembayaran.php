@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->references('id')->on('transaksi');
+            $table->foreignId('transaksi_id')->references('id')->on('transaksi')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('status', ['Lunas', 'Belum Lunas', 'Telat']);
             $table->enum('metode', ['Cash', 'Tempo']);
             $table->date('tanggal_bayar');

@@ -15,7 +15,9 @@ class BarangkeluarController extends Controller
     public function index()
     {
         //
-        $data = Barangkeluar::with('produk')->get();
+        $data = Barangkeluar::with(['produk' => function ($query) {
+            $query->withTrashed();
+        }])->get();
         return view ("transaction.stockout")->with('data', $data);
     }
 

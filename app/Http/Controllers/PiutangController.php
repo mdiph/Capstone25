@@ -16,7 +16,7 @@ class PiutangController extends Controller
 
     public function show($id){
 
-        $query = "SELECT  salesman.nama_salesman, customer.nama_customer,customer.alamat, SUM(transaksi.total - pembayaran.bayar) AS sisa_utang
+        $query = "SELECT transaksi.id AS transaksi_id, salesman.nama_salesman, customer.nama_customer,customer.alamat, SUM(transaksi.total - pembayaran.bayar) AS sisa_utang
         FROM salesman
         JOIN transaksi ON salesman.id = transaksi.salesman_id
         JOIN pembayaran ON transaksi.id = pembayaran.transaksi_id

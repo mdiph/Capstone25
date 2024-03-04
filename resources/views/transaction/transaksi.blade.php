@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+
                 <div class="row">
 
 
@@ -147,7 +126,7 @@
                                                 <div class="modal-header no-bd">
                                                     <h5 class="modal-title">
                                                         <span class="fw-mediumbold">
-                                                            Edit</span>
+                                                            Delete</span>
                                                         <span class="fw-light">
                                                             Row
                                                         </span>
@@ -249,17 +228,27 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $transaksi->kode_transaksi }}</td>
                                                 <td>{{ $transaksi->tanggal_transaksi }}</td>
-                                                <td>{{ $transaksi->subtotal }}</td>
+                                                <td>RP. {{ number_format($transaksi->subtotal , 2, ',', '.') }}</td>
                                                 <td>{{ $transaksi->diskon }} %</td>
-                                                <td>{{ $transaksi->total }}</td>
+                                                <td>RP. {{ number_format($transaksi->total , 2, ',', '.') }}</td>
                                                 <td>{{ $transaksi->salesman->nama_salesman }}</td>
                                                 <td>{{ $transaksi->customer->nama_customer }}</td>
 
-                                                <td>{{ $transaksi->pembayaran->status}}</td>
+                                                @if ($transaksi->pembayaran->status == 'Lunas')
+                                                <td class="text-success font-weight-bold">{{ $transaksi->pembayaran->status}}</td>
+                                                @elseif ($transaksi->pembayaran->status == 'Belum Lunas')
+                                                <td class="text-warning font-weight-bold">{{ $transaksi->pembayaran->status}}</td>
+                                                @elseif ($transaksi->pembayaran->status == 'Telat')
+                                                <td class="text-danger font-weight-bold">{{ $transaksi->pembayaran->status}}</td>
+                                                @endif
+
                                                 <td>
-                                                    <a href="#EditRowModal{{ $transaksi->id }}" data-toggle="modal"
+                                                    <a href="/transaksi/detail/{{ $transaksi->id }}"
+                                                        class="btn btn-xs btn-secondary"><i class="fa fa-info"></i>
+                                                        Detail</a>
+                                                    {{-- <a href="#EditRowModal{{ $transaksi->id }}" data-toggle="modal"
                                                         class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                                        Edit</a>
+                                                        Edit</a> --}}
                                                     <a href="#DeleteRowModal{{ $transaksi->id }}" data-toggle="modal"
                                                         class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
                                                         Delete</a>

@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <div class="row">
 
 
@@ -183,8 +162,8 @@
                                                 <th>No </th>
                                                 <th>Id Keluar</th>
                                                 <th>Tanggal Keluar</th>
-                                                <th>Tanggal Expired</th>
-                                                <th>Jumlah Keluar</th>
+
+
                                                 <th>Harga Jual</th>
                                                 <th>Produk</th>
 
@@ -197,11 +176,11 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->id_keluar }}</td>
                                                     <td>{{ $row->tanggal_keluar }}</td>
-                                                    <td>{{ $row->tanggal_expired }}</td>
+
                                                     <td>{{ $row->jumlah_keluar }}</td>
-                                                    <td>{{ $row->produk->harga }}</td>
+
                                                     <td>{{ $row->produk->nama_produk }}</td>
-                                                    
+
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaksi_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->references('id')->on('transaksi');
+            $table->foreignId('transaksi_id')->references('id')->on('transaksi')->onUpdate('cascade')->onDelete('cascade');
             $table->string('no_batch');
             $table->date('tanggal_kedaluwarsa');
             $table->foreignId('produk_id')->references('id')->on('produk');

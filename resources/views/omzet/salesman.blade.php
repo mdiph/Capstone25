@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <div class="row">
 
 
@@ -64,6 +43,32 @@
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
+                                                <form method="POST" action="/salesman/store" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label>Nama</label>
+                                                            <input type="text" class="form-control" name="nama_salesman"
+                                                                placeholder="Nama salesman..." required>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>No Telfon</label>
+                                                            <input type="text" class="form-control" name="no_telp"
+                                                                placeholder="no telfon..." required>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="modal-footer ">
+                                                        <button type="submit" id="addRowButton" class="btn btn-primary"><i
+                                                                class="fa fa-save"></i> Tambah</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                                                class="fa fa-undo"></i> Close</button>
+                                                    </div>
+
+                                                </form>
                                             </div>
                                             <form method="POST" action="/salesman/store" enctype="multipart/form-data">
                                                 @csrf
@@ -98,6 +103,31 @@
 
 
                                 <div class="table-responsive">
+                                    <form method="POST" action="{{ route('cariomzetsl') }}">
+                                        @csrf
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="form-group row mx-auto">
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                        </div>
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-primary" name="search" >search</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="/omzet/salesman" class="btn btn-success" >Clear</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>

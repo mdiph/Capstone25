@@ -40,6 +40,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
+
+                                <div class="container px-4 mx-auto">
+
+                                    <div class="bg-white rounded shadow">
+                                        {!! $chart->container() !!}
+                                    </div>
+
+                                </div>
                                 <!-- Modal tambah -->
                                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -90,6 +98,31 @@
 
 
                                 <div class="table-responsive">
+                                    <form method="POST" action="{{ route('cariomzetpr') }}">
+                                        @csrf
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="form-group row mx-auto">
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                        </div>
+                                                        <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-primary" name="search" >search</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="/omzet/produk" class="btn btn-success" >Clear</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
@@ -151,4 +184,8 @@
         </div>
 
     </div>
+
+    <script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
 @endsection

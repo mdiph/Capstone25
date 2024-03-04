@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('stok')->default(0);
             // $table->integer('unit');
             $table->foreignId('kategori_id')->references('id')->on('kategori');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

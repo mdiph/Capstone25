@@ -3,28 +3,22 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">Forms</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Forms</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Basic Form</a>
-                        </li>
-                    </ul>
-                </div>
+
+
+                @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+
+                                    <li>{{ $error }}</li>
+
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                        </div>
+                    @endif
                 <div class="column">
                     <div class="">
                         <form method="POST" action="/tes/add">
@@ -34,7 +28,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Transaksi</div>
+                                    <div class="card-title"> Add Transaksi</div>
                                 </div>
 
                                 <div class="card-body">
@@ -207,7 +201,7 @@
 
                                                     <div class="form-group row">
                                                         <label for="inputPassword4">Metode Pembayaran</label>
-                                                        <select class="form-control select2" name="metode" required>
+                                                        <select class="form-control select2" name="metode" id="metode">
                                                             <option value = "">Pilih metode</option>
 
                                                             <option value="Cash">Cash</option>
@@ -218,11 +212,11 @@
                                                     <div class="form-group row">
                                                         <label for="inputEmail3" class="">Bayar</label>
 
-                                                        <input type="number" class="form-control total" name="bayar">
+                                                        <input type="number" class="form-control total" name="bayar" id="bayar">
 
                                                     </div>
 
-                                                    <button type="submit" class="btn btn-success">Bayar</button>
+                                                    <button id="btnBayar" type="button" data-toggle="modal" data-target="#modalPembayaran" class="btn btn-success">Bayar</button>
 
                                                 </div>
 
@@ -244,6 +238,27 @@
                             </div>
 
                     </div>
+
+                    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detail Pembayaran</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Tempat untuk menampilkan detail pembayaran -->
+                                    <p id="modalContent"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit"  class="btn btn-parimary" >Bayar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </form>
 
                 </div>
@@ -252,6 +267,27 @@
         </div>
     </div>
 
+    </div>
+
+    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Pembayaran</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Tempat untuk menampilkan detail pembayaran -->
+                    <p id="modalContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-parimary" >Bayar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- @foreach ($data as $d) --}}
@@ -532,6 +568,39 @@
             // // Hitung total awal
             // calculateTotal();
         });
+
+        $('#btnBayar').on('click', function() {
+                // Mendapatkan nilai metode pembayaran
+                var metode = $('#metode').val();
+                // Mendapatkan nilai bayar
+                var bayar = $('#bayar').val();
+                // Mendapatkan nilai total (contoh: menggunakan nilai statis, sesuaikan dengan kebutuhan Anda)
+                var total = $('#total').val();
+
+                // Menampilkan modal dengan detail pembayaran sesuai metode
+                var modalContent = '';
+                if (metode === 'Cash') {
+                    var kembalian = bayar - total;
+                    modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
+                                   'Total: ' + total + '<br>' +
+                                   'Bayar: ' + bayar + '<br>' +
+                                   'Kembalian: ' + kembalian;
+                } else if (metode === 'Tempo') {
+                    var sisaHutang = total - bayar;
+                    modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
+                                   'Total: ' + total + '<br>' +
+                                   'Bayar: ' + bayar + '<br>' +
+                                   'Sisa Hutang: ' + sisaHutang;
+                } else if (metode === ''){
+                    modalContent = 'Silahkan pilih metode pembayaran !'
+                }
+
+                // Menetapkan konten modal
+                $('#modalContent').html(modalContent);
+
+                // Menampilkan modal
+
+            });
     </script>
 
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('piutang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pembayaran_id')->references('id')->on('pembayaran');
+            $table->foreignId('pembayaran_id')->references('id')->on('pembayaran')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_bayar');
             $table->integer('angsuran');
             $table->timestamps();

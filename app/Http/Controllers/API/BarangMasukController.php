@@ -16,7 +16,10 @@ class BarangMasukController extends Controller
     public function index()
     {
 
-        $data_query = BarangMasuk::with('produk');
+        $data_query = BarangMasuk::with(['produk' => function ($query) {
+            $query->withTrashed();
+        }])->get();
+
 
 
 

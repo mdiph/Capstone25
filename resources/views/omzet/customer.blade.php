@@ -4,28 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <div class="row">
 
 
@@ -112,8 +91,11 @@
                                                         <div class="col-sm-3">
                                                             <input type="date" class="form-control input-sm" id="form" name="todate" required>
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <button type="submit" class="btn" name="search" >search</button>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-primary" name="search" >search</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="/omzet/customer" class="btn btn-success" >Clear</a>
                                                         </div>
                                                     </div>
                                                 </div>

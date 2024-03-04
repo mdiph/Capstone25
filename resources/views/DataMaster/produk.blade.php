@@ -5,29 +5,24 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">DataTables.Net</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Tables</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Datatables</a>
-                        </li>
-                    </ul>
+
                 </div>
                 <div class="row">
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+
+                                    <li>{{ $error }}</li>
+
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                        </div>
+                    @endif
 
 
 
@@ -36,7 +31,11 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">produk</h4>
-                                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="/produk/trash">
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </a>
+                                    <button class="btn btn-primary btn-round ml-2" data-toggle="modal"
                                         data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
                                         Add Row
@@ -248,6 +247,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No </th>
+                                                <th>Kode </th>
                                                 <th>Nama </th>
                                                 <th>Deskripsi</th>
                                                 <th>Harga</th>
@@ -263,6 +263,7 @@
                                             @foreach ($data as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
+                                                    <td>{{ $row->kode }}</td>
                                                     <td>{{ $row->nama_produk }}</td>
                                                     <td>{{ $row->deskripsi}}</td>
                                                     <td>{{ $row->harga }}</td>

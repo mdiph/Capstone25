@@ -18,7 +18,20 @@ class BarangKeluarController extends Controller
     public function transaksi()
     {
 
-        $data = Transaksi::with(['salesman', 'customer', 'pembayaran.piutang', 'detailTransaksi.produk'])->get();
+        $data = Transaksi::with([
+            'salesman' => function ($query) {
+                $query->withTrashed();
+            },
+            'customer' => function ($query) {
+                $query->withTrashed();
+            },
+            'detailTransaksi' => function ($query) {
+                $query->with(['produk' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            },
+            'pembayaran.piutang'
+        ])->get();
 
 
 
@@ -35,9 +48,22 @@ class BarangKeluarController extends Controller
     public function dateRangetransaksi($startDate , $endDate  )
     {
 
-        
 
-        $data = Transaksi::with(['salesman', 'customer', 'pembayaran.piutang', 'detailTransaksi.produk'])
+
+        $data = Transaksi::with([
+            'salesman' => function ($query) {
+                $query->withTrashed();
+            },
+            'customer' => function ($query) {
+                $query->withTrashed();
+            },
+            'detailTransaksi' => function ($query) {
+                $query->with(['produk' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            },
+            'pembayaran.piutang'
+        ])
             ->whereBetween('tanggal_transaksi', [$startDate, $endDate])
             ->get();
 

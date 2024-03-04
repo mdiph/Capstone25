@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class kategori extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'kategori';
 
@@ -16,6 +18,7 @@ class kategori extends Model
 
 
     ];
+    protected $dates = ['deleted_at'];
 
     public function produk(){
         return $this->hasMany(produk::class);
