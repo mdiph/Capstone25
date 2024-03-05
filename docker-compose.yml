@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-    appdhiv:
+    smpapp:
         build: .
-        container_name: capstone25SMP
+        container_name: smpapp
         ports:
             - "80:80"
         volumes:
