@@ -33,6 +33,7 @@
     <div class="wrapper wrapper-login">
         <div class="container container-login animated fadeIn">
             <h3 class="text-center">Masukkan Kode</h3>
+            <h4 class="text-center">Silahkan Cek Email Anda</h4>
             <form action="/forgot/password/code" method="POST">
                 @csrf
                 <div class="login-form">

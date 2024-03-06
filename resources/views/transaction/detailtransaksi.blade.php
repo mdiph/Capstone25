@@ -39,7 +39,8 @@
                                         <h1 class="text-success font-weight-bold">LUNAS</h1>
                                         @elseif ($data->pembayaran->status == 'Belum Lunas')
                                             <h1 class="text-warning font-weight-bold">Belum LUNAS</h1>
-                                        @else
+                                        @elseif ($data->pembayaran->status == 'Telat')
+                                        <h1 class="text-danger font-weight-bold">TELAT</h1>
                                         @endif
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
                     @if ($errors->any())
@@ -26,7 +26,7 @@
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">produk Trash</h4>
                                     <a class="btn btn-primary btn-round ml-auto"
-                                        href="/produk">
+                                        href="/customer">
                                         <i class="fa fa-back"></i>
                                         Kembali
                                 </a>

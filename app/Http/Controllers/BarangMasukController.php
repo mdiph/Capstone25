@@ -37,7 +37,9 @@ class BarangMasukController extends Controller
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
 
-        $data = BarangMasuk::with('produk')
+        $data = BarangMasuk::with(['produk' => function ($query) {
+            $query->withTrashed();
+        }])
             ->whereBetween('tanggal_masuk', [$fromDate, $toDate])->get();
 
         return view('transaction.stockin')->with('data', $data);

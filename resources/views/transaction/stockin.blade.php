@@ -129,6 +129,9 @@
                                                         <div class="col-sm-2">
                                                             <button type="submit" class="btn" name="search" >search</button>
                                                         </div>
+                                                        <div class="col">
+                                                            <a href="/barangmasuk" class="btn btn-success" >Clear</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
