@@ -364,6 +364,8 @@ class Transaksi2Controller extends Controller
     // Fetch all transactions with related payment and debt information
     $transactions = Transaksi::with(['pembayaran.piutang'])->get();
 
+    $updated = false;
+
     // Iterate over each transaction in the collection
     foreach ($transactions as $transaction) {
         // Accessing relationships
@@ -371,18 +373,28 @@ class Transaksi2Controller extends Controller
         $piutang = $pembayaran->piutang;
 
         // Check conditions for each transaction
-        if ($pembayaran->bayar <= $transaction->total && $pembayaran->metode == 'Tempo' && now()->greaterThan($pembayaran->jatuh_tempo)) {
-            // Update 'status' to 'Telat' if conditions are met
-            $pembayaran->update([
-                'status' => 'Telat'
-            ]);
-        return redirect()->back()->with('success', 'Transaksi diubah');
-        }
-        else {
-            return redirect()->back()->with('info', 'Tidak ada yang telat');
+        if ($pembayaran->metode === 'Tempo' &&
+            $pembayaran->status === "Belum Lunas" &&
+            now()->greaterThan($pembayaran->jatuh_tempo)) {
+
+            // Check if payment is overdue
+            if ($pembayaran->bayar <= $transaction->total) {
+                // Update 'status' to 'Telat' if conditions are met
+                $pembayaran->update([
+                    'status' => 'Telat'
+                ]);
+                $updated = true; // Set flag indicating update occurred
+            }
         }
     }
+
+    if ($updated) {
+        return redirect()->back()->with('success', 'Transaksi diubah');
+    } else {
+        return redirect()->back()->with('info', 'Tidak ada yang telat');
+    }
 }
+
 
 
     /**

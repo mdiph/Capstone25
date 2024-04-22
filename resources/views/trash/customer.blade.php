@@ -24,7 +24,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">produk Trash</h4>
+                                    <h4 class="card-title">Customer Trash</h4>
                                     <a class="btn btn-primary btn-round ml-auto"
                                         href="/customer">
                                         <i class="fa fa-back"></i>

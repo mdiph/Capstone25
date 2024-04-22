@@ -152,7 +152,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Deskripsi</label>
-                                                            <input type="text" class="form-control" name="deksripsi" value="{{ $d->deskripsi }}"
+                                                            <input type="text" class="form-control" name="deskripsi" value="{{ $d->deskripsi }}"
                                                                 placeholder="Deskripsi..." required>
 
                                                         </div>

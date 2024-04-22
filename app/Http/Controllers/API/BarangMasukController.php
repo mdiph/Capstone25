@@ -18,7 +18,7 @@ class BarangMasukController extends Controller
 
         $data_query = BarangMasuk::with(['produk' => function ($query) {
             $query->withTrashed();
-        }])->get();
+        }]);
 
 
 
