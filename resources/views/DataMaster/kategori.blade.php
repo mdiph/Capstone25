@@ -143,7 +143,7 @@
                                                 <div class="modal-header no-bd">
                                                     <h5 class="modal-title">
                                                         <span class="fw-mediumbold">
-                                                            Edit</span>
+                                                            Delete</span>
                                                         <span class="fw-light">
                                                             Row
                                                         </span>

@@ -24,11 +24,13 @@ class ForgotPasswordController extends Controller
         $data = $request->all(); // Use validated() method for validation
 
 
-        if(User::where('email', $request->email)->exists()){
+        if(User::where('email', $request->email)->exists() ){
             ResetCodePassword::where('email', $request->email)->delete();
         } else{
             return ApiFormatter::createApi(422, 'Email not registered');
         }
+
+
 
 
         $data['code'] = mt_rand(100000, 999999);
