@@ -32,7 +32,7 @@
 <body class="login">
     <div class="wrapper wrapper-login">
         <div class="container container-login animated fadeIn">
-            <h3 class="text-center">Login </h3>
+            <h3 class="text-center">Sign In </h3>
             <form action="/login" method="post">
                 @csrf
                 <div class="login-form">
