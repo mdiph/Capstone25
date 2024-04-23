@@ -322,6 +322,7 @@ class Transaksi2Controller extends Controller
         $data = Transaksi::with(['salesman', 'customer', 'detailTransaksi.produk', 'pembayaran.piutang'])->find($id);
 
 
+
         Piutang::create([
             'pembayaran_id' => $id,
             'tanggal_bayar' => $validate['tanggal_bayar'],
@@ -333,34 +334,56 @@ class Transaksi2Controller extends Controller
 
 
         $pembayaran = Pembayaran::find($id);
-        $transaksiTotal = $data->total;
+        $transaksiid = $pembayaran->transaksi_id;
+        $transaksiTotal = Transaksi::where('id', $transaksiid)->first();
 
 
 
-        if ($pembayaran->bayar >= $transaksiTotal) {
+        if ($pembayaran->bayar >= $transaksiTotal->total) {
             // Jika sama, ubah kolom 'status' menjadi 'Lunas'
             $pembayaran->update([
                 'status' => 'Lunas'
             ]);
         }
 
-        if ($pembayaran->bayar <= $transaksiTotal && now()->greaterThan($pembayaran->jatuh_tempo)) {
-            // Jika sama, ubah kolom 'status' menjadi 'Lunas'
-            $pembayaran->update([
-                'status' => 'Telat'
-            ]);
-        }
+        // if ($pembayaran->bayar <= $transaksiTotal->total && now()->greaterThan($pembayaran->jatuh_tempo)) {
+        //     // Jika sama, ubah kolom 'status' menjadi 'Lunas'
+        //     $pembayaran->update([
+        //         'status' => 'Telat'
+        //     ]);
+        // }
 
-        return redirect('/transaksi');
+        return redirect()->back()->with('success', 'Angsuran dibayarkan');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transaksi $transaksi)
-    {
-        //
+    public function telat()
+{
+    // Fetch all transactions with related payment and debt information
+    $transactions = Transaksi::with(['pembayaran.piutang'])->get();
+
+    // Iterate over each transaction in the collection
+    foreach ($transactions as $transaction) {
+        // Accessing relationships
+        $pembayaran = $transaction->pembayaran;
+        $piutang = $pembayaran->piutang;
+
+        // Check conditions for each transaction
+        if ($pembayaran->bayar <= $transaction->total && $pembayaran->metode == 'Tempo' && now()->greaterThan($pembayaran->jatuh_tempo)) {
+            // Update 'status' to 'Telat' if conditions are met
+            $pembayaran->update([
+                'status' => 'Telat'
+            ]);
+        return redirect()->back()->with('success', 'Transaksi diubah');
+        }
+        else {
+            return redirect()->back()->with('info', 'Tidak ada yang telat');
+        }
     }
+}
+
 
     /**
      * Update the specified resource in storage.

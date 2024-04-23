@@ -120,6 +120,7 @@ Route::middleware(['admin'])->group(function () {
 
     Route::get('/transaksi/add', [TransaksiController::class, 'create']);
     Route::post('/transaksi/delete/{id}', [Transaksi2Controller::class, 'destroy']);
+    Route::post('/transaksi/telat', [Transaksi2Controller::class, 'telat']);
     Route::post('/transaksi/store', [TransaksiController::class, 'store']);
     Route::post('/addcart', [Transaksi2Controller::class, 'addCart']);
     Route::get('/deletecart/{id}', [Transaksi2Controller::class, 'DeleteCart']);

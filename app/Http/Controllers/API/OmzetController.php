@@ -130,16 +130,19 @@ GROUP BY
         produk.nama_produk,
         SUM(transaksi_detail.stok_keluar) AS total_stok_keluar,
         produk.harga,
-       produk.satuan,
-        SUM(transaksi.total) AS total_transaksi
+        produk.satuan,
+        SUM(transaksi_detail.total - ROUND(transaksi_detail.total * (CAST(transaksi.diskon AS DECIMAL(18,2)) / 100))) AS total_transaksi
     FROM
         transaksi
     JOIN
         transaksi_detail ON transaksi.id = transaksi_detail.transaksi_id
     JOIN
         produk ON transaksi_detail.produk_id = produk.id
+
+
     GROUP BY
         produk.nama_produk, produk.harga, produk.satuan;");
+
 
 
         if ($data) {
