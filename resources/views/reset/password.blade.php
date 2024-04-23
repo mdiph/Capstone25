@@ -40,7 +40,7 @@
                     <div class="form-group form-floating-label">
                         <input name="password" type="password" class="form-control input-border-bottom" required>
                         <input name="code" type="hidden" value="{{ $pw }}">
-                        <label for="number" class="placeholder">Password</label>
+                        <label for="password" class="placeholder">Password</label>
                     </div>
 
                     <div class="form-action mb-3">

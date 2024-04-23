@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
                     @if ($errors->any())
@@ -80,8 +80,10 @@
                                                         <label>role</label>
                                                         <select class="form-control select2" name="role" required>
                                                             <option  value = "" >Pilih role</option>
-                                                            <option  value = "admin" >Admin</option>
-                                                            <option  value = "gudang" >Gudang</option>
+                                                            <option  value = "Admin" >Admin</option>
+                                                            <option  value = "Gudang" >Gudang</option>
+                                                            <option  value = "Salesman" >Salesman</option>
+                                                            <option  value = "Kepala Cabang" >Kepala Cabang</option>
                                                         </select>
 
                                                     </div>
@@ -149,9 +151,12 @@
                                                         <div class="form-group">
                                                             <label>role</label>
                                                             <select class="form-control select2" name="role" required>
-                                                                <option  value = "{{ $d->role }}" >{{ $d->role }}</option>
-                                                                <option  value = "admin" >Admin</option>
-                                                                <option  value = "gudang" >Gudang</option>
+                                                             <option  value = "{{ $d->role }}" >{{ $d->role }} <i class="fa fa-check"></i> </option>
+
+                                                            <option  value = "Admin" >Admin</option>
+                                                            <option  value = "Gudang" >Gudang</option>
+                                                            <option  value = "Salesman" >Salesman</option>
+                                                            <option  value = "Kepala Cabang" >Kepala Cabang</option>
                                                             </select>
 
                                                         </div>

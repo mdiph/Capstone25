@@ -34,6 +34,7 @@ class PersediaanBarangController extends Controller
     $date = Carbon::today();
 
     $query = "SELECT
+        p.kode,
         p.nama_produk,
         p.satuan,
         COALESCE(sr.stok_awal, p.stok) AS stok_awal,
@@ -82,6 +83,7 @@ if ($data) {
         // $date = Carbon::today();
 
         $query = "SELECT
+        p.kode,
         p.nama_produk,
         p.satuan,
         COALESCE(sr.stok_awal, p.stok) AS stok_awal,

@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Ceritnaya skripsi</title>
+    <title>SIPSB SMP</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon" />
 
@@ -333,17 +333,11 @@
     <!-- Dropzone -->
     <script src="/assets/js/plugin/dropzone/dropzone.min.js"></script>
 
-    <!-- Fullcalendar -->
-    <script src="/assets/js/plugin/fullcalendar/fullcalendar.min.js"></script>
 
-    <!-- DateTimePicker -->
-    <script src="/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
 
-    <!-- Bootstrap Tagsinput -->
-    <script src="/assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 
-    <!-- Bootstrap Wizard -->
-    <script src="/assets/js/plugin/bootstrap-wizard/bootstrapwizard.js"></script>
+
+
 
     <!-- jQuery Validation -->
     <script src="/assets/js/plugin/jquery.validate/jquery.validate.min.js"></script>
@@ -351,8 +345,7 @@
     <!-- Summernote -->
     <script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
 
-    <!-- Select2 -->
-    <script src="/assets/js/plugin/select2/select2.full.min.js"></script>
+   
 
     <!-- Sweet Alert -->
     <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>

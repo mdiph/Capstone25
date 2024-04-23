@@ -32,6 +32,14 @@
 <body class="login">
     <div class="wrapper wrapper-login">
         <div class="container container-login animated fadeIn">
+            <div class="text-center">
+                <img src="SMP2.png" class="img-fluid" alt="" style="width: 80px; height: 80px;">
+            </div>
+
+
+
+
+
             <h3 class="text-center">Sign In </h3>
             <form action="/login" method="post">
                 @csrf
@@ -39,7 +47,7 @@
                     <div class="form-group form-floating-label">
                         <input id="email" name="email" type="email" class="form-control input-border-bottom"
                             required>
-                        <label for="email" class="placeholder">email</label>
+                        <label for="email" class="placeholder">Email</label>
                     </div>
                     <div class="form-group form-floating-label">
                         <input id="password" name="password" type="password" class="form-control input-border-bottom"
