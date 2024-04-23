@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\helpers\ApiFormatter;
+use App\Helpers\ApiFormatter;
 use App\Models\ResetCodePassword;
 use App\Http\Controllers\Controller;
 use App\Models\User;
