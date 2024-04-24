@@ -91,7 +91,7 @@ class OmzetController extends Controller
     produk.nama_produk,
     produk.satuan,
     SUM(transaksi_detail.stok_keluar) as stok_keluar,
-    SUM(transaksi_detail.total) as total_omzet
+    CAST(SUM(transaksi_detail.total - (transaksi_detail.total * transaksi.diskon/100)) AS DECIMAL(10, 0)) as total_omzet
 FROM
     salesman
 JOIN
