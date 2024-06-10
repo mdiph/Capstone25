@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('transaksi_id')->references('id')->on('transaksi')->onUpdate('cascade')->onDelete('cascade');
             $table->string('no_batch');
             $table->date('tanggal_kedaluwarsa');
-            $table->foreignId('produk_id')->references('id')->on('produk');
+            $table->foreignId('produk_id')->nullable()->references('id')->on('produk')->nullOnDelete();
             $table->integer('stok_keluar');
             $table->integer('harga_jual');
             $table->integer('diskon');

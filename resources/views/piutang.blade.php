@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
 
@@ -50,14 +50,17 @@
                                                     <td>{{ $row->keuntungan }}</td>
                                                     <td>{{ $row->persentase }} %</td> --}}
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $row->nama_salesman}}</td>
+                                                    <td>{{ $row->nama_salesman }}</td>
 
-                                                    <td>RP. {{ number_format($row->sisa_utang , 2, ',', '.') }}</td>
+                                                    <td>RP. {{ number_format($row->sisa_utang, 2, ',', '.') }}</td>
 
                                                     <td>
-                                                        <a href="/hutang/{{ $row->id}}" class="btn btn-xs btn-info">
-                                                            <i class="fa fa-money"></i> Detail
-                                                        </a>
+                                                        @if ($row->nama_salesman !== 'Salesman telah terhapus')
+                                                            <a href="/hutang/{{ $row->id }}"
+                                                                class="btn btn-xs btn-info">
+                                                                <i class="fa fa-money"></i> Detail
+                                                            </a>
+                                                        @endif
                                                     </td>
 
 

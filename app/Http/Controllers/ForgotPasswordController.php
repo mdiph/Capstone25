@@ -19,9 +19,9 @@ class ForgotPasswordController extends Controller
         $data = $request->all(); // Use validated() method for validation
 
 
-        if(User::where('email', $request->email)->exists()){
+        if (User::where('email', $request->email)->exists()) {
             ResetCodePassword::where('email', $request->email)->delete();
-        } else{
+        } else {
             return back()->with('error', 'Email tidak terdaftar');
         }
 
@@ -32,7 +32,9 @@ class ForgotPasswordController extends Controller
 
         Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
 
-        return view('reset.code')->with('success', 'Email kode dikirim ke email anda');
+        $pw = $data['email'];
+
+        return view('reset.code')->with('success', 'Email kode dikirim ke email anda')->with('pw', $pw);
     }
 
     /**
@@ -40,19 +42,30 @@ class ForgotPasswordController extends Controller
      */
     public function code(Request $request)
     {
-        $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
+        $request->validate([
+            'email' => 'required|email',
+            'code'  => 'required|string'
+        ]);
 
+
+
+        // Cari catatan reset password berdasarkan email dan kode
+        $passwordReset = ResetCodePassword::where('email', $request->email)
+            ->where('code', $request->code)
+            ->first();
+
+            $e = $request->email;
         if (!$passwordReset) {
-            return back()->with('error', 'Kode tidak valid');
+            return view('reset.code')->with('error', 'Kode tidak valid')->with('pw', $e);
         }
 
         // Check if the code has expired
         if ($passwordReset->isExpire()) {
-            return back()->with('error', 'Kode sudah hangus silahkan ulangi lagi');
+            return view('reset.code')->with('error', 'Kode sudah hangus silahkan ulangi lagi')->with('pw', $e);
         }
 
-        $pw = $passwordReset['code'];
 
+        $pw = $passwordReset['code'];
         return view("reset.password")->with('success', 'Kode sesuai')->with('pw', $pw);
     }
 

@@ -30,15 +30,100 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Kategori Trash</h4>
-                                    <a class="btn btn-primary btn-round ml-auto"
-                                        href="/kategori">
+                                    <a class="btn btn-primary btn-round ml-auto" href="/kategori">
                                         <i class="fa fa-back"></i>
                                         Kembali
-                                </a>
+                                    </a>
                                 </div>
                             </div>
+
+
+                            @foreach ($data as $d)
+                                <!-- Modal delete -->
+                                <div class="modal fade" id="ReturnRowModal{{ $d->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+                                                    <span class="fw-mediumbold">
+                                                        Return</span>
+                                                    <span class="fw-light">
+                                                        Row
+                                                    </span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="POST" action="/kategori/kembali/{{ $d->id }}"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <h4>Apakah Anda Ingin Mengembalikan Data Kategori <strong>{{ $d->nama_kategori }}</strong>? </h4>
+                                                </div>
+
+
+
+                                                <div class="modal-footer ">
+                                                    <button type="submit" id="addRowButton" class="btn btn-primary"><i
+                                                            class="fa fa-save"></i>
+                                                        Kembalikan</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                                            class="fa fa-undo"></i> Close</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            @foreach ($data as $d)
+                                <!-- Modal delete -->
+                                <div class="modal fade" id="DeleteRowModal{{ $d->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+                                                    <span class="fw-mediumbold">
+                                                        Delete</span>
+                                                    <span class="fw-light">
+                                                        Row
+                                                    </span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="POST" action="/kategori/forcedelete/{{ $d->id }}"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <h4>Apakah Anda Ingin Menghapus Data Kategori <strong>{{ $d->nama_kategori }}</strong>? </h4>
+                                                </div>
+
+
+
+                                                <div class="modal-footer ">
+                                                    <button type="submit" id="addRowButton" class="btn btn-primary"><i
+                                                            class="fa fa-save"></i>
+                                                        Hapus</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                                            class="fa fa-undo"></i> Close</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                             <div class="card-body">
                                 <!-- Modal tambah -->
+
 
 
 
@@ -64,12 +149,16 @@
                                                     <td>{{ $row->nama_kategori }}</td>
 
                                                     <td>
-                                                        <form method="POST" action="/kategori/kembali/{{ $row->id }}">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-xs btn-success">
-                                                                <i class="fa fa-back"></i> Kembalikan
-                                                            </button>
-                                                        </form>
+
+
+                                                        <a href="#ReturnRowModal{{ $row->id }}" data-toggle="modal"
+                                                            class="btn btn-xs btn-success"><i class="fa fa-undo"></i>
+                                                            Kembalikan</a>
+
+
+                                                        <a href="#DeleteRowModal{{ $row->id }}" data-toggle="modal"
+                                                            class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
+                                                            Hapus Permanen</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

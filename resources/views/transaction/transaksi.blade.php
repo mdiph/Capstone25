@@ -15,8 +15,8 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Transaksi</h4>
-                                    
-                                    <a data-toggle="collapse" href="/transaksi/telat" class="btn btn-warning btn-round ml-auto text-light"
+
+                                    <a data-toggle="collapse" href="/transaksi/telat" class="btn btn-danger btn-round ml-auto text-light"
                                         onclick="event.preventDefault(); document.getElementById('telat-form').submit();">
                                         <i class="fa fa-money-bill"></i>
                                         Telat Bayar
@@ -25,6 +25,10 @@
                                         style="display: one;">
                                         {{ csrf_field() }}
                                     </form>
+                                    <a class="btn btn-warning btn-round ml-2 text-light" href="/transaksi/trash">
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </a>
                                     <a class="btn btn-primary btn-round ml-2 text-light" href="/tes">
 
                                         <i class="fa fa-plus"></i>
@@ -237,8 +241,17 @@
                                                     <td>RP. {{ number_format($transaksi->subtotal, 2, ',', '.') }}</td>
                                                     <td>{{ $transaksi->diskon }} %</td>
                                                     <td>RP. {{ number_format($transaksi->total, 2, ',', '.') }}</td>
+                                                    @if ($transaksi->salesman)
                                                     <td>{{ $transaksi->salesman->nama_salesman }}</td>
+                                                    @else
+                                                        <td>Salesman sudah dihapus atau tidak tersedia</td>
+                                                    @endif
+                                                    @if ($transaksi->customer)
                                                     <td>{{ $transaksi->customer->nama_customer }}</td>
+                                                    @else
+                                                        <td>Customer sudah dihapus atau tidak tersedia</td>
+                                                    @endif
+                                                    
 
                                                     @if ($transaksi->pembayaran->status == 'Lunas')
                                                         <td class="text-success font-weight-bold">

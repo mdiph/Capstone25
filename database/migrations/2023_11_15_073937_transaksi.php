@@ -34,9 +34,11 @@ return new class extends Migration
             $table->integer('total');
             $table->integer('diskon')->nullable();
             $table->integer('subtotal');
-            $table->foreignId('salesman_id')->references('id')->on('salesman');
-            $table->foreignId('customer_id')->references('id')->on('customer');
+            $table->foreignId('salesman_id')->nullable()->references('id')->on('salesman')->nullOnDelete();
+            $table->foreignId('customer_id')->nullable()->references('id')->on('customer')->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
+
         });
     }
 

@@ -3,7 +3,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="column">
                     <div class="">
 
@@ -25,29 +25,31 @@
                                                 <label for="email2">Kode Barang</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="nama"
-                                                        placeholder="Cari barang. . ." aria-label="" value="{{ $data->produk->nama_produk}}"
+                                                        placeholder="Cari barang. . ."
+                                                        value="{{ $data->produk ? $data->produk->nama_produk : 'Produk tidak ditemukan' }}"
                                                         aria-describedby="basic-addon1">
-                                                    <input type="hidden" class="form-control" name="produk_id" value="{{ $data->produk_id }}"
-                                                        id="id">
-                                                        <input type="hidden" class="form-control" name="produk_idlama" value="{{ $data->produk_id }}"
-                                                        id="id">
+                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                        value="{{ $data->produk_id ?? '' }}" id="id">
+                                                    <input type="hidden" class="form-control" name="produk_idlama"
+                                                        value="{{ $data->produk_id ?? '' }}" id="id">
 
                                                     <div class="input-group-prepend">
                                                         <button class="btn btn-default btn-border" data-toggle="modal"
                                                             data-target="#modalload" type="button">cari</button>
                                                     </div>
-
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Tanggal Masuk</label>
                                                 <div class="input-group">
-                                                    <input type="date" class="form-control" id="datepicker" value="{{ $data->tanggal_masuk }}"
+                                                    <input type="date" onkeydown="return false" class="form-control"
+                                                        id="datepicker" value="{{ $data->tanggal_masuk }}"
                                                         name="tanggal_masuk" name="datepicker"
-                                                        placeholder="tanggal masuk. . .">
+                                                        placeholder="tanggal masuk. . ." disabled>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">
                                                             <i class="fa fa-calendar"></i>
@@ -76,13 +78,16 @@
                                     <div class="form-group w-50">
                                         <label for="email2">Stok Masuk</label>
                                         <div class="input-group mb-3">
-                                            <input type="number" class="form-control" placeholder="Stok Masuk" value="{{ $data->jumlah_masuk }}"
-                                                name="jumlah_masuk" aria-label="Recipient's username"
-                                                aria-describedby="basic-addon2">
+                                            <input type="number"
+                                                oninput="this.value =
+                                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                class="form-control" placeholder="Stok Masuk"
+                                                value="{{ $data->jumlah_masuk }}" name="jumlah_masuk"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
 
-                                                <input type="hidden" class="form-control" placeholder="Stok Masuk" value="{{ $data->jumlah_masuk }}"
-                                                name="jumlah_lama" aria-label="Recipient's username"
-                                                aria-describedby="basic-addon2">
+                                            <input type="hidden" class="form-control" placeholder="Stok Masuk"
+                                                value="{{ $data->jumlah_masuk }}" name="jumlah_lama"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Pcs</span>
                                             </div>
@@ -150,7 +155,11 @@
 
                                     <td>{{ $row->stok }}</td>
 
-                                    <td>{{ $row->kategori->nama_kategori }}</td>
+                                    @if ($row->kategori)
+                                        <td>{{ $row->kategori->nama_kategori }}</td>
+                                    @else
+                                        <td>Kategori sudah dihapus atau tidak tersedia</td>
+                                    @endif
                                     <td>
                                         {{-- <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>

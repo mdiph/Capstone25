@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
 
@@ -111,11 +111,11 @@
                                                     <div class="form-group row mx-auto">
                                                         <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
                                                         <div class="col-sm-3">
-                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                            <input type="date" onkeydown="return false" class="form-control input-sm" id="form" name="fromdate" required>
                                                         </div>
                                                         <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
                                                         <div class="col-sm-3">
-                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                            <input type="date" onkeydown="return false" class="form-control input-sm" id="form" name="todate" required>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <button type="submit" class="btn btn-primary" name="search" >search</button>

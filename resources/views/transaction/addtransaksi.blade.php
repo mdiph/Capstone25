@@ -62,7 +62,7 @@
                                             <div class="form-group">
                                                 <label>Tanggal Transaksi</label>
                                                 <div class="input-group">
-                                                    <input type="date" class="form-control" id="datepicker"
+                                                    <input type="date" onkeydown="return false" class="form-control" id="datepicker"
                                                         name="tanggal_transaksi" name="datepicker"
                                                         placeholder="tanggal masuk. . .">
                                                     <div class="input-group-append">

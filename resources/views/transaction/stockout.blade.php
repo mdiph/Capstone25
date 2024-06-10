@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
 
@@ -141,7 +141,7 @@
 
 
 
-                                                    {{-- <div class="modal-footer ">
+                                {{-- <div class="modal-footer ">
                                                         <button type="submit" id="addRowButton"
                                                             class="btn btn-primary"><i class="fa fa-save"></i>
                                                             Hapus</button>
@@ -161,6 +161,7 @@
                                             <tr>
                                                 <th>No </th>
                                                 <th>Id Keluar</th>
+                                                <th>Kode Transaksi</th>
                                                 <th>Tanggal Keluar</th>
 
 
@@ -175,11 +176,16 @@
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->id_keluar }}</td>
+                                                    <td>{{ $row->transaksi->kode_transaksi }}</td>
                                                     <td>{{ $row->tanggal_keluar }}</td>
 
                                                     <td>{{ $row->jumlah_keluar }}</td>
 
-                                                    <td>{{ $row->produk->nama_produk }}</td>
+                                                    @if ($row->produk)
+                                                        <td>{{ $row->produk->nama_produk }}</td>
+                                                    @else
+                                                        <td>Produk sudah dihapus atau tidak tersedia</td>
+                                                    @endif
 
                                                 </tr>
                                             @endforeach

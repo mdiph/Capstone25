@@ -74,8 +74,10 @@ Route::middleware(["auth"])->group(function () {
     // });
     Route::get('/barangkeluar', [BarangkeluarController::class, 'index']);
     Route::get('/barangmasuk', [BarangMasukController::class, 'index']);
+    Route::get('/barangmasuk/trash', [BarangMasukController::class, 'trash']);
     Route::get('/barangmasuk/edit/{id}', [BarangMasukController::class, 'edit']);
     Route::post('/barangmasuk/edit/{id}', [BarangMasukController::class, 'update']);
+    Route::post('/barangmasuk/kembali/{id}', [BarangMasukController::class, 'kembalikan']);
     Route::get('/barangmasuk/add', [BarangMasukController::class, 'create']);
     Route::post('/barangmasuk/store', [BarangMasukController::class, 'store']);
     Route::post('/barangmasuk', [BarangMasukController::class, 'dateRange'])->name('caristockin');
@@ -117,8 +119,14 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/kategori/update/{id}', [KategoriController::class, 'update']);
     Route::post('/kategori/delete/{id}', [KategoriController::class, 'destroy']);
     Route::post('/kategori/kembali/{id}', [KategoriController::class, 'kembalikan']);
+    Route::post('/kategori/forcedelete/{id}', [KategoriController::class, 'forcedelete']);
+    Route::post('/produk/forcedelete/{id}', [ProdukController::class, 'forcedelete']);
+    Route::post('/salesman/forcedelete/{id}', [SalesmanController::class, 'forcedelete']);
+    Route::post('/customer/forcedelete/{id}', [CustomerController::class, 'forcedelete']);
 
     Route::get('/transaksi/add', [TransaksiController::class, 'create']);
+    Route::get('/transaksi/trash', [Transaksi2Controller::class, 'trash']);
+    Route::post('/transaksi/kembali/{id}', [Transaksi2Controller::class, 'kembalikan']);
     Route::post('/transaksi/delete/{id}', [Transaksi2Controller::class, 'destroy']);
     Route::post('/transaksi/telat', [Transaksi2Controller::class, 'telat']);
     Route::post('/transaksi/store', [TransaksiController::class, 'store']);

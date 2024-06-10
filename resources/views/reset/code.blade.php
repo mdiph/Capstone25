@@ -40,6 +40,7 @@
                     <div class="form-group form-floating-label">
                         <input name="code" type="number" class="form-control input-border-bottom"
                             required>
+                            <input name="email" type="hidden" value="{{ $pw }}">
                         <label for="number" class="placeholder">Kode</label>
                     </div>
 

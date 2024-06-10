@@ -106,4 +106,10 @@ class CustomerController extends Controller
      $sales->restore();
      return redirect('/customer/trash')->with('success', 'Data berhasil dikembalikan');
 }
+
+public function forcedelete($id){
+    $data = customer::onlyTrashed()->where('id',$id);
+    $data->forceDelete();
+    return redirect('/customer/trash')->with('success', 'Data berhasil dihapus');
+}
 }

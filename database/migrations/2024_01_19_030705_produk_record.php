@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('produk_record', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('produk_id')->references('id')->on('produk');
+            $table->foreignId('produk_id')->references('id')->on('produk')->cascadeOnDelete();
             $table->date('tanggal');
             $table->integer('stok');
             $table->timestamps();

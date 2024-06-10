@@ -9,12 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Transaksi extends Model
 {
     use HasFactory;
-    
+    use SoftDeletes;
+
+
 
     protected $table = 'transaksi';
     protected $primaryKey = 'id';
 
     protected $fillable = ["kode_transaksi", "tanggal_transaksi", "tanggal_kedaluwarsa", "subtotal", "total", "diskon", "customer_id", "salesman_id"];
+    protected $hidden = [
+        'deleted_at'
+    ];
 
     public function salesman() {
 
@@ -34,6 +39,11 @@ class Transaksi extends Model
     public function pembayaran() {
 
         return $this->hasOne(Pembayaran::class);
+    }
+
+    public function barangkeluar() {
+
+        return $this->hasMany(Barangkeluar::class);
     }
 
 }

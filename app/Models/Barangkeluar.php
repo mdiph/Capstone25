@@ -20,9 +20,16 @@ class Barangkeluar extends Model
         'produk_id',
         'transaksi_id'
     ];
+    protected $hidden = [
+        'deleted_at'
+    ];
 
 
     public function produk(){
         return $this->belongsTo(produk::class);
+    }
+
+    public function transaksi(){
+        return $this->belongsTo(Transaksi::class);
     }
 }

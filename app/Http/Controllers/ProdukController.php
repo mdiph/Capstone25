@@ -20,7 +20,10 @@ class ProdukController extends Controller
     {
         //
 
-        $data = produk::with('kategori')->get();
+
+        $data = produk::with(['kategori' => function ($query) {
+            $query->withTrashed();
+        }])->get();
         $kategori = kategori::all();
 
 
@@ -123,5 +126,11 @@ class ProdukController extends Controller
      $sales = produk::onlyTrashed()->where('id',$id);
      $sales->restore();
      return redirect('/produk/trash')->with('success', 'Data berhasil dikembalikan');
+}
+
+public function forcedelete($id){
+    $data = produk::onlyTrashed()->where('id',$id);
+    $data->forceDelete();
+    return redirect('/produk/trash')->with('success', 'Data berhasil dihapus');
 }
 }
