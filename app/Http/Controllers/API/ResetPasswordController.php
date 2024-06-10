@@ -33,6 +33,7 @@ class ResetPasswordController extends Controller
         }
 
         $user = User::firstWhere('email', $passwordReset->email);
+        
 
         $user->update($request->only('password'));
 

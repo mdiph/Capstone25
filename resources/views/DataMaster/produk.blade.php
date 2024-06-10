@@ -13,14 +13,12 @@
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <ul>
                                 @foreach ($errors->all() as $error)
-
                                     <li>{{ $error }}</li>
-
                                 @endforeach
                             </ul>
                             <button type="button" class="close" aria-label="Close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span>
-                              </button>
+                            </button>
                         </div>
                     @endif
 
@@ -87,7 +85,7 @@
                                                         <label>Satuan</label>
                                                         <select class="form-control select2" name="satuan" required>
 
-                                                            <option  value = "" >Pilih satuan</option>
+                                                            <option value = "">Pilih satuan</option>
                                                             <option value="MDS">MDS</option>
                                                             <option value="KTN">KTN</option>
 
@@ -100,9 +98,10 @@
                                                     <div class="form-group">
                                                         <label>Kategori</label>
                                                         <select class="form-control select2" name="kategori_id" required>
-                                                            <option  value = "" >Pilih kategori</option>
+                                                            <option value = "">Pilih kategori</option>
                                                             @foreach ($kategori as $k)
-                                                            <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
+                                                                <option value="{{ $k->id }}">{{ $k->nama_kategori }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
 
@@ -146,28 +145,32 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>Nama</label>
-                                                            <input type="text" class="form-control" name="nama_produk" value="{{ $d->nama_produk }}"
-                                                                placeholder="Nama produk..." required>
+                                                            <input type="text" class="form-control" name="nama_produk"
+                                                                value="{{ $d->nama_produk }}" placeholder="Nama produk..."
+                                                                required>
 
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Deskripsi</label>
-                                                            <input type="text" class="form-control" name="deskripsi" value="{{ $d->deskripsi }}"
-                                                                placeholder="Deskripsi..." required>
+                                                            <input type="text" class="form-control" name="deskripsi"
+                                                                value="{{ $d->deskripsi }}" placeholder="Deskripsi..."
+                                                                required>
 
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>Harga</label>
-                                                            <input type="text" class="form-control" name="harga" value="{{ $d->harga }}"
-                                                                placeholder="Harga..." required>
+                                                            <input type="text" class="form-control" name="harga"
+                                                                value="{{ $d->harga }}" placeholder="Harga..."
+                                                                required>
 
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>Satuan</label>
-                                                            <input type="text" class="form-control" name="satuan" value="{{ $d->satuan }}"
-                                                                placeholder="satuan..." required>
+                                                            <input type="text" class="form-control" name="satuan"
+                                                                value="{{ $d->satuan }}" placeholder="satuan..."
+                                                                required>
 
                                                         </div>
 
@@ -175,12 +178,22 @@
 
                                                         <div class="form-group">
                                                             <label>Kategori</label>
-                                                            <select class="form-control select2" name="kategori_id" required>
-
-                                                                <option disabled value="{{ $d->id }}">Dipilih {{ $d->kategori->nama_kategori }}</option>
+                                                            <select class="form-control select2" name="kategori_id"
+                                                                required>
+                                                                @if ($d->kategori)
+                                                                    <option disabled value="{{ $d->id }}">Dipilih
+                                                                        {{ $d->kategori->nama_kategori }}</option>
+                                                                @else
+                                                                    <option disabled value="{{ $d->id }}">Dipilih
+                                                                        (Kategori tidak tersedia)</option>
+                                                                @endif
+                                                                {{-- <option disabled value="{{ $d->id }}">Dipilih
+                                                                    {{ $d->kategori->nama_kategori }}</option> --}}
                                                                 @foreach ($kategori as $k)
-                                                                <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
+                                                                    <option value="{{ $k->id }}">
+                                                                        {{ $k->nama_kategori }}</option>
                                                                 @endforeach
+
                                                             </select>
 
                                                         </div>
@@ -265,12 +278,16 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->kode }}</td>
                                                     <td>{{ $row->nama_produk }}</td>
-                                                    <td>{{ $row->deskripsi}}</td>
+                                                    <td>{{ $row->deskripsi }}</td>
                                                     <td>{{ $row->harga }}</td>
-                                                    <td>{{ $row->satuan}}</td>
+                                                    <td>{{ $row->satuan }}</td>
                                                     <td>{{ $row->stok }}</td>
+                                                    @if ($row->kategori)
+                                                        <td>{{ $row->kategori->nama_kategori }}</td>
+                                                    @else
+                                                        <td>Kategori sudah dihapus atau tidak tersedia</td>
+                                                    @endif
 
-                                                    <td>{{ $row->kategori->nama_kategori }}</td>
                                                     <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>

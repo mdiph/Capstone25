@@ -108,4 +108,11 @@ class KategoriController extends Controller
      $sales->restore();
      return redirect('/kategori/trash')->with('success', 'Data berhasil dikembalikan');
 }
+
+public function forcedelete($id){
+    $data = kategori::onlyTrashed()->where('id',$id);
+    $data->forceDelete();
+    return redirect('/kategori/trash')->with('success', 'Data berhasil dihapus');
+}
+
 }

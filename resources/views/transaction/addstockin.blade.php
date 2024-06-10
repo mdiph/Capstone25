@@ -24,77 +24,87 @@
                             @csrf
 
 
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Tambah Barang Masuk</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="email2">Kode Barang</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="nama"
-                                                    placeholder="Cari barang. . ." aria-label=""
-                                                    aria-describedby="basic-addon1" required>
-                                                    <input type="hidden" class="form-control" name="produk_id" id="id">
-                                                    <input type="hidden" class="form-control" name="stok_lama" id="stok_lama">
-                                                <div class="input-group-prepend">
-                                                    <button class="btn btn-default btn-border" data-toggle="modal"
-                                                        data-target="#modalload" type="button">cari</button>
-                                                </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Tambah Barang Masuk</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="email2">Kode Barang</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="nama" disabled
+                                                        placeholder="Cari barang. . ." aria-label=""
+                                                        aria-describedby="basic-addon1" required>
+                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                        id="id">
+                                                    <input type="hidden" class="form-control" name="stok_lama"
+                                                        id="stok_lama">
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn btn-default btn-border" data-toggle="modal"
+                                                            data-target="#modalload" type="button">cari</button>
+                                                    </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>Tanggal Masuk</label>
-                                            <div class="input-group">
-                                                <input type="date" class="form-control" id="datepicker" name="tanggal_masuk"
-                                                    placeholder="tanggal masuk. . ." required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Tanggal Masuk</label>
+                                                <div class="input-group">
+                                                    <input type="date" onkeydown="return false" class="form-control"
+                                                        id="datepicker" name="tanggal_masuk"
+                                                        placeholder="tanggal masuk. . ." required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                    </div>
+
+                                    <div class="form-group w-50">
+                                        <label for="email2">Stok Masuk</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" min="0"
+                                                placeholder="Stok Masuk" name="jumlah_masuk"
+                                                oninput="this.value =
+                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">Pcs</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col">
-
-                                </div>
-                            </div>
 
 
-                            <div class="form-group">
 
                             </div>
+                            <div class="card-action">
+                                <button class="btn btn-success" type="submit">Submit</button>
 
-                            <div class="form-group w-50">
-                                <label for="email2">Stok Masuk</label>
-                                <div class="input-group mb-3">
-                                    <input type="number" class="form-control" placeholder="Stok Masuk" name="jumlah_masuk"
-                                        aria-label="Recipient's username" aria-describedby="basic-addon2" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">Pcs</span>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        <div class="card-action">
-                            <button class="btn btn-success"
-                                type="submit">Submit</button>
-
-                        </div>
                     </div>
                     </form>
 
@@ -169,7 +179,7 @@
 
                                 <th>Stok</th>
 
-                                <th>Kategori</th>
+                                {{-- <th>Kategori</th> --}}
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -184,7 +194,7 @@
 
                                     <td>{{ $row->stok }}</td>
 
-                                    <td>{{ $row->kategori->nama_kategori }}</td>
+                                    {{-- <td>{{ $row->kategori->nama_kategori }}</td> --}}
                                     <td>
                                         {{-- <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>

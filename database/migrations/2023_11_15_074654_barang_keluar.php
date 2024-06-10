@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->integer('jumlah_keluar');
 
-            $table->foreignId('produk_id')->references('id')->on('produk');
+            $table->foreignId('produk_id')->nullable()->references('id')->on('produk')->nullOnDelete();
             $table->foreignId('transaksi_id')->references('id')->on('transaksi')->onDelete('cascade')->cascadeOnUpdate('cascade');
             $table->timestamps();
         });

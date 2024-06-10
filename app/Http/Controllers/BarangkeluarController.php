@@ -15,10 +15,16 @@ class BarangkeluarController extends Controller
     public function index()
     {
         //
-        $data = Barangkeluar::with(['produk' => function ($query) {
+        $data = Barangkeluar::whereHas('transaksi', function ($query) {
+            // Ensure only non-deleted transaksi are considered
+            $query->whereNull('deleted_at');
+        })->with(['produk' => function ($query) {
             $query->withTrashed();
-        }])->get();
-        return view ("transaction.stockout")->with('data', $data);
+        }, 'transaksi' => function ($query) {
+            $query->whereNull('deleted_at');
+        }])->latest()->get();
+
+        return view("transaction.stockout")->with('data', $data);
     }
 
     /**
@@ -47,11 +53,9 @@ class BarangkeluarController extends Controller
 
         $query = Barangkeluar::create($validate);
 
-        DB::transaction(function () use($harga, $query, $qty, $select) {
+        DB::transaction(function () use ($harga, $query, $qty, $select) {
             produk::where('id', $select)->decrement('stok', $qty);
-            $query->increment('harga_jual', $harga * $qty );
-
-
+            $query->increment('harga_jual', $harga * $qty);
         });
         // if($query){
 
@@ -61,7 +65,6 @@ class BarangkeluarController extends Controller
 
 
         return redirect('/barangkeluar');
-
     }
 
     /**

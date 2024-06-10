@@ -18,7 +18,11 @@
                                     <div id="datarange" class="float-end">
 
                                     </div>
-                                    <a class="btn btn-primary btn-round ml-auto text-light" href="/barangmasuk/add">
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="/barangmasuk/trash">
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </a>
+                                    <a class="btn btn-primary btn-round ml-2 text-light" href="/barangmasuk/add">
 
                                         <i class="fa fa-plus"></i>
                                         Add Row
@@ -120,11 +124,11 @@
                                                     <div class="form-group row mx-auto">
                                                         <label for="date" class="col-form-label col-sm-1">Tanggal Mulai</label>
                                                         <div class="col-sm-3">
-                                                            <input type="date" class="form-control input-sm" id="form" name="fromdate" required>
+                                                            <input type="date" onkeydown="return false" class="form-control input-sm" id="form" name="fromdate" required>
                                                         </div>
                                                         <label for="date" class="col-form-label col-sm-1">Tanggal Akhir</label>
                                                         <div class="col-sm-3">
-                                                            <input type="date" class="form-control input-sm" id="form" name="todate" required>
+                                                            <input type="date" onkeydown="return false" class="form-control input-sm" id="form" name="todate" required>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <button type="submit" class="btn" name="search" >search</button>
@@ -157,7 +161,12 @@
                                                     <td>{{ $row->id_masuk }}</td>
                                                     <td>{{ $row->tanggal_masuk }}</td>
                                                     <td>{{ $row->jumlah_masuk }}</td>
-                                                    <td>{{ $row->produk->nama_produk }}</td>
+
+                                                    @if ($row->produk)
+                                                        <td>{{ $row->produk->nama_produk }}</td>
+                                                    @else
+                                                        <td>Produk sudah dihapus atau tidak tersedia</td>
+                                                    @endif
                                                     <td>
                                                         <a href="/barangmasuk/edit/{{ $row->id }}"
                                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>

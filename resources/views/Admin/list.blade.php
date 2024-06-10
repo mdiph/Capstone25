@@ -79,11 +79,11 @@
                                                     <div class="form-group">
                                                         <label>role</label>
                                                         <select class="form-control select2" name="role" required>
-                                                            <option  value = "" >Pilih role</option>
-                                                            <option  value = "Admin" >Admin</option>
-                                                            <option  value = "Gudang" >Gudang</option>
-                                                            <option  value = "Salesman" >Salesman</option>
-                                                            <option  value = "Kepala Cabang" >Kepala Cabang</option>
+                                                            <option value = "">Pilih role</option>
+                                                            <option value = "Admin">Admin</option>
+                                                            <option value = "Gudang">Gudang</option>
+                                                            <option value = "Salesman">Salesman</option>
+                                                            <option value = "Kepala Cabang">Kepala Cabang</option>
                                                         </select>
 
                                                     </div>
@@ -126,14 +126,16 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>Nama</label>
-                                                            <input type="text" class="form-control" name="nama" value="{{ $d->nama }}"
-                                                                placeholder="Nama User..." required>
+                                                            <input type="text" class="form-control" name="nama"
+                                                                value="{{ $d->nama }}" placeholder="Nama User..."
+                                                                required>
 
                                                         </div>
                                                         <div class="form-group">
                                                             <label>email</label>
-                                                            <input type="email" class="form-control" name="email" value="{{ $d->email }}"
-                                                                placeholder="deksripsi..." required>
+                                                            <input type="email" class="form-control" name="email"
+                                                                value="{{ $d->email }}" placeholder="deksripsi..."
+                                                                required>
 
                                                         </div>
 
@@ -141,7 +143,7 @@
                                                         <div class="form-group">
                                                             <label>password</label>
                                                             <input type="password" class="form-control" name="password"
-                                                                placeholder="password..." >
+                                                                placeholder="password...">
 
                                                         </div>
 
@@ -150,14 +152,21 @@
 
                                                         <div class="form-group">
                                                             <label>role</label>
-                                                            <select class="form-control select2" name="role" required>
-                                                             <option  value = "{{ $d->role }}" >{{ $d->role }} <i class="fa fa-check"></i> </option>
+                                                            <select class="form-control select2" name="role"
+                                                                {{ $d->role == 'Admin' ? 'disabled' : 'required' }}>
+                                                                <!-- Pilihan role -->
+                                                                <option value="{{ $d->role }}">Role: {{ $d->role }}
+                                                                </option>
 
-                                                            <option  value = "Admin" >Admin</option>
-                                                            <option  value = "Gudang" >Gudang</option>
-                                                            <option  value = "Salesman" >Salesman</option>
-                                                            <option  value = "Kepala Cabang" >Kepala Cabang</option>
+                                                                <!-- Opsi lainnya -->
+
+                                                                <option value="Gudang">Gudang</option>
+                                                                <option value="Salesman">Salesman</option>
+                                                                <option value="Kepala Cabang">Kepala Cabang</option>
                                                             </select>
+
+
+
 
                                                         </div>
 
@@ -234,16 +243,20 @@
                                             @foreach ($user as $row)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->nama}}</td>
-                                                    <td>{{ $row->email}}</td>
+                                                    <td>{{ $row->nama }}</td>
+                                                    <td>{{ $row->email }}</td>
                                                     <td>{{ $row->role }}</td>
                                                     <td>
                                                         <a href="#EditRowModal{{ $row->id }}" data-toggle="modal"
                                                             class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
                                                             Edit</a>
-                                                        <a href="#DeleteRowModal{{ $row->id }}" data-toggle="modal"
-                                                            class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
-                                                            Delete</a>
+
+                                                        @if ($row->role != 'Admin')
+                                                            <a href="#DeleteRowModal{{ $row->id }}"
+                                                                data-toggle="modal" class="btn btn-xs btn-danger">
+                                                                <i class="fa fa-trash"></i> Delete
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach

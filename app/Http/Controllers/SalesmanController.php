@@ -113,4 +113,10 @@ class SalesmanController extends Controller
      $sales->restore();
      return redirect('/salesman/trash')->with('success', 'Data berhasil dikembalikan');
 }
+
+public function forcedelete($id){
+    $data = salesman::onlyTrashed()->where('id',$id);
+    $data->forceDelete();
+    return redirect('/salesman/trash')->with('success', 'Data berhasil dihapus');
+}
 }

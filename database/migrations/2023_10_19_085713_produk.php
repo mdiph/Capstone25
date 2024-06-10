@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('satuan');
             $table->integer('stok')->default(0);
             // $table->integer('unit');
-            $table->foreignId('kategori_id')->references('id')->on('kategori');
+            $table->foreignId('kategori_id')->nullable()->references('id')->on('kategori')->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

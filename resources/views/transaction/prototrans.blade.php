@@ -44,7 +44,7 @@
 
                                             <div class="form-group row ">
                                                 <label for="inputPassword4">Tanggal transaksi</label>
-                                                <input type="date" class="form-control" id="inputPassword4"
+                                                <input type="date" onkeydown="return false" class="form-control" id="inputPassword4"
                                                     name="tanggal_transaksi" placeholder="Pilih tanggal">
                                             </div>
 
@@ -85,7 +85,7 @@
 
                                             <div class="form-group row ">
                                                 <label for="inputPassword4">Tanggal Kedaluwarsa</label>
-                                                <input type="date" class="form-control" id="kedaluwarsa"
+                                                <input type="date" onkeydown="return false" class="form-control" id="kedaluwarsa"
                                                     name="tanggal_kedaluwarsa" placeholder="Pilih tanggal">
                                             </div>
 
@@ -99,14 +99,16 @@
 
                                             <div class="form-group row">
                                                 <label for="inputEmail4">Diskon</label>
-                                                <input type="number" class="form-control" id="diskonp" name="diskon">
+                                                <input type="number" class="form-control" id="diskonp" name="diskon" min="0" oninput="this.value =
+                                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
 
 
                                             </div>
 
                                             <div class="form-group row">
                                                 <label for="inputEmail4">Jumlah Keluar</label>
-                                                <input type="number" class="form-control" id="jumlah_keluar"
+                                                <input type="number" class="form-control" id="jumlah_keluar" min="0" oninput="this.value =
+                                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                                     name="jumlah_keluar">
                                                 <input type="hidden" class="form-control" id="harga_jual"
                                                     name="harga_jual">
@@ -187,7 +189,8 @@
                                                     <div class="form-group row">
                                                         <label for="inputEmail3" class="">Diskon</label>
 
-                                                        <input type="number" class="form-control diskon" id="diskon"
+                                                        <input type="number" class="form-control diskon" id="diskon" min="0" oninput="this.value =
+                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                                             name="diskon" placeholder="diskon">
 
                                                     </div>
@@ -212,7 +215,8 @@
                                                     <div class="form-group row">
                                                         <label for="inputEmail3" class="">Bayar</label>
 
-                                                        <input type="number" class="form-control total" name="bayar" id="bayar">
+                                                        <input type="number" class="form-control total" name="bayar" id="bayar" min="0" oninput="this.value =
+                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" >
 
                                                     </div>
 
