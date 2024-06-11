@@ -84,7 +84,7 @@
                                                         <label>role</label>
                                                         <select class="form-control select2" name="role" required>
                                                             <option value = "">Pilih role</option>
-                                                            <option value = "Admin">Admin</option>
+                                                            
                                                             <option value = "Gudang">Gudang</option>
                                                             <option value = "Salesman">Salesman</option>
                                                             <option value = "Kepala Cabang">Kepala Cabang</option>
