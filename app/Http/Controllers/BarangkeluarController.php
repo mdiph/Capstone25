@@ -98,4 +98,27 @@ class BarangkeluarController extends Controller
     {
         //
     }
+
+    public function dateRange(Request $request)
+{
+    $fromDate = $request->input('fromdate');
+    $toDate = $request->input('todate');
+
+    // Check if toDate is less than fromDate
+    if (strtotime($toDate) < strtotime($fromDate)) {
+        return redirect()->back()->with('error', 'Tanggal akhir tidak boleh kurang dari tanggal mulai.');
+    }
+
+    $data = Barangkeluar::whereHas('transaksi', function ($query) {
+        // Ensure only non-deleted transaksi are considered
+        $query->whereNull('deleted_at');
+    })->with(['produk' => function ($query) {
+        $query->withTrashed();
+    }, 'transaksi' => function ($query) {
+        $query->whereNull('deleted_at');
+    }])
+    ->whereBetween('tanggal_keluar', [$fromDate, $toDate])->get();
+
+    return view('transaction.stockout')->with('data', $data);
+}
 }

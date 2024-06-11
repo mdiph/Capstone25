@@ -81,7 +81,9 @@ Route::middleware(["auth"])->group(function () {
     Route::post('/barangmasuk/kembali/{id}', [BarangMasukController::class, 'kembalikan']);
     Route::get('/barangmasuk/add', [BarangMasukController::class, 'create']);
     Route::post('/barangmasuk/store', [BarangMasukController::class, 'store']);
+    Route::post('/transaksi', [Transaksi2Controller::class, 'dateRange'])->name('caritransaksi');
     Route::post('/barangmasuk', [BarangMasukController::class, 'dateRange'])->name('caristockin');
+    Route::post('/barangkeluar', [BarangkeluarController::class, 'dateRange'])->name('caristockout');
     Route::post('/barangmasuk/delete/{id}', [BarangMasukController::class, 'delete']);
     Route::get('/stok', [ControllersPersediaanBarangController::class, 'index']);
     Route::get('/', [DashboardController::class, 'index']);

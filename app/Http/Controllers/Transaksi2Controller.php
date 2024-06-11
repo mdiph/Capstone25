@@ -165,8 +165,12 @@ class Transaksi2Controller extends Controller
             }
 
             if ($validate['metode'] == "Tempo") {
-                $konfirmasi = "Belum Lunas";
-                $jatuhTempo = Carbon::parse($validate['tanggal_transaksi'])->addDays(30);
+                if ($validate['bayar'] >= $validate['total']) {
+                    return redirect()->back()->with('error', 'Jumlah bayar tidak boleh sama atau lebih dari total untuk metode Tempo.');
+                } else {
+                    $konfirmasi = "Belum Lunas";
+                    $jatuhTempo = Carbon::parse($validate['tanggal_transaksi'])->addDays(30);
+                }
             } else if ($validate['metode'] == "Cash" && $validate['bayar'] == $validate['total']) {
                 $konfirmasi = "Lunas";
                 $jatuhTempo = $validate['tanggal_transaksi'];
@@ -477,4 +481,26 @@ class Transaksi2Controller extends Controller
         $data->forceDelete();
         return redirect('/transaksi/trash')->with('success', 'Data berhasil dihapus');
     }
+
+    public function dateRange(Request $request)
+{
+    $fromDate = $request->input('fromdate');
+    $toDate = $request->input('todate');
+
+    // Check if toDate is less than fromDate
+    if (strtotime($toDate) < strtotime($fromDate)) {
+        return redirect()->back()->with('error', 'Tanggal akhir tidak boleh kurang dari tanggal mulai.');
+    }
+
+    $data = Transaksi::with([
+        'salesman' => function ($query) {
+            $query->withTrashed();
+        },
+        'customer' => function ($query) {
+            $query->withTrashed();
+        }, 'pembayaran'
+    ])->whereBetween('tanggal_transaksi', [$fromDate, $toDate])->get();
+
+    return view('transaction.transaksi')->with('data', $data);
+}
 }
