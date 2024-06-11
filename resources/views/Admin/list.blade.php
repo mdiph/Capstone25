@@ -24,7 +24,11 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">User</h4>
-                                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
+                                    <a class="btn btn-warning btn-round ml-auto text-light" href="/user/trash">
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </a>
+                                    <button class="btn btn-primary btn-round ml-2" data-toggle="modal"
                                         data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
                                         Add Row

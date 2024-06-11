@@ -18,10 +18,12 @@
                                     <div id="datarange" class="float-end">
 
                                     </div>
+                                    @if (auth()->user()->role == "Admin")
                                     <a class="btn btn-warning btn-round ml-auto text-light" href="/barangmasuk/trash">
                                         <i class="fa fa-trash"></i>
                                         Trash
                                     </a>
+                                    @endif
                                     <a class="btn btn-primary btn-round ml-2 text-light" href="/barangmasuk/add">
 
                                         <i class="fa fa-plus"></i>

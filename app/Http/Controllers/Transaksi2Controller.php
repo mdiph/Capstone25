@@ -471,4 +471,10 @@ class Transaksi2Controller extends Controller
 
         return view('trash.transaksi')->with('data', $data);
     }
+
+    public function forcedelete($id){
+        $data = Transaksi::onlyTrashed()->where('id',$id);
+        $data->forceDelete();
+        return redirect('/transaksi/trash')->with('success', 'Data berhasil dihapus');
+    }
 }

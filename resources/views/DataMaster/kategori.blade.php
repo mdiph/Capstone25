@@ -31,7 +31,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">kategori</h4>
+                                    <h4 class="card-title">Kategori</h4>
                                     <a class="btn btn-warning btn-round ml-auto text-light" href="/kategori/trash">
                                         <i class="fa fa-trash"></i>
                                         Trash
@@ -123,7 +123,7 @@
                                                     <div class="modal-footer ">
                                                         <button type="submit" id="addRowButton"
                                                             class="btn btn-primary"><i class="fa fa-save"></i>
-                                                            Tambah</button>
+                                                            Ubah</button>
                                                         <button type="button" class="btn btn-danger"
                                                             data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
                                                     </div>

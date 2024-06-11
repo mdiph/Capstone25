@@ -10,9 +10,10 @@ class UserController extends Controller
     //
 
 
-    public function index(){
+    public function index()
+    {
 
-        if(auth()->user()->role !== 'Admin'){
+        if (auth()->user()->role !== 'Admin') {
             abort(403);
         }
         $user = User::all();
@@ -22,7 +23,8 @@ class UserController extends Controller
         return view('Admin.list')->with('user', $user);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
 
         $validateData = $request->validate([
@@ -30,20 +32,21 @@ class UserController extends Controller
             'email' => 'required|email:dns|unique:users',
             'role' => 'required',
             'password' => 'required|min:5|max:30'
-          ]);
+        ]);
 
-          //enkripsi password di my sql
-          $validateData['password'] = bcrypt($validateData['password']);
+        //enkripsi password di my sql
+        $validateData['password'] = bcrypt($validateData['password']);
 
 
-          //$request->session()->flash('success', 'Registrasi selesai, silahkan login');
+        //$request->session()->flash('success', 'Registrasi selesai, silahkan login');
 
-          User::create($validateData);
+        User::create($validateData);
 
-       return redirect('/User')->with('success', 'Tambah data berhasil');
+        return redirect('/User')->with('success', 'Tambah data berhasil');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
         $user  =  User::find($id);
 
@@ -66,14 +69,15 @@ class UserController extends Controller
         }
 
 
-          //enkripsi password di my sql
+        //enkripsi password di my sql
 
         $user->update($validateData);
 
         return redirect('/User')->with('success', 'Ubah data berhasil');
     }
 
-    public function destroy(Request $request, $id){
+    public function destroy(Request $request, $id)
+    {
         $user  = User::find($id);
 
         $user->delete();
@@ -81,6 +85,24 @@ class UserController extends Controller
         return redirect('/User')->with('success', 'Hapus data berhasil');
     }
 
+    public function trash()
+    {
+        $data = User::onlyTrashed()->get();
 
+        return view('trash.user')->with('data', $data);
+    }
 
+    public function kembalikan($id)
+    {
+        $sales = User::onlyTrashed()->where('id', $id);
+        $sales->restore();
+        return redirect('/user/trash')->with('success', 'Data berhasil dikembalikan');
+    }
+
+    public function forcedelete($id)
+    {
+        $data = User::onlyTrashed()->where('id', $id);
+        $data->forceDelete();
+        return redirect('/user/trash')->with('success', 'Data berhasil dihapus');
+    }
 }

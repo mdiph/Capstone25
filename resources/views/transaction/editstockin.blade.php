@@ -27,16 +27,16 @@
                                                     <input type="text" class="form-control" id="nama"
                                                         placeholder="Cari barang. . ."
                                                         value="{{ $data->produk ? $data->produk->nama_produk : 'Produk tidak ditemukan' }}"
-                                                        aria-describedby="basic-addon1">
+                                                        aria-describedby="basic-addon1" disabled>
                                                     <input type="hidden" class="form-control" name="produk_id"
                                                         value="{{ $data->produk_id ?? '' }}" id="id">
                                                     <input type="hidden" class="form-control" name="produk_idlama"
                                                         value="{{ $data->produk_id ?? '' }}" id="id">
 
-                                                    <div class="input-group-prepend">
+                                                    {{-- <div class="input-group-prepend">
                                                         <button class="btn btn-default btn-border" data-toggle="modal"
                                                             data-target="#modalload" type="button">cari</button>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
 

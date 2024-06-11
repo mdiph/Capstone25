@@ -21,6 +21,7 @@ use App\Http\Controllers\API\PersediaanBarangController;
 use App\Http\Controllers\ForgotPasswordController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\PersediaanBarangController as ControllersPersediaanBarangController;
+use App\Models\BarangMasuk;
 use App\Models\produk;
 
 /*
@@ -100,6 +101,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/produk/trash', [ProdukController::class, 'trash']);
     Route::post('/produk/kembali/{id}', [ProdukController::class, 'kembalikan']);
 
+    Route::get('/user/trash', [UserController::class, 'trash']);
+    Route::post('/user/kembali/{id}', [UserController::class, 'kembalikan']);
+
     Route::get('/salesman', [SalesmanController::class, 'index']);
     Route::get('/salesman/trash', [SalesmanController::class, 'trash']);
     Route::post('/salesman/kembali/{id}', [SalesmanController::class, 'kembalikan']);
@@ -123,6 +127,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/produk/forcedelete/{id}', [ProdukController::class, 'forcedelete']);
     Route::post('/salesman/forcedelete/{id}', [SalesmanController::class, 'forcedelete']);
     Route::post('/customer/forcedelete/{id}', [CustomerController::class, 'forcedelete']);
+    Route::post('/barangmasuk/forcedelete/{id}', [BarangMasukController::class, 'forcedelete']);
+    Route::post('/transaksi/forcedelete/{id}', [Transaksi2Controller::class, 'forcedelete']);
+    Route::post('/user/forcedelete/{id}', [UserController::class, 'forcedelete']);
 
     Route::get('/transaksi/add', [TransaksiController::class, 'create']);
     Route::get('/transaksi/trash', [Transaksi2Controller::class, 'trash']);

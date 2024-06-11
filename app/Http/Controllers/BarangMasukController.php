@@ -261,5 +261,11 @@ class BarangMasukController extends Controller
         return view('trash.stockin')->with('data', $data);
     }
 
+    public function forcedelete($id){
+        $data = BarangMasuk::onlyTrashed()->where('id',$id);
+        $data->forceDelete();
+        return redirect('/barangmasuk/trash')->with('success', 'Data berhasil dihapus');
+    }
+
 
 }

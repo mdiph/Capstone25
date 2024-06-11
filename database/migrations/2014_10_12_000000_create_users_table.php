@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('role', ['Admin', 'Gudang', 'Kepala Cabang', 'Salesman'])->default('Gudang');
             $table->string('password');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
