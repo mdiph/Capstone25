@@ -32,18 +32,23 @@ class BarangMasukController extends Controller
 
 
     public function dateRange(Request $request)
-    {
+{
+    $fromDate = $request->input('fromdate');
+    $toDate = $request->input('todate');
 
-        $fromDate = $request->input('fromdate');
-        $toDate = $request->input('todate');
-
-        $data = BarangMasuk::with(['produk' => function ($query) {
-            $query->withTrashed();
-        }])
-            ->whereBetween('tanggal_masuk', [$fromDate, $toDate])->get();
-
-        return view('transaction.stockin')->with('data', $data);
+    // Check if toDate is less than fromDate
+    if (strtotime($toDate) < strtotime($fromDate)) {
+        return redirect()->back()->with('error', 'Tanggal akhir tidak boleh kurang dari tanggal mulai.');
     }
+
+    $data = BarangMasuk::with(['produk' => function ($query) {
+        $query->withTrashed();
+    }])
+    ->whereBetween('tanggal_masuk', [$fromDate, $toDate])->get();
+
+    return view('transaction.stockin')->with('data', $data);
+}
+
 
     public function edit($id)
     {
@@ -259,6 +264,12 @@ class BarangMasukController extends Controller
         }])->get();
 
         return view('trash.stockin')->with('data', $data);
+    }
+
+    public function forcedelete($id){
+        $data = BarangMasuk::onlyTrashed()->where('id',$id);
+        $data->forceDelete();
+        return redirect('/barangmasuk/trash')->with('success', 'Data berhasil dihapus');
     }
 
 

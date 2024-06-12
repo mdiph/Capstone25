@@ -28,7 +28,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">produk Trash</h4>
+                                    <h4 class="card-title">Produk Trash</h4>
                                     <a class="btn btn-primary btn-round ml-auto"
                                         href="/produk">
                                         <i class="fa fa-back"></i>
