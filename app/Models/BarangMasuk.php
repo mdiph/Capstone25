@@ -15,7 +15,7 @@ class BarangMasuk extends Model
     protected $table = 'barang_masuk';
 
     protected $fillable = [
-        "id_masuk", 'tanggal_masuk',  'jumlah_masuk', 'produk_id'
+        "id_masuk", 'tanggal_masuk',  'jumlah_masuk', 'produk_id', 'batch', 'tanggal_kadaluarsa', 'stok_tersisa'
     ];
     protected $hidden = [
         'deleted_at'

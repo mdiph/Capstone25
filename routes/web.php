@@ -17,7 +17,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\Transaksi2Controller;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangkeluarController;
-use App\Http\Controllers\API\PersediaanBarangController;
+use App\Http\Controllers\PersediaanBarangController;
 use App\Http\Controllers\ForgotPasswordController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\PersediaanBarangController as ControllersPersediaanBarangController;
@@ -84,6 +84,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post('/transaksi', [Transaksi2Controller::class, 'dateRange'])->name('caritransaksi');
     Route::post('/barangmasuk', [BarangMasukController::class, 'dateRange'])->name('caristockin');
     Route::post('/barangkeluar', [BarangkeluarController::class, 'dateRange'])->name('caristockout');
+    Route::post('/stok', [PersediaanBarangController::class, 'changedate'])->name('changedate');
     Route::post('/barangmasuk/delete/{id}', [BarangMasukController::class, 'delete']);
     Route::get('/stok', [ControllersPersediaanBarangController::class, 'index']);
     Route::get('/', [DashboardController::class, 'index']);

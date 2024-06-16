@@ -4,7 +4,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                
+
                 <div class="row">
 
 
@@ -24,6 +24,28 @@
 
 
                                 <div class="table-responsive">
+                                    <form method="POST" action="{{ route('changedate') }}">
+                                        @csrf
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="form-group row mx-auto">
+
+                                                        <div class="col-sm-3">
+                                                            <input type="date" onkeydown="return false" class="form-control input-sm" id="form" name="date" required>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <button type="submit" class="btn" name="search" >search</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="/stok" class="btn btn-success" >Clear</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table id="table" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>

@@ -179,9 +179,9 @@
                                                         <div class="form-group">
                                                             <label>Kategori</label>
                                                             <select class="form-control select2" name="kategori_id"
-                                                                required>
+                                                                >
                                                                 @if ($d->kategori)
-                                                                    <option disabled value="{{ $d->id }}">Dipilih
+                                                                    <option  value="{{ $d->id }}">Dipilih
                                                                         {{ $d->kategori->nama_kategori }}</option>
                                                                 @else
                                                                     <option disabled value="{{ $d->id }}">Dipilih

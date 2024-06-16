@@ -137,88 +137,64 @@ class BarangMasukController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    DB::beginTransaction();
 
+    try {
+        $rules = [
+            'produk_id' => 'required',
+            'stok_lama' => 'required',
+            'jumlah_masuk' => 'required|numeric',
+            'tanggal_masuk' => 'required|date',
+            'batch' => 'required|string',
+            'tanggal_kadaluarsa' => 'required|date'
+        ];
 
+        $validate = $request->validate($rules);
+        $select = $validate['produk_id'];
+        $qty = $validate['jumlah_masuk'];
+        $date = $validate['tanggal_masuk'];
 
-        DB::beginTransaction();
+        $lastDigitOfYear = substr($date, -2, 2); // Mengambil 2 digit terakhir tahun
+        $month = date('m', strtotime($date)); // Mengambil bulan dari tanggal transaksi
+        $day = date('d', strtotime($date)); // Mengambil tanggal dari tanggal transaksi
 
-        try {
+        // Mendapatkan digit terakhir dari barangkeluar dibuat ke berapa pada tanggal tersebut
+        $lastDigitFromBarangKeluar = BarangMasuk::whereDate('tanggal_masuk', $date)->count() + 1;
 
-            $rules = [
+        $validate['id_masuk'] = "BM-" . $lastDigitOfYear . $month . $day . $lastDigitFromBarangKeluar . $select;
+        $validate['stok_tersisa'] = $validate['jumlah_masuk']; // Set stok_tersisa equal to jumlah_masuk
 
-                'produk_id' => 'required',
-                'stok_lama' => 'required',
-                'jumlah_masuk' => 'required|numeric',
-                'tanggal_masuk' => 'required|date',
-            ];
+        $produklama = $validate['stok_lama'];
+        BarangMasuk::create($validate);
 
+        produkrecord::create([
+            'produk_id' => $select,
+            'stok' => $produklama,
+            'tanggal' => $date
+        ]);
 
+        produk::where('id', $select)->increment('stok', $qty);
+        // produk_record create
+        $message = 'success';
+        $queryStatus = 'Data berhasil ditambah';
 
-            $validate = $request->validate($rules);
-            $select = $validate['produk_id'];
-            $qty =  $validate['jumlah_masuk'];
-            $date = $validate['tanggal_masuk'];
+        // Jika semua query berhasil, simpan perubahan
+        DB::commit();
+    } catch (\Exception $e) {
+        // Tangani kesalahan jika ditemui
+        // Rollback untuk membatalkan transaksi
+        DB::rollBack();
 
-            $lastDigitOfYear = substr($date, -2, 2); // Mengambil 2 digit terakhir tahun
-            $month = date('m', strtotime($date)); // Mengambil bulan dari tanggal transaksi
-            $day = date('d', strtotime($date)); // Mengambil tanggal dari tanggal transaksi
+        $message = 'error';
+        $queryStatus = 'Data gagal ditambah. Error: ' . $e->getMessage();
 
-            // Mendapatkan digit terakhir dari barangkeluar dibuat ke berapa pada tanggal tersebut
-            $lastDigitFromBarangKeluar = BarangMasuk::whereDate('tanggal_masuk', $date)->count() + 1;
-
-            $validate['id_masuk'] = "BM-" . $lastDigitOfYear . $month . $day . $lastDigitFromBarangKeluar . $select;
-
-
-
-
-            $produklama =  $validate['stok_lama'];
-            BarangMasuk::create($validate);
-
-            produkrecord::create([
-                'produk_id' => $select,
-                'stok' => $produklama,
-                'tanggal' => $date
-            ]);
-
-            produk::where('id', $select)->increment('stok', $qty);
-            // produk_record create
-            $message = 'success';
-            $queryStatus = 'Data berhasil ditambah';
-
-
-
-            // Jika semua query berhasil, simpan perubahan
-            DB::commit();
-        } catch (\Exception $e) {
-            // Tangani kesalahan jika ditemui
-            // Rollback untuk membatalkan transaksi
-            DB::rollBack();
-
-            $message = 'error';
-            $queryStatus = 'Data gagal ditambah. Error: ' . $e->getMessage();
-        }
-
-
-
-
-
-        // Lakukan operasi-opsi query di sini
-        // ...
-
-
-
-
-
-
-
-
-
-
-
-
-        return redirect('/barangmasuk')->with($message, $queryStatus);
+        return back()->withInput()->with('error', 'Terdapat kesalahan');
     }
+
+    return redirect('/barangmasuk')->with($message, $queryStatus);
+}
+
 
     public function delete($id)
     {
