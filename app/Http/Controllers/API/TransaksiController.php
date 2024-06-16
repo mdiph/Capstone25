@@ -5,7 +5,7 @@ use Exception;
 
 use Carbon\Carbon;
 use App\Models\Cart;
-use App\Models\Produk;
+use App\Models\produk;
 use App\Models\Piutang;
 use App\Models\Transaksi;
 use App\Models\Pembayaran;
@@ -124,7 +124,7 @@ public function store(Request $request)
             'total' => 'required|numeric',
             'diskon' => 'nullable|numeric',
             'subtotal' => 'required|numeric',
-            'customer_id' => 'required|exists:customers,id',
+            'customer_id' => 'required',
             'metode' => 'required|string',
             'bayar' => 'required|numeric',
         ]);
@@ -143,7 +143,7 @@ public function store(Request $request)
             'diskon' => $validate['diskon'] ?? 0,
             'subtotal' => $validate['subtotal'],
             'salesman_id' => $salesman_id,
-            'customer_id' => $customer_id
+            'customer_id' => $validate['customer_id']
         ]);
 
         $cart = cart_salesman::with('produk')->where('salesman_id', $salesman_id)->get();

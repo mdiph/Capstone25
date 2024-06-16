@@ -10,7 +10,7 @@ class cart_salesman extends Model
     use HasFactory;
 
 
-    protected $table = 'cart';
+    protected $table = 'cart_salesman';
 
     protected $fillable = [
          "produk_id",
