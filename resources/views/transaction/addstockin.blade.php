@@ -34,12 +34,12 @@
                                             <div class="form-group">
                                                 <label for="email2">Kode Barang</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="nama" disabled
+                                                    <input type="text" class="form-control" id="nama" name="nama" disabled value="{{ old('nama') }}"
                                                         placeholder="Cari barang. . ." aria-label=""
                                                         aria-describedby="basic-addon1" required>
-                                                    <input type="hidden" class="form-control" name="produk_id"
+                                                    <input type="hidden" class="form-control" name="produk_id" value="{{ old('produk_id') }}"
                                                         id="id">
-                                                    <input type="hidden" class="form-control" name="stok_lama"
+                                                    <input type="hidden" class="form-control" name="stok_lama" value="{{ old('stok_lama') }}"
                                                         id="stok_lama">
                                                     <div class="input-group-prepend">
                                                         <button class="btn btn-default btn-border" data-toggle="modal"
@@ -51,24 +51,43 @@
                                         </div>
 
                                         <div class="col">
-                                            <div class="form-group">
-                                                <label>Tanggal Masuk</label>
-                                                <div class="input-group">
-                                                    <input type="date" onkeydown="return false" class="form-control"
-                                                        id="datepicker" name="tanggal_masuk"
-                                                        placeholder="tanggal masuk. . ." required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label>Tanggal Masuk</label>
+                                                    <div class="input-group">
+                                                        <input type="date" onkeydown="return false" class="form-control"
+                                                            id="datepicker" name="tanggal_masuk"
+                                                            placeholder="tanggal masuk. . ." value="{{ old('tanggal_masuk') }}" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label>Tanggal kadaluarsa</label>
+                                                    <div class="input-group">
+                                                        <input type="date" onkeydown="return false" class="form-control"
+                                                            id="datepicker" name="tanggal_kadaluarsa"
+                                                            placeholder="tanggal kadaluarsa. . ." value="{{ old('tanggal_kadaluarsa') }}" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
 
-                                    </div>
 
 
                                     <div class="row">
@@ -79,9 +98,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
 
-                                    </div>
 
                                     <div class="form-group w-50">
                                         <label for="email2">Stok Masuk</label>
@@ -90,10 +107,20 @@
                                                 placeholder="Stok Masuk" name="jumlah_masuk"
                                                 oninput="this.value =
                                         !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                                aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2" >
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Pcs</span>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group w-50">
+                                        <label for="email2">Batch</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control"
+                                                placeholder="Batch" name="batch"
+                                                 >
+
                                         </div>
                                     </div>
                                 </div>

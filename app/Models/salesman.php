@@ -26,6 +26,11 @@ class salesman extends Model
         return $this->hasMany(Transaksi::class, 'salesman_id', 'id');
     }
 
+    public function cart() {
+
+        return $this->hasMany(cart_salesman::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -148,10 +148,11 @@
                                             <tr>
                                                 <th>No </th>
                                                 <th>ID</th>
-                                                <th>tanggal_masuk</th>
-
-                                                <th>jumlah_masuk</th>
-                                                <th>produk</th>
+                                                <th>Tanggal Masuk</th>
+                                                <th>Batch</th>
+                                                <th>Tanggal Kadaluarsa</th>
+                                                <th>Jumlah Masuk</th>
+                                                <th>Produk</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -162,6 +163,8 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $row->id_masuk }}</td>
                                                     <td>{{ $row->tanggal_masuk }}</td>
+                                                    <td>{{ $row->batch }}</td>
+                                                    <td>{{ $row->tanggal_kadaluarsa }}</td>
                                                     <td>{{ $row->jumlah_masuk }}</td>
 
                                                     @if ($row->produk)

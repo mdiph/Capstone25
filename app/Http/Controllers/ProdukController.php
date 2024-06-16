@@ -82,25 +82,39 @@ class ProdukController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, produk $produk, $id)
-    {
-        //
-        $sales = produk::with('kategori')->findOrFail($id);
+{
+    $sales = produk::with('kategori')->findOrFail($id);
 
-        $rules = [
-            'nama_produk' => 'required|max:255',
-            'deskripsi' => 'required|max:255',
-            'harga' => 'required|numeric',
-            'satuan' => 'required',
-            'kategori_id' => 'required'
+    $rules = [
+        'nama_produk' => 'required|max:255',
+        'deskripsi' => 'required|max:255',
+        'harga' => 'required|numeric',
+        'satuan' => 'required',
+        // Kategori ID tidak divalidasi di sini
+    ];
 
-        ];
-        $validate = $request->validate($rules);
-        $kategori = kategori::all();
+    $validate = $request->validate($rules);
 
-        $sales->update($validate);
+    // Periksa kategori secara manual termasuk yang di-soft delete
+    $kategoriId = $request->input('kategori_id');
+    $kategori = kategori::withTrashed()->find($kategoriId);
 
-        return redirect('/produk')->with('success', 'Data berhasil diubah')->with('kategori', $kategori);
+    if (!$kategori) {
+        return redirect()->back()->withErrors(['kategori_id' => 'Kategori yang dipilih tidak valid.']);
     }
+
+    // Update produk dengan kategori yang valid
+    $sales->update([
+        'nama_produk' => $validate['nama_produk'],
+        'deskripsi' => $validate['deskripsi'],
+        'harga' => $validate['harga'],
+        'satuan' => $validate['satuan'],
+        'kategori_id' => $kategoriId,
+    ]);
+
+    return redirect('/produk')->with('success', 'Data berhasil diubah');
+}
+
 
     /**
      * Remove the specified resource from storage.

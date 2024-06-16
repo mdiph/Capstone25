@@ -42,7 +42,7 @@
                                             <div class="form-group">
                                                 <label for="email2">Nama Barang</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="nama"
+                                                    <input type="text" class="form-control" id="nama" name=""
                                                         placeholder="Cari barang. . ." aria-label=""
                                                         aria-describedby="basic-addon1">
                                                     <input type="hidden" class="form-control" name="produk_id"
@@ -82,7 +82,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">RP</span>
                                                     </div>
-                                                    <input type="text" class="form-control harga_jual" name="harga_jual"
+                                                    <input type="text" value="{{ old('harga_jual') }}" class="form-control harga_jual" name="harga_jual"
                                                         id="harga" aria-label="Amount (to the nearest dollar)">
                                                 </div>
                                             </div>

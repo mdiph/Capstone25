@@ -6,19 +6,17 @@
 
 
                 @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-
-                                    <li>{{ $error }}</li>
-
-                                @endforeach
-                            </ul>
-                            <button type="button" class="close" aria-label="Close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                        </div>
-                    @endif
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="column">
                     <div class="">
                         <form method="POST" action="/tes/add">
@@ -32,105 +30,6 @@
                                 </div>
 
                                 <div class="card-body">
-
-                                    <div class="row">
-                                        <div class="col">
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">Kode Transaksi</label>
-                                                <input type="text" class="form-control" placeholder="Kode Transaksi . ."
-                                                    name="kode_transaksi">
-                                            </div>
-
-                                            <div class="form-group row ">
-                                                <label for="inputPassword4">Tanggal transaksi</label>
-                                                <input type="date" onkeydown="return false" class="form-control" id="inputPassword4"
-                                                    name="tanggal_transaksi" placeholder="Pilih tanggal">
-                                            </div>
-
-
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">Salesman</label>
-                                                <select class="form-control select2" name="salesman_id" required>
-                                                    <option value = "">Pilih Salesman</option>
-                                                    @foreach ($salesman as $s)
-                                                        <option value="{{ $s->id }}">{{ $s->nama_salesman }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="inputPassword4">Customer</label>
-                                                <select class="form-control select2" name="customer_id" required>
-                                                    <option value = "">Pilih Customer</option>
-                                                    @foreach ($customer as $c)
-                                                        <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-
-
-
-                                        </div>
-
-                                        <div class="col">
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">No Batch</label>
-                                                <input type="text" class="form-control" placeholder="No batch. . ."
-                                                    name="no_batch" id="batch">
-                                            </div>
-
-                                            <div class="form-group row ">
-                                                <label for="inputPassword4">Tanggal Kedaluwarsa</label>
-                                                <input type="date" onkeydown="return false" class="form-control" id="kedaluwarsa"
-                                                    name="tanggal_kedaluwarsa" placeholder="Pilih tanggal">
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">Produk</label>
-                                                <input type="text" class="form-control" id="nama"
-                                                    placeholder="Cari Produk" data-toggle="modal" data-target="#modalload">
-                                                <input type="hidden" class="form-control" name="produk_id" id="id">
-
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">Diskon</label>
-                                                <input type="number" class="form-control" id="diskonp" name="diskon" min="0" oninput="this.value =
-                                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
-
-
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="inputEmail4">Jumlah Keluar</label>
-                                                <input type="number" class="form-control" id="jumlah_keluar" min="0" oninput="this.value =
-                                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                                    name="jumlah_keluar">
-                                                <input type="hidden" class="form-control" id="harga_jual"
-                                                    name="harga_jual">
-
-                                            </div>
-
-
-
-
-
-
-                                            <button type="submit" class="btn btn-primary" id="addcart"><i
-                                                    class="fa fa-plus"> </i>
-                                                Tambah ke Keranjang</button>
-
-
-
-
-
-                                        </div>
-                                    </div>
-
 
                                     <div class="row">
                                         <div class="col">
@@ -171,6 +70,146 @@
                                             </div>
                                         </div>
 
+
+
+                                        <div class="col">
+
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title">Input Keranjang</div>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">No Batch</label>
+                                                        <input type="text" class="form-control" id="batch"
+                                                            placeholder="No batch. . ." name="no_batch" id="batch">
+                                                    </div>
+
+                                                    <div class="form-group row ">
+                                                        <label for="inputPassword4">Tanggal Kedaluwarsa</label>
+                                                        <input type="date" onkeydown="return false" class="form-control"
+                                                            id="kedaluwarsa" name="tanggal_kedaluwarsa"
+                                                            placeholder="Pilih tanggal">
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">Produk</label>
+                                                        <input type="text" class="form-control" id="nama"
+                                                            placeholder="Cari Produk" data-toggle="modal"
+                                                            data-target="#modalload">
+                                                        <input type="hidden" class="form-control" name="produk_id"
+                                                            id="id">
+
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">Diskon</label>
+                                                        <input type="number" class="form-control" id="diskonp"
+                                                            name="diskon" min="0"
+                                                            oninput="this.value =
+                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+
+
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">Jumlah Keluar</label>
+                                                        <input type="number" class="form-control" id="jumlah_keluar"
+                                                            min="0"
+                                                            oninput="this.value =
+                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                            name="jumlah_keluar">
+                                                        <input type="hidden" class="form-control" id="harga_jual"
+                                                            name="harga_jual">
+
+                                                    </div>
+
+
+
+
+
+
+                                                    <button type="submit" class="btn btn-primary" id="addcart"><i
+                                                            class="fa fa-plus"> </i>
+                                                        Tambah ke Keranjang</button>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div class="card">
+
+                                                <div class="card-header">
+                                                    <div class="card-title">Data Transaksi</div>
+                                                </div>
+
+                                                <div class="card-body">
+
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">Kode Transaksi</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Kode Transaksi . ." name="kode_transaksi"
+                                                            value="{{ old('kode_transaksi') }}">
+                                                    </div>
+
+                                                    <div class="form-group row ">
+                                                        <label for="inputPassword4">Tanggal transaksi</label>
+                                                        <input type="date" onkeydown="return false"
+                                                            class="form-control" id="inputPassword4"
+                                                            name="tanggal_transaksi"
+                                                            value="{{ old('tanggal_transaksi') }}"
+                                                            placeholder="Pilih tanggal">
+                                                    </div>
+
+
+
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail4">Salesman</label>
+                                                        <select class="form-control select2" name="salesman_id" required>
+                                                            <option value="">Pilih Salesman</option>
+                                                            @foreach ($salesman as $s)
+                                                                <option value="{{ $s->id }}"
+                                                                    {{ old('salesman_id') == $s->id ? 'selected' : '' }}>
+                                                                    {{ $s->nama_salesman }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-group row">
+                                                        <label for="inputPassword4">Customer</label>
+                                                        <select class="form-control select2" name="customer_id" required>
+                                                            <option value = "">Pilih Customer</option>
+                                                            @foreach ($customer as $c)
+                                                                <option value="{{ $c->id }}"
+                                                                    {{ old('customer_id') == $c->id ? 'selected' : '' }}>
+                                                                    {{ $c->nama_customer }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
                                         <div class="col">
                                             <div class="card">
 
@@ -187,40 +226,53 @@
 
                                                     </div> --}}
                                                     <div class="form-group row">
-                                                        <label for="inputEmail3" class="">Diskon</label>
+                                                        <label for="inputEmail3" class="">Diskon (%)</label>
 
-                                                        <input type="number" class="form-control diskon" id="diskon" min="0" oninput="this.value =
+                                                        <input type="number" class="form-control diskon" id="diskon"
+                                                            min="0"
+                                                            oninput="this.value =
                                                         !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                                            name="diskon" placeholder="diskon">
+                                                            name="diskon" placeholder="diskon"
+                                                            value="{{ old('diskon') }}">
 
                                                     </div>
+
+
                                                     <div class="form-group row">
-                                                        <label for="inputEmail3" class="">Total</label>
-
-                                                        <input type="text" class="form-control total" id="total"
-                                                            name="total" readonly>
-
+                                                        <label for="total">Total</label>
+                                                        <input type="number" class="form-control" name="total"
+                                                            id="total" value="{{ old('total') }}" readonly>
                                                     </div>
+
+
 
                                                     <div class="form-group row">
                                                         <label for="inputPassword4">Metode Pembayaran</label>
-                                                        <select class="form-control select2" name="metode" id="metode">
-                                                            <option value = "">Pilih metode</option>
-
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Tempo">tempo</option>
-
+                                                        <select class="form-control select2" name="metode"
+                                                            id="metode">
+                                                            <option value="">Pilih metode</option>
+                                                            <option value="Cash"
+                                                                {{ old('metode') == 'Cash' ? 'selected' : '' }}>Cash
+                                                            </option>
+                                                            <option value="Tempo"
+                                                                {{ old('metode') == 'Tempo' ? 'selected' : '' }}>Tempo
+                                                            </option>
                                                         </select>
                                                     </div>
+
                                                     <div class="form-group row">
                                                         <label for="inputEmail3" class="">Bayar</label>
 
-                                                        <input type="number" class="form-control total" name="bayar" id="bayar" min="0" oninput="this.value =
-                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" >
+                                                        <input type="number" class="form-control total" name="bayar"
+                                                            value="{{ old('bayar') }}" id="bayar" min="0"
+                                                            oninput="this.value =
+                                                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
 
                                                     </div>
 
-                                                    <button id="btnBayar" type="button" data-toggle="modal" data-target="#modalPembayaran" class="btn btn-success">Bayar</button>
+                                                    <button id="btnBayar" type="button" data-toggle="modal"
+                                                        data-target="#modalPembayaran"
+                                                        class="btn btn-success">Bayar</button>
 
                                                 </div>
 
@@ -243,7 +295,8 @@
 
                     </div>
 
-                    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -257,7 +310,7 @@
                                     <p id="modalContent"></p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit"  class="btn btn-parimary" >Bayar</button>
+                                    <button type="submit" class="btn btn-parimary">Bayar</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                 </div>
                             </div>
@@ -273,7 +326,8 @@
 
     </div>
 
-    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -287,7 +341,7 @@
                     <p id="modalContent"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit"  class="btn btn-parimary" >Bayar</button>
+                    <button type="submit" class="btn btn-parimary">Bayar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 </div>
             </div>
@@ -316,11 +370,14 @@
                         <thead>
                             <tr>
                                 <th>No </th>
-                                <th>Nama </th>
-                                <th>Harga</th>
-                                <th>Stok tersisa</th>
-                                {{-- <th class="w-10">Qty</th> --}}
-                                <td>Action</td>
+                                <th>ID</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Batch</th>
+                                <th>Tanggal Kadaluarsa</th>
+                                <th>Stok Tersisa</th>
+                                <th>Total Stok</th>
+                                <th>Produk</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -330,26 +387,30 @@
                                 <tr>
                                     {{-- <form action="/addcart/" method="POST">
                                         @csrf --}}
+
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $row->nama_produk }}</td>
+                                    <td>{{ $row->id_masuk }}</td>
+                                    <td>{{ $row->tanggal_masuk }}</td>
+                                    <td>{{ $row->batch }}</td>
+                                    <td>{{ $row->tanggal_kadaluarsa }}</td>
+                                    <td>{{ $row->stok_tersisa }}</td>
+                                    <td>{{ $row->produk->stok }}</td>
 
 
-                                    <td>{{ $row->harga }}</td>
+                                        <td>{{ $row->produk->nama_produk }}</td>
 
-                                    <td>{{ $row->stok }}</td>
-
-                                    {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
-                                    <td>
+                                        {{-- <td><input type="number" id="qty" name="qty" class="w-100"></td> --}}
+                                        <td>
 
 
 
-                                        <button class="btn btn-xs btn-info" type="submit" id="select"
-                                            data-id="{{ $row->id }}" data-nama = "{{ $row->nama_produk }}"
-                                            data-harga ="{{ $row->harga }}" data-stok="{{ $row->stok }}">
-                                            <i class="fa fa-check"> Pilih </i>
-                                        </button>
-                                    </td>
-                                    {{-- </form> --}}
+                                            <button class="btn btn-xs btn-info" type="submit" id="select"
+                                                data-id="{{ $row->produk->id }}" data-nama = "{{ $row->produk->nama_produk }}"
+                                                data-harga ="{{ $row->produk->harga }}" data-stok="{{ $row->produk->stok }}" data-stokt="{{ $row->stok_tersisa }}" data-batch="{{ $row->batch }}" data-tanggalk="{{ $row->tanggal_kadaluarsa }}">
+                                                <i class="fa fa-check"> Pilih </i>
+                                            </button>
+                                        </td>
+                                        {{-- </form> --}}
 
                                 </tr>
                             @endforeach
@@ -485,7 +546,9 @@
                         console.log('Error: ' + err.error);
 
                         // Tampilkan pesan error ke pengguna, misalnya dengan menggunakan alert atau menambahkannya ke elemen HTML tertentu
-                        alert('Error: Pastikan form yang anda isi benar dan jumlah keluar tidak melebihi stok');
+                        alert(
+                            'Error: Pastikan form yang anda isi benar dan jumlah keluar tidak melebihi stok'
+                        );
                     }
                 });
             });
@@ -495,11 +558,16 @@
                 var nama = $(this).data('nama');
                 var harga = $(this).data('harga');
                 var stok = $(this).data('stok');
+                var batch = $(this).data('batch');
+                var tanggalk = $(this).data('tanggalk');
+                var stokt = $(this).data('stokt');
                 $('#id').val(id);
                 $('#harga_jual').val(harga);
+                $('#kedaluwarsa').val(tanggalk);
+                $('#batch').val(batch);
 
 
-                $('#nama').val(nama + ' | ' + ' Stok ' + stok + ' | ' + ' Harga ' + harga)
+                $('#nama').val(nama + ' | ' + ' Stok ' + stokt + ' | ' + ' Harga ' + harga)
 
                 // $.ajaxSetup({
                 //     headers: {
@@ -534,7 +602,7 @@
 
             function calculateTotal() {
                 let subtotal = $('#subtotal').val();
-                const diskon = parseInt($('#diskon').val()) || 0;
+                const diskon = parseInt($('#diskon').val());
                 const persen = diskon / 100;
                 const total = subtotal - (subtotal * persen);
 
@@ -574,37 +642,37 @@
         });
 
         $('#btnBayar').on('click', function() {
-                // Mendapatkan nilai metode pembayaran
-                var metode = $('#metode').val();
-                // Mendapatkan nilai bayar
-                var bayar = $('#bayar').val();
-                // Mendapatkan nilai total (contoh: menggunakan nilai statis, sesuaikan dengan kebutuhan Anda)
-                var total = $('#total').val();
+            // Mendapatkan nilai metode pembayaran
+            var metode = $('#metode').val();
+            // Mendapatkan nilai bayar
+            var bayar = $('#bayar').val();
+            // Mendapatkan nilai total (contoh: menggunakan nilai statis, sesuaikan dengan kebutuhan Anda)
+            var total = $('#total').val();
 
-                // Menampilkan modal dengan detail pembayaran sesuai metode
-                var modalContent = '';
-                if (metode === 'Cash') {
-                    var kembalian = bayar - total;
-                    modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
-                                   'Total: ' + total + '<br>' +
-                                   'Bayar: ' + bayar + '<br>' +
-                                   'Kembalian: ' + kembalian;
-                } else if (metode === 'Tempo') {
-                    var sisaHutang = total - bayar;
-                    modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
-                                   'Total: ' + total + '<br>' +
-                                   'Bayar: ' + bayar + '<br>' +
-                                   'Sisa Hutang: ' + sisaHutang;
-                } else if (metode === ''){
-                    modalContent = 'Silahkan pilih metode pembayaran !'
-                }
+            // Menampilkan modal dengan detail pembayaran sesuai metode
+            var modalContent = '';
+            if (metode === 'Cash') {
+                var kembalian = bayar - total;
+                modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
+                    'Total: ' + total + '<br>' +
+                    'Bayar: ' + bayar + '<br>' +
+                    'Kembalian: ' + kembalian;
+            } else if (metode === 'Tempo') {
+                var sisaHutang = total - bayar;
+                modalContent = 'Metode Pembayaran: ' + metode + '<br>' +
+                    'Total: ' + total + '<br>' +
+                    'Bayar: ' + bayar + '<br>' +
+                    'Sisa Hutang: ' + sisaHutang;
+            } else if (metode === '') {
+                modalContent = 'Silahkan pilih metode pembayaran !'
+            }
 
-                // Menetapkan konten modal
-                $('#modalContent').html(modalContent);
+            // Menetapkan konten modal
+            $('#modalContent').html(modalContent);
 
-                // Menampilkan modal
+            // Menampilkan modal
 
-            });
+        });
     </script>
 
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CodeCheckController;
 use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\API\ForgotPasswordController;
+use App\Http\Controllers\API\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use App\Http\Controllers\API\ForgotPasswordController;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::post('/cart/add', [TransaksiController::class, 'addCart']);
+    Route::post('/addTransaksi', [TransaksiController::class, 'store']);
+    Route::post('/cart/delete/{id}', [TransaksiController::class, 'deleteCart']);
+    Route::get('/cart', [TransaksiController::class, 'getCart']);
     Route::post('logout', [\App\Http\Controllers\API\UserController::class, 'logout']);
     Route::get('barangmasuk', [\App\Http\Controllers\API\BarangMasukController::class, 'index']);
     Route::get('user', [\App\Http\Controllers\API\UserController::class, 'user']);
